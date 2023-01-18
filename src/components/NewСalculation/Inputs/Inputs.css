@@ -1,0 +1,41 @@
+.inputs {
+    padding: 10px;
+    display: grid;
+    grid-template-areas:
+        'title title title'
+        'date select btn';
+}
+
+.inputs__title {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: normal;
+    grid-area: title;
+}
+
+.inputs__interval {
+    display: flex;
+    margin: 10px 0;
+    grid-area: date;
+}
+
+.inputs__text {
+    margin: 5px;
+}
+
+.inputs__date {
+    width: 150px;
+    padding: 5px;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.514);
+}
+
+.inputs__select {
+    width: 150px;
+    padding: 5px;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.514);
+    grid-area: select;
+}

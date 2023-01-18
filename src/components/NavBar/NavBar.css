@@ -1,0 +1,22 @@
+.navbar {
+    padding: 30px;
+}
+
+.navbar__btn {
+    border: 0.1px solid rgba(25, 0, 138, 0.39);
+    background-color: inherit;
+    border-radius: 10px;
+    margin: 5px;
+    text-decoration: none;
+    padding: 8px 15px;
+}
+
+.navbar__btn:hover {
+    background-color: rgba(25, 0, 138, 0.39);
+    color: white;
+    font-size: 18px;
+}
+
+.navbar__btn_active {
+    background-color: rgba(25, 0, 138, 0.39);
+}

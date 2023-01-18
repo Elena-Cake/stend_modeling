@@ -16,9 +16,7 @@ function App() {
             <Route path="/culculate" element={<NewСalculation />} />
             <Route path="/results" element={<Results />} />
           </Routes>
-
         </div>
-
       </div>
     </BrowserRouter>
   );

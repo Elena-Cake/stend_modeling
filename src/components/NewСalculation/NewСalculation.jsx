@@ -1,14 +1,15 @@
 import React from "react";
-import Configuration from "./Configuration/Configuration";
-import Inputs from "./Inputs/Inputs";
+
+import Configuration from "../Configuration/Configuration";
+import Inputs from "../Inputs/Inputs";
 import './NewСalculation.css';
 
 
-const NewСalculation = () => {
+const NewСalculation = ({ openTelescope, loadPopup }) => {
     return (
         <div className="calculation">
             <Inputs />
-            <Configuration />
+            <Configuration onTelescope={openTelescope} onLoadPopup={loadPopup} />
         </div>
     )
 }

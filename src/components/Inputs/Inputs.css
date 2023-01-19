@@ -1,17 +1,12 @@
 .inputs {
-    padding: 10px;
-    display: grid;
-    grid-template-areas:
-        'title title title'
-        'date select btn';
+    display: flex;
+    justify-content: space-around;
 }
 
-.inputs__title {
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    font-weight: normal;
-    grid-area: title;
+@media screen and (max-width: 1080px) {
+    .inputs {
+        display: block;
+    }
 }
 
 .inputs__interval {
@@ -34,8 +29,15 @@
 .inputs__select {
     width: 150px;
     padding: 5px;
-    margin: 0;
+    margin: 10px 0;
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.514);
     grid-area: select;
+    align-self: end;
+}
+
+.button__find {
+    grid-area: btn;
+    max-width: 200px;
+    align-self: end;
 }

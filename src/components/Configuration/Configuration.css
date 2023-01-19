@@ -1,0 +1,10 @@
+.result__link-btn {
+    text-decoration: none;
+    color: #000;
+    width: 100%;
+    height: 100%;
+}
+
+.button__bottom:hover .result__link-btn {
+    color: rgb(255, 255, 255);
+}

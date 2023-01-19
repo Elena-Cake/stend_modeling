@@ -1,0 +1,6 @@
+.resultsdone {
+    display: grid;
+    grid-template-areas:
+        'date date'
+        'table charts';
+}

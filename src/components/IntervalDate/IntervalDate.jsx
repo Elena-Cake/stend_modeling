@@ -1,10 +1,10 @@
 import React from "react";
-import './Inputs.css';
+import './IntervalDate.css';
 
-const Inputs = () => {
+const IntervalDate = () => {
     return (
-        <div className="inputs">
-            <h1 className="inputs__title">
+        <div className="intervaldate">
+            <h1 className="title">
                 Интервал моделирования
             </h1>
             <div className="inputs__interval">
@@ -13,13 +13,8 @@ const Inputs = () => {
                 <p className="inputs__text">по</p>
                 <input className="inputs__date" type="date" />
             </div>
-            <select className="inputs__select">
-                <option>1</option>
-                <option>2</option>
-            </select>
-            <button className="button__bottom">Найти</button>
         </div>
     )
 }
 
-export default Inputs;
+export default IntervalDate;

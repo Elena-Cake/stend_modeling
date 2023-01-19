@@ -1,0 +1,19 @@
+.popup__addNS {
+    width: 500px;
+}
+
+.form__addNS {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__field {
+    display: grid;
+    grid-template-columns: 20% auto;
+    margin: 10px 0;
+
+}
+
+.form__btn {
+    width: 200px;
+}

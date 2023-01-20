@@ -1,22 +1,25 @@
 .navbar {
-    padding: 30px;
+    padding: 50px 80px 0px;
+    margin-bottom: 20px;
 }
 
 .navbar__btn {
-    border: 0.1px solid rgba(25, 0, 138, 0.39);
     background-color: inherit;
     border-radius: 10px;
-    margin: 5px;
     text-decoration: none;
-    padding: 8px 15px;
+    padding: 8px 15px 15px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
 }
 
 .navbar__btn:hover {
-    background-color: rgba(25, 0, 138, 0.39);
-    color: white;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 24, 77);
     font-size: 18px;
 }
 
 .navbar__btn_active {
-    background-color: rgba(25, 0, 138, 0.39);
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 24, 77);
+    text-decoration: underline;
 }

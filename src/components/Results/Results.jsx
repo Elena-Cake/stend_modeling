@@ -14,7 +14,7 @@ import configuration from '../../constans/configurations'
 const Results = () => {
 
     const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-    const gridStyle = useMemo(() => ({ height: '94%', width: '100%' }), []);
+    const gridStyle = useMemo(() => ({ height: '78vh', width: '100%' }), []);
 
     const changeResStructure = (res) => {
         const rowDataGenerated = [];

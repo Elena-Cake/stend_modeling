@@ -14,8 +14,8 @@ import configuration from '../../constans/configurations'
 
 const Configuration = ({ onTelescope, onLoadPopup }) => {
 
-    const containerStyle = useMemo(() => ({ width: '100%', height: '20%' }), []);
-    const gridStyle = useMemo(() => ({ height: '24%', width: '100%' }), []);
+    const containerStyle = useMemo(() => ({ width: '100%', height: '55vh' }), []);
+    const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
     const changeResStructure = (res) => {
         const rowDataGenerated = [];
@@ -47,7 +47,7 @@ const Configuration = ({ onTelescope, onLoadPopup }) => {
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'idInstruments' },
+        { field: 'idInstruments', checkboxSelection: true },
         { field: 'name' },
         { field: 'latitude' },
         { field: 'longitude' },
@@ -57,22 +57,33 @@ const Configuration = ({ onTelescope, onLoadPopup }) => {
         { field: 'noko_twilight' },
         { field: 'gso_survey' }
     ]);
-    const defaultColDef = useMemo(() => {
-        return {
-            flex: 1,
-            minWidth: 100,
-            sortable: true,
-            resizable: true,
-        };
-    }, []);
+
+
     const autoGroupColumnDef = useMemo(() => {
         return {
             headerValueGetter: (params) => `${params.colDef.headerName}`,
-            minWidth: 220,
+            minWidth: 150,
             cellRendererParams: {
                 suppressCount: true,
                 checkbox: true,
             },
+        };
+    }, []);
+
+
+    const isFirstColumn = (params) => {
+        var displayedColumns = params.columnApi.getAllDisplayedColumns();
+        var thisIsFirstColumn = displayedColumns[0] === params.column;
+        return thisIsFirstColumn;
+    };
+
+    const defaultColDef = useMemo(() => {
+        return {
+            flex: 1,
+            minWidth: 100,
+            resizable: true,
+            headerCheckboxSelection: isFirstColumn,
+            checkboxSelection: isFirstColumn,
         };
     }, []);
 
@@ -90,6 +101,8 @@ const Configuration = ({ onTelescope, onLoadPopup }) => {
                         groupDisplayType={'multipleColumns'}
                         animateRows={true}
                         sideBar={'columns'}
+                        rowSelection='multiple'
+
                     ></AgGridReact>
                 </div>
             </div>

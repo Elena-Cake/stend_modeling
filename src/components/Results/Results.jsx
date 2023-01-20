@@ -69,7 +69,7 @@ const Results = () => {
     const autoGroupColumnDef = useMemo(() => {
         return {
             headerValueGetter: (params) => `${params.colDef.headerName}`,
-            minWidth: 220,
+            minWidth: 140,
             cellRendererParams: {
                 suppressCount: true,
                 checkbox: true,

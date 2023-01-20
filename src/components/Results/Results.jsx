@@ -1,138 +1,99 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import { render } from 'react-dom';
+
 import './Results.css';
 
-import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { render } from 'react-dom';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-enterprise';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
-import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
+import configuration from '../../constans/configurations'
 
 
 const Results = () => {
 
-    // const gridRef = useRef(); // Optional - for accessing Grid's API
-    // const [rowData, setRowData] = useState([
-    //     {
-    //         make: 1,
-    //         model: 2,
-    //         price: 3
-    //     }, {
-    //         make: 1,
-    //         model: 2,
-    //         price: 3
-    //     }
-    // ]); // Set rowData to Array of Objects, one Object per Row
-
-    // // Each Column Definition results in one Column.
-    // const [columnDefs, setColumnDefs] = useState([
-    //     { field: 'make', filter: true },
-    //     { field: 'model', filter: true },
-    //     { field: 'price' }
-    // ]);
-
-    // // DefaultColDef sets props common to all Columns
-    // const defaultColDef = useMemo(() => ({
-    //     sortable: true
-    // }));
+    const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
+    const gridStyle = useMemo(() => ({ height: '94%', width: '100%' }), []);
 
 
-    // // Example using Grid's API
-    // const buttonListener = useCallback(e => {
-
-    // }, []);
-
-    // return (
-    //     <div className="calculation">
-    //         <div className="table">
-    //             <AgGridReact
-    //                 ref={gridRef} // Ref for accessing Grid's API
-
-    //                 rowData={rowData} // Row Data for Rows
-
-    //                 columnDefs={columnDefs} // Column Defs for Columns
-    //                 defaultColDef={defaultColDef} // Default Column Properties
-
-    //                 animateRows={true} // Optional - set to 'true' to have rows animate when sorted
-    //                 rowSelection='multiple' // Options - allows click selection of rows
-
-    //             />
-    //         </div>
-    //         <button className="button__bottom" onClick={buttonListener}>Загрузить результаты</button>
-    //     </div>
-    // )
-
-
-    const gridRef = useRef(); // Optional - for accessing Grid's API
-    const [rowData, setRowData] = useState([
-        {
-            make: '1',
-            model: '2',
-            price: '3'
-        },
-        {
-            make: '1',
-            model: '3',
-            price: '3'
-        },
-        {
-            make: '2',
-            model: '3',
-            price: '3'
+    const changeResStructure = (res) => {
+        const rowDataGenerated = [];
+        for (let key in res.configurations) {
+            for (let keyInst in res.configurations[key].instruments) {
+                const item = {
+                    pairs: key,
+                    idInstruments: keyInst,
+                    name: res.configurations[key].instruments[keyInst].name,
+                    latitude: res.configurations[key].instruments[keyInst].latitude,
+                    longitude: res.configurations[key].instruments[keyInst].longitude,
+                    mode: res.configurations[key].instruments[keyInst].mode,
+                    voko: res.configurations[key].instruments[keyInst].voko,
+                    noko: res.configurations[key].instruments[keyInst].noko,
+                    noko_twilight: res.configurations[key].instruments[keyInst].noko_twilight,
+                    gso_survey: res.configurations[key].instruments[keyInst].gso_survey
+                }
+                rowDataGenerated.push(item)
+            }
         }
-    ]); // Set rowData to Array of Objects, one Object per Row
+        return rowDataGenerated
+    }
+
+    changeResStructure(configuration)
+
+
+    const [rowData, setRowData] = useState(
+        changeResStructure(configuration)
+    ); // Set rowData to Array of Objects, one Object per Row
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'make', filter: true },
-        { field: 'model', filter: true },
-        { field: 'price' }
+        { field: 'pairs', rowGroup: true, hide: true },
+        { field: 'idInstruments' },
+        { field: 'name' },
+        { field: 'latitude' },
+        { field: 'longitude' },
+        { field: 'mode' },
+        { field: 'voko' },
+        { field: 'noko' },
+        { field: 'noko_twilight' },
+        { field: 'gso_survey' }
     ]);
-
-    // DefaultColDef sets props common to all Columns
-    const defaultColDef = useMemo(() => ({
-        sortable: true
-    }));
-
-    // Example of consuming Grid Event
-    const cellClickedListener = useCallback(event => {
-        console.log('cellClicked', event);
+    const defaultColDef = useMemo(() => {
+        return {
+            flex: 1,
+            minWidth: 100,
+            sortable: true,
+            resizable: true,
+        };
+    }, []);
+    const autoGroupColumnDef = useMemo(() => {
+        return {
+            headerValueGetter: (params) => `${params.colDef.headerName}`,
+            minWidth: 220,
+            cellRendererParams: {
+                suppressCount: true,
+                checkbox: true,
+            },
+        };
     }, []);
 
-    // Example load data from sever
-    // useEffect(() => {
-    //     fetch('https://www.ag-grid.com/example-assets/row-data.json')
-    //         .then(result => result.json())
-    //         .then(rowData => setRowData(rowData))
-    // }, []);
-
-    // Example using Grid's API
-    const buttonListener = useCallback(e => {
-        gridRef.current.api.deselectAll();
-    }, []);
 
     return (
-        <div>
-
-            {/* Example using Grid's API */}
-            <button onClick={buttonListener}>Push Me</button>
-
-            {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
-            <div className="ag-theme-alpine" style={{ width: 500, height: 500 }}>
-
+        <div style={containerStyle}>
+            <div style={gridStyle} className="ag-theme-alpine ">
                 <AgGridReact
-                    ref={gridRef} // Ref for accessing Grid's API
-
-                    rowData={rowData} // Row Data for Rows
-
-                    columnDefs={columnDefs} // Column Defs for Columns
-                    defaultColDef={defaultColDef} // Default Column Properties
-
-                    animateRows={true} // Optional - set to 'true' to have rows animate when sorted
-                    rowSelection='multiple' // Options - allows click selection of rows
-
-                    onCellClicked={cellClickedListener} // Optional - registering for Grid Event
-                />
+                    rowData={rowData}
+                    columnDefs={columnDefs}
+                    defaultColDef={defaultColDef}
+                    autoGroupColumnDef={autoGroupColumnDef}
+                    groupDisplayType={'multipleColumns'}
+                    animateRows={true}
+                    sideBar={'columns'}
+                    groupDefaultExpanded={1}
+                ></AgGridReact>
             </div>
+            <button className="button__bottom">Загрузить результаты</button>
         </div>
     );
 }

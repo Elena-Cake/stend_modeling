@@ -16,13 +16,12 @@ const Results = () => {
     const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
     const gridStyle = useMemo(() => ({ height: '94%', width: '100%' }), []);
 
-
     const changeResStructure = (res) => {
         const rowDataGenerated = [];
         for (let key in res.configurations) {
             for (let keyInst in res.configurations[key].instruments) {
                 const item = {
-                    pairs: key,
+                    configuration: key,
                     idInstruments: keyInst,
                     name: res.configurations[key].instruments[keyInst].name,
                     latitude: res.configurations[key].instruments[keyInst].latitude,
@@ -48,7 +47,7 @@ const Results = () => {
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'pairs', rowGroup: true, hide: true },
+        { field: 'configuration', rowGroup: true, hide: true },
         { field: 'idInstruments' },
         { field: 'name' },
         { field: 'latitude' },

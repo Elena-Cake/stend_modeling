@@ -6,7 +6,7 @@ import NavBar from './components/NavBar/NavBar';
 import NewСalculation from './components/NewСalculation/NewСalculation';
 import Results from './components/Results/Results';
 
-import TelescopePopup from './components/TelescopePopup/TelescopePopup';
+import TelescopePopup from './components/NewСalculation/TelescopePopup/TelescopePopup';
 import AddNSPopup from './components/AddNSPopup/AddNSPopup';
 import LoadingPopup from './components/LoadingPopup/LoadingPopup';
 

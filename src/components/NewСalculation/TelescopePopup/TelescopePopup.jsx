@@ -7,7 +7,7 @@ import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-import configuration from '../../constans/configurations'
+import configuration from '../../../constans/configurations'
 
 const TelescopePopup = ({ isOpen, onClose, addNs }) => {
     const classPopup = `popup popup-telescope  ${isOpen ? 'popup_opened' : ''}`

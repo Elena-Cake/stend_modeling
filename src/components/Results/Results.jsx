@@ -13,8 +13,8 @@ import configuration from '../../constans/configurations'
 
 const Results = () => {
 
-    const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-    const gridStyle = useMemo(() => ({ height: '78vh', width: '100%' }), []);
+    const containerStyle = useMemo(() => ({ width: '100%', height: '75vh' }), []);
+    const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
     const changeResStructure = (res) => {
         const rowDataGenerated = [];

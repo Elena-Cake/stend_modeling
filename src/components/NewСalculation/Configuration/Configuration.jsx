@@ -1,6 +1,3 @@
-
-import './Results.css';
-
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { render } from 'react-dom';
 import { AgGridReact } from 'ag-grid-react';
@@ -8,12 +5,16 @@ import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-import configuration from '../../constans/configurations'
+import './Configuration.css';
+import { NavLink } from "react-router-dom";
 
 
-const Results = () => {
+import configuration from '../../../constans/configurations'
 
-    const containerStyle = useMemo(() => ({ width: '100%', height: '75vh' }), []);
+
+const Configuration = ({ onTelescope, onLoadPopup }) => {
+
+    const containerStyle = useMemo(() => ({ width: '100%', height: '55vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
     const changeResStructure = (res) => {
@@ -21,7 +22,6 @@ const Results = () => {
         for (let key in res.configurations) {
             for (let keyInst in res.configurations[key].instruments) {
                 const item = {
-                    configuration: key,
                     idInstruments: keyInst,
                     name: res.configurations[key].instruments[keyInst].name,
                     latitude: res.configurations[key].instruments[keyInst].latitude,
@@ -47,8 +47,7 @@ const Results = () => {
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'configuration', rowGroup: true, hide: true },
-        { field: 'idInstruments' },
+        { field: 'idInstruments', checkboxSelection: true },
         { field: 'name' },
         { field: 'latitude' },
         { field: 'longitude' },
@@ -58,18 +57,12 @@ const Results = () => {
         { field: 'noko_twilight' },
         { field: 'gso_survey' }
     ]);
-    const defaultColDef = useMemo(() => {
-        return {
-            flex: 1,
-            minWidth: 100,
-            sortable: true,
-            resizable: true,
-        };
-    }, []);
+
+
     const autoGroupColumnDef = useMemo(() => {
         return {
             headerValueGetter: (params) => `${params.colDef.headerName}`,
-            minWidth: 140,
+            minWidth: 150,
             cellRendererParams: {
                 suppressCount: true,
                 checkbox: true,
@@ -78,22 +71,48 @@ const Results = () => {
     }, []);
 
 
+    const isFirstColumn = (params) => {
+        var displayedColumns = params.columnApi.getAllDisplayedColumns();
+        var thisIsFirstColumn = displayedColumns[0] === params.column;
+        return thisIsFirstColumn;
+    };
+
+    const defaultColDef = useMemo(() => {
+        return {
+            flex: 1,
+            minWidth: 100,
+            resizable: true,
+            headerCheckboxSelection: isFirstColumn,
+            checkboxSelection: isFirstColumn,
+        };
+    }, []);
+
     return (
-        <div style={containerStyle}>
-            <div style={gridStyle} className="ag-theme-alpine ">
-                <AgGridReact
-                    rowData={rowData}
-                    columnDefs={columnDefs}
-                    defaultColDef={defaultColDef}
-                    autoGroupColumnDef={autoGroupColumnDef}
-                    groupDisplayType={'multipleColumns'}
-                    animateRows={true}
-                    groupDefaultExpanded={1}
-                ></AgGridReact>
+        <div className="configuration">
+            <h2 className="title">Конфигурация наблюдательной сети</h2>
+            <button className="button__bottom" onClick={onTelescope}>Добавить НС в расчет</button>
+            <div style={containerStyle}>
+                <div style={gridStyle} className="ag-theme-alpine ">
+                    <AgGridReact
+                        rowData={rowData}
+                        columnDefs={columnDefs}
+                        defaultColDef={defaultColDef}
+                        autoGroupColumnDef={autoGroupColumnDef}
+                        groupDisplayType={'multipleColumns'}
+                        animateRows={true}
+                        rowSelection='multiple'
+
+                    ></AgGridReact>
+                </div>
             </div>
-            <button className="button__bottom">Загрузить результаты</button>
+            <button className="button__bottom" onClick={onLoadPopup}>Запустить расчет</button>
+
+            <NavLink to="/resultsdone"
+                className="result__link-btn">
+                <button className="button__bottom">Результаты</button>
+            </NavLink>
         </div>
-    );
+    )
 }
 
-export default Results;
+export default Configuration; 

@@ -5,7 +5,7 @@ const LoadingPopup = ({ isOpen, onClose }) => {
     const classPopup = `popup popup-addNS  ${isOpen ? 'popup_opened' : ''}`
     return (
         <div className={classPopup}>
-            <div className="popup__container">
+            <div className="popup__container popup__warning">
                 <button onClick={onClose}
                     className="popup__btn-close"
                     type="button"

@@ -3,7 +3,7 @@
     justify-content: space-around;
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 800px) {
     .inputs {
         display: block;
     }

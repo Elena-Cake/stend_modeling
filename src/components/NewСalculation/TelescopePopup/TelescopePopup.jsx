@@ -7,7 +7,7 @@ import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-import configuration from '../../constans/configurations'
+import configuration from '../../../constans/configurations'
 
 const TelescopePopup = ({ isOpen, onClose, addNs }) => {
     const classPopup = `popup popup-telescope  ${isOpen ? 'popup_opened' : ''}`
@@ -100,7 +100,6 @@ const TelescopePopup = ({ isOpen, onClose, addNs }) => {
                                 autoGroupColumnDef={autoGroupColumnDef}
                                 groupDisplayType={'multipleColumns'}
                                 animateRows={true}
-                                sideBar={true}
                                 stopEditingWhenCellsLoseFocus={true}
                                 groupDefaultExpanded={1}
                             ></AgGridReact>

@@ -24,6 +24,10 @@
     position: relative;
 }
 
+.popup__telescope {
+    width: 85%;
+}
+
 .popup__btn-close {
     position: absolute;
     right: -40px;
@@ -58,4 +62,30 @@
 
 .popup__text {
     margin: 10px 0 20px;
+}
+
+.button__table {
+    width: 40px;
+    height: 40px;
+    background-color: inherit;
+    border-radius: 3px;
+    border: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: .65;
+}
+
+.button__table:hover {
+    background-color: rgba(0, 24, 77, 0.25);
+    opacity: 1;
+}
+
+.button__edit {
+    background-image: url(../../images/profile_edit.svg);
+    background-size: 50px 50px;
+}
+
+.button__delete {
+    background-image: url(../../images/elements_trash.svg);
+    background-size: 20px 20px;
 }

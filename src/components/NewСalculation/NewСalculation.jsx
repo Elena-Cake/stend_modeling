@@ -6,6 +6,8 @@ import './NewСalculation.css';
 
 
 const NewСalculation = ({ openTelescope, loadPopup }) => {
+
+
     return (
         <div className="calculation">
             <Inputs />

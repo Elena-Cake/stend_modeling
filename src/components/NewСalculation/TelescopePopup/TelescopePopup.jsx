@@ -100,7 +100,6 @@ const TelescopePopup = ({ isOpen, onClose, addNs }) => {
                                 autoGroupColumnDef={autoGroupColumnDef}
                                 groupDisplayType={'multipleColumns'}
                                 animateRows={true}
-                                sideBar={true}
                                 stopEditingWhenCellsLoseFocus={true}
                                 groupDefaultExpanded={1}
                             ></AgGridReact>

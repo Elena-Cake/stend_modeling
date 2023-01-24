@@ -7,8 +7,8 @@ import NewСalculation from './components/NewСalculation/NewСalculation';
 import Results from './components/Results/Results';
 
 import TelescopePopup from './components/NewСalculation/TelescopePopup/TelescopePopup';
-import AddNSPopup from './components/AddNSPopup/AddNSPopup';
-import LoadingPopup from './components/LoadingPopup/LoadingPopup';
+import AddNSPopup from './components/NewСalculation/TelescopePopup/AddNSPopup/AddNSPopup';
+import LoadingPopup from './components/NewСalculation/LoadingPopup/LoadingPopup';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ResultsDone from './components/ResultsDone/ResultsDone';

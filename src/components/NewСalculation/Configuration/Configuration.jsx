@@ -9,7 +9,7 @@ import './Configuration.css';
 import { NavLink } from "react-router-dom";
 
 
-import configuration from '../../constans/configurations'
+import configuration from '../../../constans/configurations'
 
 
 const Configuration = ({ onTelescope, onLoadPopup }) => {
@@ -100,7 +100,6 @@ const Configuration = ({ onTelescope, onLoadPopup }) => {
                         autoGroupColumnDef={autoGroupColumnDef}
                         groupDisplayType={'multipleColumns'}
                         animateRows={true}
-                        sideBar={'columns'}
                         rowSelection='multiple'
 
                     ></AgGridReact>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Configuration from "../Configuration/Configuration";
+import Configuration from "./Configuration/Configuration";
 import Inputs from "../Inputs/Inputs";
 import './NewСalculation.css';
 

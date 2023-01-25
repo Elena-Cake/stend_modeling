@@ -9,7 +9,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import configuration from '../../../constans/configurations'
 
-const TableResultsDone = ({  }) => {
+const TableResultsDone = ({ }) => {
 
     const containerStyle = useMemo(() => ({ width: '100%', height: '70vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
@@ -44,7 +44,7 @@ const TableResultsDone = ({  }) => {
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'idInstruments', checkboxSelection: true },
+        { field: 'idInstruments' },
         { field: 'name' },
         { field: 'latitude' },
         { field: 'longitude' },
@@ -56,48 +56,24 @@ const TableResultsDone = ({  }) => {
     ]);
 
 
-    const autoGroupColumnDef = useMemo(() => {
-        return {
-            headerValueGetter: (params) => `${params.colDef.headerName}`,
-            minWidth: 150,
-            cellRendererParams: {
-                suppressCount: true,
-                checkbox: true,
-            },
-        };
-    }, []);
-
-
-    const isFirstColumn = (params) => {
-        var displayedColumns = params.columnApi.getAllDisplayedColumns();
-        var thisIsFirstColumn = displayedColumns[0] === params.column;
-        return thisIsFirstColumn;
-    };
-
     const defaultColDef = useMemo(() => {
         return {
-            flex: 1,
-            minWidth: 100,
+            minWidth: 80,
+            width: 100,
             resizable: true,
-            headerCheckboxSelection: isFirstColumn,
-            checkboxSelection: isFirstColumn,
         };
     }, []);
 
     return (
         <div style={containerStyle}>
-        <div style={gridStyle} className="ag-theme-alpine ">
-            <AgGridReact
-                rowData={rowData}
-                columnDefs={columnDefs}
-                defaultColDef={defaultColDef}
-                autoGroupColumnDef={autoGroupColumnDef}
-                groupDisplayType={'multipleColumns'}
-                animateRows={true}
-                rowSelection='multiple'
-            ></AgGridReact>
+            <div style={gridStyle} className="ag-theme-alpine ">
+                <AgGridReact
+                    rowData={rowData}
+                    columnDefs={columnDefs}
+                    defaultColDef={defaultColDef}
+                ></AgGridReact>
+            </div>
         </div>
-    </div>
     )
 }
 

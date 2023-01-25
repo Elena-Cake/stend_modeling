@@ -47,7 +47,7 @@ const Results = () => {
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'idInstruments', rowGroup: true, hide: true },
+        { field: 'configuration', rowGroup: true, hide: true },
         { field: 'name' },
         { field: 'latitude' },
         { field: 'longitude' },

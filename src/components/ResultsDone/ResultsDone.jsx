@@ -1,6 +1,6 @@
 import React from "react";
 import IntervalDate from "../IntervalDate/IntervalDate";
-import ChartsSplider from "./ChartsSplider/ChartsSplider";
+import Splider from "./Splider/Splider";
 import './ResultsDone.css';
 import TableResultsDone from "./TableResultsDone/TableResultsDone";
 
@@ -9,7 +9,7 @@ const ResultsDone = () => {
         <div className="resultsdone">
             <IntervalDate />
             <TableResultsDone />
-            <ChartsSplider />
+            <Splider />
         </div>
     )
 }

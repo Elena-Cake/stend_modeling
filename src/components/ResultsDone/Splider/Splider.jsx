@@ -27,27 +27,26 @@ const Splider = ({ }) => {
         },
     }
 
-    return (
-        <Splide hasTrack={false} aria-label="..." >
-            <div className="custom-wrapper">
-                <SplideTrack>
-                    <SplideSlide>
-                        <Charts text={1} />
-                    </SplideSlide>
-                    <SplideSlide>
-                        <Charts text={2} />
-                    </SplideSlide>
-                    <SplideSlide>
-                        <Charts text={3} />
-                    </SplideSlide>
-                </SplideTrack>
+    return (<Splide hasTrack={false} aria-label="..." >
+        <div className="custom-wrapper">
+            <SplideTrack>
+                <SplideSlide>
+                    <Charts />
+                </SplideSlide>
+                <SplideSlide>
+                    <Charts text={2} />
+                </SplideSlide>
+                <SplideSlide>
+                    <Charts text={3} />
+                </SplideSlide>
+            </SplideTrack>
 
-                <div className="splide__arrows">
-                    <button className="splide__arrow splide__arrow--prev">Prev</button>
-                    <button className="splide__arrow splide__arrow--next">Next</button>
-                </div>
+            <div className="splide__arrows">
+                <button className="splide__arrow splide__arrow--prev">Prev</button>
+                <button className="splide__arrow splide__arrow--next">Next</button>
             </div>
-        </Splide>
+        </div>
+    </Splide>
     )
 }
 

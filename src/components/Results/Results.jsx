@@ -47,7 +47,7 @@ const Results = () => {
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'configuration', rowGroup: true, hide: true },
+        { field: 'configuration', rowGroup: true, hide: true, checkboxSelection: true },
         { field: 'name' },
         { field: 'latitude' },
         { field: 'longitude' },
@@ -57,6 +57,13 @@ const Results = () => {
         { field: 'noko_twilight' },
         { field: 'gso_survey' }
     ]);
+
+    const isFirstColumn = (params) => {
+        var displayedColumns = params.columnApi.getAllDisplayedColumns();
+        var thisIsFirstColumn = displayedColumns[0] === params.column;
+        return thisIsFirstColumn;
+    };
+
     const defaultColDef = useMemo(() => {
         return {
             flex: 1,
@@ -64,6 +71,7 @@ const Results = () => {
             sortable: true,
             filter: true,
             resizable: true,
+            checkboxSelection: isFirstColumn
         };
     }, []);
     const autoGroupColumnDef = useMemo(() => {
@@ -71,10 +79,7 @@ const Results = () => {
             headerName: 'Instruments',
             field: 'idInstruments',
             minWidth: 150,
-            cellRenderer: 'agGroupCellRenderer',
-            cellRendererParams: {
-                checkbox: true,
-            },
+            cellRenderer: 'agGroupCellRenderer'
         };
     }, []);
 
@@ -87,11 +92,8 @@ const Results = () => {
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
                     autoGroupColumnDef={autoGroupColumnDef}
-                    rowSelection={'multiple'}
-                    groupSelectsChildren={true}
                     groupDisplayType={'multipleColumns'}
 
-                    groupSelectsFiltered={true}
                 ></AgGridReact>
             </div>
             <button className="button__bottom">Загрузить результаты</button>

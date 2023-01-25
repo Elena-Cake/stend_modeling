@@ -2,3 +2,7 @@
     text-align: center;
     margin: auto 0;
 }
+
+.charts__container {
+    margin: 0 auto;
+}

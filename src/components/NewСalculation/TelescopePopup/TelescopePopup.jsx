@@ -50,7 +50,7 @@ const TelescopePopup = ({ isOpen, onClose, addNs }) => {
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'idInstruments' },
+        { field: 'idInstruments', },
         { field: 'name' },
         { field: 'latitude' },
         { field: 'longitude' },

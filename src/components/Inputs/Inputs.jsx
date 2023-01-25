@@ -10,7 +10,6 @@ const Inputs = () => {
                 <option>1</option>
                 <option>2</option>
             </select>
-            <button className="button__bottom button__find">Найти</button>
         </div>
     )
 }

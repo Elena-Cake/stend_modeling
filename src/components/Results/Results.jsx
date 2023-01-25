@@ -48,7 +48,6 @@ const Results = () => {
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
         { field: 'configuration', rowGroup: true, hide: true },
-        { field: 'idInstruments' },
         { field: 'name' },
         { field: 'latitude' },
         { field: 'longitude' },
@@ -63,15 +62,17 @@ const Results = () => {
             flex: 1,
             minWidth: 100,
             sortable: true,
+            filter: true,
             resizable: true,
         };
     }, []);
     const autoGroupColumnDef = useMemo(() => {
         return {
-            headerValueGetter: (params) => `${params.colDef.headerName}`,
-            minWidth: 140,
+            headerName: 'Instruments',
+            field: 'idInstruments',
+            minWidth: 150,
+            cellRenderer: 'agGroupCellRenderer',
             cellRendererParams: {
-                suppressCount: true,
                 checkbox: true,
             },
         };
@@ -86,9 +87,11 @@ const Results = () => {
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
                     autoGroupColumnDef={autoGroupColumnDef}
+                    rowSelection={'multiple'}
+                    groupSelectsChildren={true}
                     groupDisplayType={'multipleColumns'}
-                    animateRows={true}
-                    groupDefaultExpanded={1}
+
+                    groupSelectsFiltered={true}
                 ></AgGridReact>
             </div>
             <button className="button__bottom">Загрузить результаты</button>

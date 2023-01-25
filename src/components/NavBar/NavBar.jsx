@@ -16,6 +16,11 @@ const NavBar = () => {
                     `navbar__btn navbar__btn_active` : "navbar__btn"}>
                 Загрузить результаты
             </NavLink>
+            <NavLink to="/resultsdone"
+                className={(state) => state.isActive ?
+                    `navbar__btn navbar__btn_active` : "navbar__btn"}>
+                Последний расчет
+            </NavLink>
         </div>
     )
 }

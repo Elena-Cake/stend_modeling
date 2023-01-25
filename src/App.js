@@ -49,8 +49,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className='header'><NavBar /></div>
       <div className="App">
+
+        <div className='header'><NavBar /></div>
         <div className='main'>
           <Routes>
             <Route path="/culculate" element={<NewСalculation openTelescope={openTelescopePopup} loadPopup={openLoadingPopup} />} />

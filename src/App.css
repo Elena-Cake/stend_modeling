@@ -1,6 +1,4 @@
 .App {
-  max-width: 1600px;
-  width: 95%;
   margin: 0 auto;
 }
 
@@ -10,8 +8,7 @@
 
 .main {
   max-width: 1600px;
-  width: 95%;
-  height: 90vh;
+  width: 92%;
   margin: auto auto;
   padding: 30px 0;
   /* border: 1px solid black; */

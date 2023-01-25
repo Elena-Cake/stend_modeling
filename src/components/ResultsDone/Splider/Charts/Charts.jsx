@@ -1,11 +1,11 @@
 import React from "react";
 import './Charts.css';
 
-const Charts = ({ }) => {
+const Charts = ({ text }) => {
 
     return (
-        <div>
-            1
+        <div className="charts__anc">
+            {text}
         </div>
     )
 }

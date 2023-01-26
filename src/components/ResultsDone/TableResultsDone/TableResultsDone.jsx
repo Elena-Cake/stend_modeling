@@ -1,9 +1,29 @@
 
 import './TableResultsDone.css';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 import configuration from '../../../constans/configurations'
+
+
+class ProductService {
+
+    getProductsSmall() {
+        return fetch('data/products-small.json').then(res => res.json()).then(d => d.data);
+    }
+
+    getProducts() {
+        return fetch('data/products.json').then(res => res.json()).then(d => d.data);
+    }
+
+    getProductsWithOrdersSmall() {
+        return fetch('data/products-orders-small.json').then(res => res.json()).then(d => d.data);
+    }
+}
+
 
 const TableResultsDone = ({ }) => {
 
@@ -18,9 +38,7 @@ const TableResultsDone = ({ }) => {
                     longitude: res.configurations[key].instruments[keyInst].longitude,
                     mode: res.configurations[key].instruments[keyInst].mode,
                     voko: res.configurations[key].instruments[keyInst].voko,
-                    noko: res.configurations[key].instruments[keyInst].noko,
-                    noko_twilight: res.configurations[key].instruments[keyInst].noko_twilight,
-                    gso_survey: res.configurations[key].instruments[keyInst].gso_survey
+                    noko: res.configurations[key].instruments[keyInst].noko
                 }
                 rowDataGenerated.push(item)
             }
@@ -28,15 +46,32 @@ const TableResultsDone = ({ }) => {
         return rowDataGenerated
     }
 
-    console.log(changeResStructure(configuration))
+    changeResStructure(configuration)
 
 
+    const [products, setProducts] = useState(changeResStructure(configuration));
+    const productService = new ProductService();
+
+    console.log(products)
+
+    // useEffect(() => {
+    //     productService.getProductsSmall().then(data => setProducts(data));
+    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div >
-            table
+        <div>
+            <div className="card">
+                <DataTable value={products} stripedRows responsiveLayout="scroll">
+                    <Column field="idInstruments" header="Code"></Column>
+                    <Column field="name" header="Name"></Column>
+                    <Column field="latitude" header="latitude"></Column>
+                    <Column field="longitude" header="longitude"></Column>
+                </DataTable>
+            </div>
         </div>
-    )
+    );
 }
+
+
 
 export default TableResultsDone;

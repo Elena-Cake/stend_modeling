@@ -186,11 +186,11 @@
 // ____________________________________________________
 
 
-
+import './Results.css';
 import React, { useEffect, useState, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import './Results.css';
+
 import { dataRows } from '../../constans/changeResStructure'
 
 const Results = () => {
@@ -212,7 +212,8 @@ const Results = () => {
             <DataTable value={products} selection={selectedProducts9} onSelectionChange={SelecteChange}
                 dataKey="id" responsiveLayout="scroll"
                 selectionPageOnly paginator rows={10} selectionMode="checkbox"
-            // onRowSelect={onRowSelect} onRowUnselect={onRowUnselect}
+                // onRowSelect={onRowSelect} onRowUnselect={onRowUnselect}
+                scrollHeight="400px"
             >
                 <Column selectionMode="multiple" headerStyle={{ width: '3em' }}></Column>
                 <Column field="idInstruments" header="idInstruments"></Column>

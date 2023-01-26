@@ -1,5 +1,6 @@
 import React from "react";
 import Charts from "./Charts/Charts";
+import ChartsBar from "./ChartsBar/ChartsBar";
 import './Splider.css';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
@@ -31,7 +32,7 @@ const Splider = ({ }) => {
         <div className="custom-wrapper">
             <SplideTrack>
                 <SplideSlide>
-                    <Charts />
+                    <ChartsBar />
                 </SplideSlide>
                 <SplideSlide>
                     <Charts text={2} />

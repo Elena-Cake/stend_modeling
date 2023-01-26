@@ -35,10 +35,10 @@ const Splider = ({ }) => {
                     <ChartsBar />
                 </SplideSlide>
                 <SplideSlide>
-                    <Charts text={2} />
+                    <Charts />
                 </SplideSlide>
                 <SplideSlide>
-                    <Charts text={3} />
+                    <Charts />
                 </SplideSlide>
             </SplideTrack>
 

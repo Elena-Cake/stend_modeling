@@ -39,9 +39,14 @@ const TelescopePopup = ({ isOpen, onClose, addNs }) => {
 
     function deleteBtn(params) {
         return (
-            <button className="button__table button__delete">
+            <button className="button__table button__delete" onClick={deleteRow}>
             </button>
         );
+    }
+
+    function deleteRow(e) {
+        e.preventDefault()
+        console.log('delete')
     }
 
     const [rowData, setRowData] = useState(
@@ -50,12 +55,14 @@ const TelescopePopup = ({ isOpen, onClose, addNs }) => {
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'idInstruments', },
+        { field: 'idInstruments', checkboxSelection: true },
         { field: 'name' },
         { field: 'latitude' },
         { field: 'longitude' },
         { field: 'mode' },
-        { field: '', cellRenderer: deleteBtn, resizable: false, sortable: false, width: 80, maxWidth: 80, filter: false }
+        {
+            field: '', cellRenderer: deleteBtn, resizable: false, sortable: false, width: 80, maxWidth: 80, filter: false, editable: false
+        }
     ]);
     const defaultColDef = useMemo(() => {
         return {
@@ -67,6 +74,7 @@ const TelescopePopup = ({ isOpen, onClose, addNs }) => {
             resizable: true,
             filter: true,
             editable: true
+
         };
     }, []);
     const autoGroupColumnDef = useMemo(() => {

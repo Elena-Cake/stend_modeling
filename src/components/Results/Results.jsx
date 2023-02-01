@@ -58,6 +58,10 @@ const Results = () => {
         { field: 'gso_survey' }
     ]);
 
+    const checkbox = (params) => {
+        return params.node.group === true;
+    };
+
     const isFirstColumn = (params) => {
         var displayedColumns = params.columnApi.getAllDisplayedColumns();
         var thisIsFirstColumn = displayedColumns[0] === params.column;
@@ -71,7 +75,9 @@ const Results = () => {
             sortable: true,
             filter: true,
             resizable: true,
-            checkboxSelection: isFirstColumn
+            cellRendererParams: {
+                checkbox,
+            },
         };
     }, []);
     const autoGroupColumnDef = useMemo(() => {

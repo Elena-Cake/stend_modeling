@@ -54,6 +54,7 @@ function App() {
         <div className='header'><NavBar /></div>
         <div className='main'>
           <Routes>
+            <Route path="/" element={<ResultsDone />} />
             <Route path="/culculate" element={<NewСalculation openTelescope={openTelescopePopup} loadPopup={openLoadingPopup} />} />
             <Route path="/results" element={<Results />} />
             <Route path="/resultsdone" element={<ResultsDone />} />

@@ -1,3 +1,7 @@
+Ссылка на схему:
+https://app.creately.com/d/F9VXXzZFhdM/edit
+
+
 ag-grid-enterprise i
 
 //UI & Bll

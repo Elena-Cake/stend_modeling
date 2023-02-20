@@ -95,7 +95,7 @@ function App() {
         <div className='header'><NavBar /></div>
         <div className='main'>
           <Routes>
-            <Route path="/" element={<ResultsDone />} />
+            <Route path="/" element={<Results />} />
             <Route path="/culculate" element={<NewСalculation openTelescope={openAddNSPopup} loadPopup={openLoadingPopup} rowData={rowData} />} />
             <Route path="/results" element={
               <Results

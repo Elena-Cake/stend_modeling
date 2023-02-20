@@ -125,7 +125,7 @@ const Results = ({ onAskConfiguration, onShowResults }) => {
                 <NavLink to="/culculate" className="navlink__decoration">Загрузить конфигурацию</NavLink>
             </button>
             <button className="button__bottom" onClick={handleShowResults}>
-                <NavLink to="/resultsdone" className="navlink__decoration" onClick={handleShowResults}>Показать результаты расчета</NavLink>
+                <NavLink to="/resultsdone" className="navlink__decoration">Показать результаты расчета</NavLink>
             </button>
         </div>
     );

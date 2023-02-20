@@ -53,6 +53,11 @@ function App() {
     console.log(id);
   }
 
+  // Добавить телескоп в базу
+  function addTelescope(id, name) {
+    console.log({ idInstrument: id, name })
+  }
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -74,7 +79,7 @@ function App() {
 
       <TelescopePopup isOpen={isTelescopePopupOpen} onClose={closeTelescopePopup} addNs={openAddNSPopup} />
       <LoadingPopup isOpen={isLoadingPopupOpen} onClose={closeLoadingPopup} />
-      <AddNSPopup isOpen={isAddNSPopupOpen} onClose={closeAddNSPopup} />
+      <AddNSPopup isOpen={isAddNSPopupOpen} onClose={closeAddNSPopup} onAddTelescope={addTelescope} />
 
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 
 import './TableResultsDone.css';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -62,6 +62,10 @@ const TableResultsDone = ({ }) => {
             width: 100,
             resizable: true,
         };
+    }, []);
+
+    useEffect(() => {
+        console.clear()
     }, []);
 
     return (

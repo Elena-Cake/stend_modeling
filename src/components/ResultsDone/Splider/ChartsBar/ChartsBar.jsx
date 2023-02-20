@@ -1,9 +1,9 @@
-
-import './ChartsBar.css';
-
-import React, { PureComponent } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import React, { useState } from "react";
+import {
+    BarChart, Bar, XAxis,
+    YAxis, CartesianGrid, Tooltip, Legend,
+    Brush
+} from 'recharts';
 
 const data = [
     {
@@ -44,33 +44,32 @@ const data = [
 ];
 
 
-export default class ChartsBar extends PureComponent {
-    static demoUrl = 'https://codesandbox.io/s/bar-chart-with-double-yaxis-zr232';
 
-    render() {
-        return (
-            <div className='charts__container'>
-                <BarChart
-                    width={650}
-                    height={700}
-                    data={data}
-                    margin={{
-                        top: 20,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                    }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-                    <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-                    <Tooltip />
-                    <Legend />
-                    <Bar yAxisId="right" dataKey="uv" fill="#82ca9d" />
-                </BarChart>
-            </div>
-        );
-    }
+const ChartsBar = ({ activeSlide, dataChart, i }) => {
+
+    return (
+        <div key={i} className={`slide ${activeSlide == i && 'slide_active'}`}>
+            <BarChart
+                width={700}
+                height={520}
+                data={data}
+                margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                }}
+            >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" label={{ value: "dates" }} />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Brush dataKey="name" height={30} stroke="#8884d8" />
+                <Bar dataKey="data" fill="#8884d8" />
+            </BarChart>
+        </div>
+    )
 }
 
+export default ChartsBar;

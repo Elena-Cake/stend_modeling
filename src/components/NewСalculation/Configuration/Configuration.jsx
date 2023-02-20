@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { render } from 'react-dom';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
@@ -85,6 +85,10 @@ const Configuration = ({ onTelescope, onLoadPopup }) => {
             headerCheckboxSelection: isFirstColumn,
             checkboxSelection: isFirstColumn,
         };
+    }, []);
+
+    useEffect(() => {
+        console.clear()
     }, []);
 
     return (

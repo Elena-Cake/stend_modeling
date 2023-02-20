@@ -1,7 +1,7 @@
 
 import './Results.css';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { render } from 'react-dom';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
@@ -89,6 +89,9 @@ const Results = () => {
         };
     }, []);
 
+    useEffect(() => {
+        console.clear()
+    }, []);
 
     return (
         <div style={containerStyle}>

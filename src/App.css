@@ -30,6 +30,18 @@
   color: white;
 }
 
+.navlink__decoration {
+  text-decoration: none;
+  color: #0a0141;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.navlink__decoration:hover {
+  background-color: rgba(0, 24, 77, 0.527);
+  color: white;
+}
+
 .table {
   width: 100%;
 }

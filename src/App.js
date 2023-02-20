@@ -10,7 +10,7 @@ import TelescopePopup from './components/NewСalculation/TelescopePopup/Telescop
 import AddNSPopup from './components/NewСalculation/TelescopePopup/AddNSPopup/AddNSPopup';
 import LoadingPopup from './components/NewСalculation/LoadingPopup/LoadingPopup';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import ResultsDone from './components/ResultsDone/ResultsDone';
 
 
@@ -24,7 +24,6 @@ function App() {
   function openAddNSPopup() {
     setIsAddNSPopupOpen(true)
   }
-
   function closeAddNSPopup() {
     setIsAddNSPopupOpen(false)
   }
@@ -33,7 +32,6 @@ function App() {
   function openTelescopePopup() {
     setIsTelescopePopupOpen(true)
   }
-
   function closeTelescopePopup() {
     setIsTelescopePopupOpen(false)
   }
@@ -42,9 +40,17 @@ function App() {
   function openLoadingPopup() {
     setIsLoadingPopupOpen(true)
   }
-
   function closeLoadingPopup() {
     setIsLoadingPopupOpen(false)
+  }
+
+  // послать номер расчета для получения коонфигурации в NewСalculation
+  function onAskConfiguration(id) {
+    console.log(id);
+  }
+  // послать номер расчета для просмотра результатов
+  function onShowResults(id) {
+    console.log(id);
   }
 
   return (
@@ -56,7 +62,11 @@ function App() {
           <Routes>
             <Route path="/" element={<ResultsDone />} />
             <Route path="/culculate" element={<NewСalculation openTelescope={openTelescopePopup} loadPopup={openLoadingPopup} />} />
-            <Route path="/results" element={<Results />} />
+            <Route path="/results" element={
+              <Results
+                onAskConfiguration={onAskConfiguration}
+                onShowResults={onShowResults}
+              />} />
             <Route path="/resultsdone" element={<ResultsDone />} />
           </Routes>
         </div>

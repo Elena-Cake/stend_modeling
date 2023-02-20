@@ -9,10 +9,11 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import configuration from '../../constans/configurations'
+import { NavLink } from 'react-router-dom';
 
 
-const Results = () => {
-
+const Results = ({ onAskConfiguration, onShowResults }) => {
+    const gridRef = useRef();
     const containerStyle = useMemo(() => ({ width: '100%', height: '75vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
@@ -38,12 +39,10 @@ const Results = () => {
         return rowDataGenerated
     }
 
-    changeResStructure(configuration)
-
-
+    // заполнение таблицы
     const [rowData, setRowData] = useState(
         changeResStructure(configuration)
-    ); // Set rowData to Array of Objects, one Object per Row
+    );
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
@@ -89,6 +88,22 @@ const Results = () => {
         };
     }, []);
 
+    const handleAskResults = useCallback(() => {
+        let selectedId
+        gridRef.current.api.forEachNode(function (node) {
+            if (node.selected) { selectedId = node.key }
+        });
+        onAskConfiguration(selectedId)
+    }, []);
+
+    const handleShowResults = useCallback(() => {
+        let selectedId
+        gridRef.current.api.forEachNode(function (node) {
+            if (node.selected) { selectedId = node.key }
+        });
+        onShowResults(selectedId)
+    }, []);
+
     useEffect(() => {
         console.clear()
     }, []);
@@ -97,6 +112,7 @@ const Results = () => {
         <div style={containerStyle}>
             <div style={gridStyle} className="ag-theme-alpine ">
                 <AgGridReact
+                    ref={gridRef}
                     rowData={rowData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
@@ -105,7 +121,12 @@ const Results = () => {
 
                 ></AgGridReact>
             </div>
-            <button className="button__bottom">Загрузить результаты</button>
+            <button className="button__bottom" onClick={handleAskResults}>
+                <NavLink to="/culculate" className="navlink__decoration">Загрузить конфигурацию</NavLink>
+            </button>
+            <button className="button__bottom" onClick={handleShowResults}>
+                <NavLink to="/resultsdone" className="navlink__decoration" onClick={handleShowResults}>Показать результаты расчета</NavLink>
+            </button>
         </div>
     );
 }

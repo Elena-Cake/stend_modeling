@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ChartsBar from "./ChartsBar/ChartsBar";
 import './Splider.css';
 
-const Splider = ({ dates, data, isVisible = true }) => {
+const Splider = ({ dates, data }) => {
 
     const [activeSlide, setActiveSlide] = useState(0);
 
@@ -45,7 +45,7 @@ const Splider = ({ dates, data, isVisible = true }) => {
     }
 
     return (
-        <div className={`charts ${isVisible ? '' : 'charts_invisible'}`}>
+        <div className={`charts `}>
             <select className="charts__select" onChange={(event) => setActiveSlide(event.target.value)}>
                 {options}
             </select>

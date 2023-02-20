@@ -2,14 +2,14 @@ import React from "react";
 import IntervalDate from "../IntervalDate/IntervalDate";
 import './Inputs.css';
 
-const Inputs = () => {
+const Inputs = ({ onChangeDate }) => {
     return (
         <div className="inputs">
-            <IntervalDate />
-            <select className="inputs__select">
+            <IntervalDate onChangeDate={onChangeDate} />
+            {/* <select className="inputs__select">
                 <option>1</option>
                 <option>2</option>
-            </select>
+            </select> */}
         </div>
     )
 }

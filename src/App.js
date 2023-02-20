@@ -13,6 +13,7 @@ import LoadingPopup from './components/NewСalculation/LoadingPopup/LoadingPopup
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import ResultsDone from './components/ResultsDone/ResultsDone';
 
+import configuration from './constans/configurations'
 
 function App() {
 
@@ -53,9 +54,38 @@ function App() {
     console.log(id);
   }
 
-  // Добавить телескоп в базу
+  // формирование данных для таблицы нового расчета
+  const changeResStructure = (res) => {
+    const rowDataGenerated = [];
+    for (let key in res.configurations) {
+      for (let keyInst in res.configurations[key].instruments) {
+        const item = {
+          idInstruments: keyInst,
+          name: res.configurations[key].instruments[keyInst].name,
+          latitude: res.configurations[key].instruments[keyInst].latitude,
+          longitude: res.configurations[key].instruments[keyInst].longitude,
+          mode: res.configurations[key].instruments[keyInst].mode,
+          voko: res.configurations[key].instruments[keyInst].voko,
+          noko: res.configurations[key].instruments[keyInst].noko,
+          noko_twilight: res.configurations[key].instruments[keyInst].noko_twilight,
+          gso_survey: res.configurations[key].instruments[keyInst].gso_survey
+        }
+        rowDataGenerated.push(item)
+      }
+    }
+    return rowDataGenerated
+  }
+
+  changeResStructure(configuration)
+
+  const [rowData, setRowData] = useState(
+    changeResStructure(configuration)
+  );
+
+  // Добавить телескоп (в базу) в таблицу расчета
   function addTelescope(id, name) {
-    console.log({ idInstrument: id, name })
+    setRowData([...rowData, { idInstruments: id, name }])
+    closeAddNSPopup()
   }
 
   return (
@@ -66,7 +96,7 @@ function App() {
         <div className='main'>
           <Routes>
             <Route path="/" element={<ResultsDone />} />
-            <Route path="/culculate" element={<NewСalculation openTelescope={openTelescopePopup} loadPopup={openLoadingPopup} />} />
+            <Route path="/culculate" element={<NewСalculation openTelescope={openAddNSPopup} loadPopup={openLoadingPopup} rowData={rowData} />} />
             <Route path="/results" element={
               <Results
                 onAskConfiguration={onAskConfiguration}

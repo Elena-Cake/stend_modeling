@@ -2,10 +2,10 @@ import React from "react";
 import IntervalDate from "../IntervalDate/IntervalDate";
 import './Inputs.css';
 
-const Inputs = ({ onChangeDate }) => {
+const Inputs = ({ onChangeDate, isErrorDate }) => {
     return (
         <div className="inputs">
-            <IntervalDate onChangeDate={onChangeDate} />
+            <IntervalDate onChangeDate={onChangeDate} isErrorDate={isErrorDate} />
             {/* <select className="inputs__select">
                 <option>1</option>
                 <option>2</option>

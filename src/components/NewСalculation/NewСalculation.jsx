@@ -5,10 +5,12 @@ import Inputs from "../Inputs/Inputs";
 import './NewСalculation.css';
 
 
-const NewСalculation = ({ openTelescope, loadPopup, rowData }) => {
+const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculationIcon }) => {
 
     const [dates, setDates] = useState({ date_start: '', date_end: '' })
     const [selectedId, setSelectedId] = useState([])
+
+    const [isErrorDate, setIsErrorDate] = useState(false)
 
     function onChangeDate(e) {
         const { name, value } = e.target
@@ -18,22 +20,31 @@ const NewСalculation = ({ openTelescope, loadPopup, rowData }) => {
     // нажатие запуска расчета
     function onAskCulculate(arrId) {
         setSelectedId(arrId)
-        // loadPopup()
     }
 
     useEffect(() => {
-        const reqData = {
-            ...dates,
-            selectedId
+        if (dates.date_start === '' || dates.date_end === '') {
+            setIsErrorDate(true)
+        } else {
+            setIsErrorDate(false)
+            setCulculationIcon()
+            openloadPopup('Расчет запущен', false)
+            const reqData = {
+                ...dates,
+                selectedId
+            }
+            console.log(reqData)
         }
-        console.log(reqData)
     }, [selectedId]);
 
+    useEffect(() => {
+        setIsErrorDate(false)
+    }, []);
 
     return (
         <div className="calculation">
-            <Inputs onChangeDate={onChangeDate} />
-            <Configuration onTelescope={openTelescope} onLoadPopup={loadPopup} rowData={rowData} onAskCulculate={onAskCulculate} />
+            <Inputs onChangeDate={onChangeDate} isErrorDate={isErrorDate} />
+            <Configuration onTelescope={openTelescope} rowData={rowData} onAskCulculate={onAskCulculate} />
         </div>
     )
 }

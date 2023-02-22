@@ -1,4 +1,20 @@
 .intervaldate {
     align-self: end;
     grid-area: date;
+    position: relative;
+}
+
+.inputs__error {
+    color: #fd0000;
+    font-size: 14px;
+    padding: 2px 5px 5px;
+    border: 1px solid #fd00003f;
+    border-radius: 5px;
+    position: absolute;
+    right: 10px;
+    display: none;
+}
+
+.inputs__error_visible {
+    display: block;
 }

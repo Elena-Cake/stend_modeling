@@ -1,7 +1,7 @@
 import React from "react";
 import './LoadingPopup.css';
 
-const LoadingPopup = ({ isOpen, onClose, dataLog, textPopup, dataLogMessage, onAbortClick }) => {
+const LoadingPopup = ({ isOpen, onClose, dataLog, textPopup = { text: "ой", isError: true }, dataLogMessage = '', onAbortClick }) => {
     const classPopup = `popup popup-addNS  ${isOpen ? 'popup_opened' : ''}`
 
     const handleAbortClick = (e) => {

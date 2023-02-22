@@ -3,7 +3,11 @@ import './NavBar.css';
 
 import { NavLink } from "react-router-dom";
 
-const NavBar = (isCulculating) => {
+const NavBar = (isCulculating, openLoadPopup) => {
+
+    const openLoadingPopup = () => {
+        openLoadPopup()
+    }
     return (
         <div className="navbar">
             <NavLink to="/culculate"
@@ -21,7 +25,7 @@ const NavBar = (isCulculating) => {
                     `navbar__btn navbar__btn_active` : "navbar__btn"}>
                 Последний расчет
             </NavLink>
-            <button className={`navbar__calc ${isCulculating && "navbar__calc_visible"}`}></button>
+            <button className={`navbar__calc ${isCulculating && "navbar__calc_visible"}`} onClick={openLoadPopup}></button>
         </div>
     )
 }

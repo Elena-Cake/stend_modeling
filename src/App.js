@@ -55,6 +55,9 @@ function App() {
   // попап ожидания расчетов
   function openLoadingPopup(text, isError) {
     setTextPopup({ text, isError })
+    openLoadPopup()
+  }
+  function openLoadPopup() { //!!!!!!!!!!!!!!!!err
     setIsLoadingPopupOpen(true)
   }
   function closeLoadingPopup() {
@@ -108,7 +111,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
 
-        <div className='header'><NavBar isCulculating={isCulculating} /></div>
+        <div className='header'><NavBar isCulculating={isCulculating} openLoadPopup={openLoadPopup} /></div>
         <div className='main'>
           <Routes>
             <Route path="/" element={<Results />} />

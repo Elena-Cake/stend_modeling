@@ -1,5 +1,5 @@
 .intervaldate {
-    align-self: end;
+    align-self: start;
     grid-area: date;
     position: relative;
 }

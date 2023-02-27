@@ -12,11 +12,8 @@ import { NavLink } from "react-router-dom";
 
 const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const gridRef = useRef();
-    const containerStyle = useMemo(() => ({ width: '100%', height: '55vh' }), []);
+    const containerStyle = useMemo(() => ({ width: '100%', height: '50vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
-
-
-    console.log(rowData)
 
     const [columnDefs, setColumnDefs] = useState([
         { field: 'nsr', checkboxSelection: true },
@@ -49,7 +46,7 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const autoGroupColumnDef = useMemo(() => {
         return {
             headerValueGetter: (params) => `${params.colDef.headerName}`,
-            // minWidth: 350,
+            minWidth: 300,
             cellRendererParams: {
                 suppressCount: true,
                 checkbox: true,
@@ -83,7 +80,7 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
         useCallback(() => {
             let selectedIds = []
             gridRef.current.api.forEachNode(function (node) {
-                if (node.selected) { selectedIds = [...selectedIds, node.data.idInstruments] }
+                if (node.selected) { selectedIds = [...selectedIds, node.data] }
             });
             onAskCulculate(selectedIds)
         }, []);

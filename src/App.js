@@ -78,7 +78,6 @@ function App() {
   const changeResStructure = (res) => {
     const rowDataGenerated = res.instruments;
 
-    console.log(rowDataGenerated)
     return rowDataGenerated
   }
 
@@ -107,12 +106,17 @@ function App() {
     quantum_efficiency, mode = 'обзор', noko_twilight = false,
     noko = false, gso_survey = false) {
     setRowData([...rowData, {
-      nsr, cod, latitude, longitude,
-      altitude, aperture, secondary_coefficient, pixel_scale,
-      readout_noise, fovx, fovy, frame_readout,
-      frame_flush, task_switch_time, stabilization_time, mount_type,
-      slew_vel_alpha, slew_vel_delta, min_elevation, transmittivity,
-      quantum_efficiency, mode,
+      nsr: Number(nsr), cod,
+      latitude: Number(latitude), longitude: Number(longitude),
+      altitude: Number(altitude), aperture: Number(aperture),
+      secondary_coefficient: Number(secondary_coefficient),
+      pixel_scale: Number(pixel_scale), readout_noise: Number(readout_noise),
+      fovx: Number(fovx), fovy: Number(fovy), frame_readout: Number(frame_readout),
+      frame_flush: Number(frame_flush), task_switch_time: Number(task_switch_time),
+      stabilization_time: Number(stabilization_time), mount_type,
+      slew_vel_alpha: Number(slew_vel_alpha), slew_vel_delta: Number(slew_vel_delta),
+      min_elevation: Number(min_elevation), transmittivity: Number(transmittivity),
+      quantum_efficiency: Number(quantum_efficiency), mode,
       noko_twilight: noko_twilight === 'on' ? true : false,
       noko: noko === 'on' ? true : false,
       gso_survey: gso_survey === 'on' ? true : false

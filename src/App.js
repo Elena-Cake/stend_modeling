@@ -14,6 +14,7 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import ResultsDone from './components/ResultsDone/ResultsDone';
 
 import configuration from './constans/configurations'
+import { newCulc } from './constans/newCalc';
 
 function App() {
 
@@ -73,37 +74,49 @@ function App() {
     console.log(id);
   }
 
-  // формирование данных для таблицы нового расчета
+  // формирование данных для таблицы готовых расчетов
   const changeResStructure = (res) => {
+    const rowDataGenerated = res.instruments;
+
+    console.log(rowDataGenerated)
+    return rowDataGenerated
+  }
+
+  // формирование данных для таблицы нового расчета
+  const changeNewCalcStructure = (res) => {
     const rowDataGenerated = [];
-    for (let key in res.configurations) {
-      for (let keyInst in res.configurations[key].instruments) {
-        const item = {
-          idInstruments: keyInst,
-          name: res.configurations[key].instruments[keyInst].name,
-          latitude: res.configurations[key].instruments[keyInst].latitude,
-          longitude: res.configurations[key].instruments[keyInst].longitude,
-          mode: res.configurations[key].instruments[keyInst].mode,
-          voko: res.configurations[key].instruments[keyInst].voko,
-          noko: res.configurations[key].instruments[keyInst].noko,
-          noko_twilight: res.configurations[key].instruments[keyInst].noko_twilight,
-          gso_survey: res.configurations[key].instruments[keyInst].gso_survey
-        }
-        rowDataGenerated.push(item)
-      }
+    for (let item of res.instruments) {
+      rowDataGenerated.push(item)
     }
     return rowDataGenerated
   }
 
-  changeResStructure(configuration)
+  changeResStructure(newCulc)
 
   const [rowData, setRowData] = useState(
-    changeResStructure(configuration)
+    changeNewCalcStructure(newCulc)
   );
 
   // Добавить телескоп (в базу) в таблицу расчета
-  function addTelescope(id, name) {
-    setRowData([...rowData, { idInstruments: id, name }])
+  function addTelescope(
+    nsr, cod, latitude, longitude,
+    altitude, aperture, secondary_coefficient, pixel_scale,
+    readout_noise, fovx, fovy, frame_readout,
+    frame_flush, task_switch_time, stabilization_time, mount_type = 'альтазимутальная',
+    slew_vel_alpha, slew_vel_delta, min_elevation, transmittivity,
+    quantum_efficiency, mode = 'обзор', noko_twilight = false,
+    noko = false, gso_survey = false) {
+    setRowData([...rowData, {
+      nsr, cod, latitude, longitude,
+      altitude, aperture, secondary_coefficient, pixel_scale,
+      readout_noise, fovx, fovy, frame_readout,
+      frame_flush, task_switch_time, stabilization_time, mount_type,
+      slew_vel_alpha, slew_vel_delta, min_elevation, transmittivity,
+      quantum_efficiency, mode,
+      noko_twilight: noko_twilight === 'on' ? true : false,
+      noko: noko === 'on' ? true : false,
+      gso_survey: gso_survey === 'on' ? true : false
+    }])
     closeAddNSPopup()
   }
 

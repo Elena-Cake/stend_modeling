@@ -15,22 +15,41 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const containerStyle = useMemo(() => ({ width: '100%', height: '55vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
+
+    console.log(rowData)
+
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'idInstruments', checkboxSelection: true },
-        { field: 'name' },
+        { field: 'nsr', checkboxSelection: true },
+        { field: 'cod' },
         { field: 'latitude' },
         { field: 'longitude' },
+        { field: 'altitude' },
+        { field: 'aperture' },
+        { field: 'secondary_coefficient' },
+        { field: 'pixel_scale', hide: true },
+        { field: 'readout_noise', hide: true },
+        { field: 'fovx', hide: true },
+        { field: 'fovy', hide: true },
+        { field: 'frame_readout', hide: true },
+        { field: 'frame_flush', hide: true },
+        { field: 'task_switch_time', hide: true },
+        { field: 'stabilization_time', hide: true },
+        { field: 'mount_type', hide: true },
+        { field: 'slew_vel_alpha', hide: true },
+        { field: 'slew_vel_delta', hide: true },
+        { field: 'min_elevation' },
+        { field: 'transmittivity' },
+        { field: 'quantum_efficiency' },
         { field: 'mode' },
-        { field: 'voko' },
-        { field: 'noko' },
         { field: 'noko_twilight' },
+        { field: 'noko' },
         { field: 'gso_survey' }
     ]);
 
     const autoGroupColumnDef = useMemo(() => {
         return {
             headerValueGetter: (params) => `${params.colDef.headerName}`,
-            minWidth: 150,
+            // minWidth: 350,
             cellRendererParams: {
                 suppressCount: true,
                 checkbox: true,

@@ -17,6 +17,14 @@ const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculation
         setDates({ ...dates, [name]: value })
     }
 
+    // назначение дат
+    useEffect(() => {
+        if (dates.date_start !== '' || dates.date_end !== '') {
+
+            // АПИ  гет каталог сет каталог
+        }
+    }, [dates]);
+
     // нажатие запуска расчета
     function onAskCulculate(arrId) {
         setSelectedId(arrId)

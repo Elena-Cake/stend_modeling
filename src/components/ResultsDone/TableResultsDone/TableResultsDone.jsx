@@ -1,6 +1,10 @@
 
 import './TableResultsDone.css';
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-enterprise';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -26,6 +30,10 @@ class ProductService {
 const TableResultsDone = ({ }) => {
 
     const [products, setProducts] = useState(dataRows);
+
+    useEffect(() => {
+        console.clear()
+    }, []);
 
     return (
         <div className="resdone__table">

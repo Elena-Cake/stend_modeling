@@ -1,5 +1,9 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { render } from 'react-dom';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-enterprise';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import './Configuration.css';
 import { NavLink } from "react-router-dom";
@@ -7,43 +11,87 @@ import { NavLink } from "react-router-dom";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
-import { dataRows } from '../../../constans/changeResStructure'
+
+const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
+    const gridRef = useRef();
+    const containerStyle = useMemo(() => ({ width: '100%', height: '55vh' }), []);
+    const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
+
+    const [columnDefs, setColumnDefs] = useState([
+        { field: 'idInstruments', checkboxSelection: true },
+        { field: 'name' },
+        { field: 'latitude' },
+        { field: 'longitude' },
+        { field: 'mode' },
+        { field: 'voko' },
+        { field: 'noko' },
+        { field: 'noko_twilight' },
+        { field: 'gso_survey' }
+    ]);
+
+    const autoGroupColumnDef = useMemo(() => {
+        return {
+            headerValueGetter: (params) => `${params.colDef.headerName}`,
+            minWidth: 150,
+            cellRendererParams: {
+                suppressCount: true,
+                checkbox: true,
+            },
+        };
+    }, []);
 
 
-const Configuration = ({ onTelescope, onLoadPopup }) => {
-    const [products, setProducts] = useState(dataRows);
+    const isFirstColumn = (params) => {
+        var displayedColumns = params.columnApi.getAllDisplayedColumns();
+        var thisIsFirstColumn = displayedColumns[0] === params.column;
+        return thisIsFirstColumn;
+    };
 
-    const [selectedProducts9, setSelectedProducts9] = useState([]);
+    const defaultColDef = useMemo(() => {
+        return {
+            flex: 1,
+            minWidth: 100,
+            resizable: true,
+            headerCheckboxSelection: isFirstColumn,
+            checkboxSelection: isFirstColumn,
+        };
+    }, []);
 
+    useEffect(() => {
+        console.clear()
+    }, []);
 
-    const SelecteChange = (e) => {
-        //     setSelectedProducts9([e.value, ...selectedProducts9])
-        //     console.log(e.value)
-    }
+    // при нажатии запроса на расчет
+    const handleAskCulculate =
+        useCallback(() => {
+            let selectedIds = []
+            gridRef.current.api.forEachNode(function (node) {
+                if (node.selected) { selectedIds = [...selectedIds, node.data.idInstruments] }
+            });
+            onAskCulculate(selectedIds)
+        }, []);
+
 
     return (
         <div className="configuration">
             <h2 className="title">Конфигурация наблюдательной сети</h2>
             <button className="button__bottom" onClick={onTelescope}>Добавить НС в расчет</button>
-            <div >
-                <DataTable value={products} selection={selectedProducts9} onSelectionChange={SelecteChange}
-                    dataKey="id" responsiveLayout="scroll"
-                    selectionPageOnly paginator rows={8} selectionMode="checkbox"
-                // onRowSelect={onRowSelect} onRowUnselect={onRowUnselect}
-                >
-                    <Column selectionMode="multiple" headerStyle={{ width: '3em' }}></Column>
-                    <Column field="idInstruments" header="idInstruments"></Column>
-                    <Column field="name" header="Name"></Column>
-                    <Column field="latitude" header="latitude"></Column>
-                    <Column field="mode" header="mode"></Column>
-                </DataTable>
+            <div style={containerStyle}>
+                <div style={gridStyle} className="ag-theme-alpine ">
+                    <AgGridReact
+                        ref={gridRef}
+                        rowData={rowData}
+                        columnDefs={columnDefs}
+                        defaultColDef={defaultColDef}
+                        autoGroupColumnDef={autoGroupColumnDef}
+                        groupDisplayType={'multipleColumns'}
+                        animateRows={true}
+                        rowSelection='multiple'
+                    ></AgGridReact>
+                </div>
             </div>
-            <button className="button__bottom" onClick={onLoadPopup}>Запустить расчет</button>
+            <button className="button__bottom" onClick={handleAskCulculate}>Запустить расчет</button>
 
-            <NavLink to="/resultsdone"
-                className="result__link-btn">
-                <button className="button__bottom">Результаты</button>
-            </NavLink>
         </div>
     )
 }

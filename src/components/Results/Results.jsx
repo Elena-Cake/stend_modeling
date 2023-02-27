@@ -186,16 +186,25 @@
 // ____________________________________________________
 
 
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './Results.css';
-import React, { useEffect, useState, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
-import { dataRows } from '../../constans/changeResStructure'
+import { render } from 'react-dom';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-enterprise';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-const Results = () => {
+import configuration from '../../constans/configurations'
+import { NavLink } from 'react-router-dom';
 
-    const [products, setProducts] = useState(dataRows);
+
+const Results = ({ onAskConfiguration, onShowResults }) => {
+    const gridRef = useRef();
+    const containerStyle = useMemo(() => ({ width: '100%', height: '75vh' }), []);
+    const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
     const [selectedProducts9, setSelectedProducts9] = useState([]);
 
@@ -205,22 +214,94 @@ const Results = () => {
         //     console.log(e.value)
     }
 
+    // заполнение таблицы
+    const [rowData, setRowData] = useState(
+        // changeResStructure(configuration)
+    );
+
+    // Each Column Definition results in one Column.
+    const [columnDefs, setColumnDefs] = useState([
+        { field: 'configuration', rowGroup: true, hide: true, checkboxSelection: true },
+        { field: 'name' },
+        { field: 'latitude' },
+        { field: 'longitude' },
+        { field: 'mode' },
+        { field: 'voko' },
+        { field: 'noko' },
+        { field: 'noko_twilight' },
+        { field: 'gso_survey' }
+    ]);
+
+    const checkbox = (params) => {
+        return params.node.group === true;
+    };
+
+    const isFirstColumn = (params) => {
+        var displayedColumns = params.columnApi.getAllDisplayedColumns();
+        var thisIsFirstColumn = displayedColumns[0] === params.column;
+        return thisIsFirstColumn;
+    };
+
+    const defaultColDef = useMemo(() => {
+        return {
+            flex: 1,
+            minWidth: 100,
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellRendererParams: {
+                checkbox,
+            },
+        };
+    }, []);
+    const autoGroupColumnDef = useMemo(() => {
+        return {
+            headerName: 'Instruments',
+            field: 'idInstruments',
+            minWidth: 150,
+            cellRenderer: 'agGroupCellRenderer'
+        };
+    }, []);
+
+    const handleAskResults = useCallback(() => {
+        let selectedId
+        gridRef.current.api.forEachNode(function (node) {
+            if (node.selected) { selectedId = node.key }
+        });
+        onAskConfiguration(selectedId)
+    }, []);
+
+    const handleShowResults = useCallback(() => {
+        let selectedId
+        gridRef.current.api.forEachNode(function (node) {
+            if (node.selected) { selectedId = node.key }
+        });
+        onShowResults(selectedId)
+    }, []);
+
+    useEffect(() => {
+        console.clear()
+    }, []);
 
     return (
-        <div className="datatable-selection-demo">
+        <div style={containerStyle}>
+            <div style={gridStyle} className="ag-theme-alpine ">
+                <AgGridReact
+                    ref={gridRef}
+                    rowData={rowData}
+                    columnDefs={columnDefs}
+                    defaultColDef={defaultColDef}
+                    autoGroupColumnDef={autoGroupColumnDef}
+                    groupDisplayType={'multipleColumns'}
 
-            <DataTable value={products} selection={selectedProducts9} onSelectionChange={SelecteChange}
-                dataKey="id" responsiveLayout="scroll"
-                selectionPageOnly paginator rows={10} selectionMode="checkbox"
-                // onRowSelect={onRowSelect} onRowUnselect={onRowUnselect}
-                scrollHeight="400px"
-            >
-                <Column selectionMode="multiple" headerStyle={{ width: '3em' }}></Column>
-                <Column field="idInstruments" header="idInstruments"></Column>
-                <Column field="name" header="Name"></Column>
-                <Column field="latitude" header="latitude"></Column>
-                <Column field="mode" header="mode"></Column>
-            </DataTable>
+                ></AgGridReact>
+            </div>
+            <button className="button__bottom" onClick={handleAskResults}>
+                <NavLink to="/culculate" className="navlink__decoration">Загрузить конфигурацию</NavLink>
+            </button>
+            <button className="button__bottom" onClick={handleShowResults}>
+                <NavLink to="/resultsdone" className="navlink__decoration">Показать результаты расчета</NavLink>
+            </button>
         </div>
 
 

@@ -10,10 +10,20 @@
 .form__field {
     display: grid;
     grid-template-columns: 20% auto;
-    margin: 10px 0;
-
 }
 
 .form__btn {
     width: 200px;
+}
+
+.form__input {
+    border: 0;
+    border-bottom: 1px solid rgb(0, 45, 87, 0.4);
+    padding: 10px;
+    align-self: center;
+}
+
+.form__label {
+    margin: 0;
+    align-self: center;
 }

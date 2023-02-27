@@ -1,7 +1,8 @@
+// yeap
 const configuration = {
 	success: true,
 	configurations: {
-		1: {
+		109: {
 			name: "АЦУК",
 			instruments: {
 				10301: {
@@ -28,7 +29,7 @@ const configuration = {
 			}
 		}
 		,
-		2: {
+		120: {
 			name: "АЦУК-М",
 			instruments: {
 				10301: {

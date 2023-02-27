@@ -8,11 +8,12 @@ import Results from './components/Results/Results';
 
 import TelescopePopup from './components/NewСalculation/TelescopePopup/TelescopePopup';
 import AddNSPopup from './components/NewСalculation/TelescopePopup/AddNSPopup/AddNSPopup';
-import LoadingPopup from './components/NewСalculation/LoadingPopup/LoadingPopup';
+import LoadingPopup from './components/LoadingPopup/LoadingPopup';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import ResultsDone from './components/ResultsDone/ResultsDone';
 
+import configuration from './constans/configurations'
 
 function App() {
 
@@ -20,11 +21,25 @@ function App() {
   const [isAddNSPopupOpen, setIsAddNSPopupOpen] = useState(false);
   const [isLoadingPopupOpen, setIsLoadingPopupOpen] = useState(false);
 
+  const [isCulculating, setIsCulculating] = useState(false);
+
+
+  const [textPopup, setTextPopup] = useState({ text: '', isError: false });
+  const [dataLogMessage, setDataLogMessage] = useState('')
+  const [dataLog, setDataLog] = useState('')
+
+  // показ и сокрытие иконки расчета
+  function setCulculationIcon() {
+    setIsCulculating(true)
+  }
+  function setCulculatingOver() {
+    setIsCulculating(false)
+  }
+
   // попап добавления из базы
   function openAddNSPopup() {
     setIsAddNSPopupOpen(true)
   }
-
   function closeAddNSPopup() {
     setIsAddNSPopupOpen(false)
   }
@@ -33,38 +48,100 @@ function App() {
   function openTelescopePopup() {
     setIsTelescopePopupOpen(true)
   }
-
   function closeTelescopePopup() {
     setIsTelescopePopupOpen(false)
   }
 
   // попап ожидания расчетов
-  function openLoadingPopup() {
+  function openLoadingPopup(text, isError) {
+    setTextPopup({ text, isError })
+    openLoadPopup()
+  }
+  function openLoadPopup() { //!!!!!!!!!!!!!!!!err
     setIsLoadingPopupOpen(true)
   }
-
   function closeLoadingPopup() {
     setIsLoadingPopupOpen(false)
+  }
+
+  // послать номер расчета для получения коонфигурации в NewСalculation
+  function onAskConfiguration(id) {
+    console.log(id);
+  }
+  // послать номер расчета для просмотра результатов
+  function onShowResults(id) {
+    console.log(id);
+  }
+
+  // формирование данных для таблицы нового расчета
+  const changeResStructure = (res) => {
+    const rowDataGenerated = [];
+    for (let key in res.configurations) {
+      for (let keyInst in res.configurations[key].instruments) {
+        const item = {
+          idInstruments: keyInst,
+          name: res.configurations[key].instruments[keyInst].name,
+          latitude: res.configurations[key].instruments[keyInst].latitude,
+          longitude: res.configurations[key].instruments[keyInst].longitude,
+          mode: res.configurations[key].instruments[keyInst].mode,
+          voko: res.configurations[key].instruments[keyInst].voko,
+          noko: res.configurations[key].instruments[keyInst].noko,
+          noko_twilight: res.configurations[key].instruments[keyInst].noko_twilight,
+          gso_survey: res.configurations[key].instruments[keyInst].gso_survey
+        }
+        rowDataGenerated.push(item)
+      }
+    }
+    return rowDataGenerated
+  }
+
+  changeResStructure(configuration)
+
+  const [rowData, setRowData] = useState(
+    changeResStructure(configuration)
+  );
+
+  // Добавить телескоп (в базу) в таблицу расчета
+  function addTelescope(id, name) {
+    setRowData([...rowData, { idInstruments: id, name }])
+    closeAddNSPopup()
   }
 
   return (
     <BrowserRouter>
       <div className="App">
 
-        <div className='header'><NavBar /></div>
+        <div className='header'><NavBar isCulculating={isCulculating} openLoadPopup={openLoadPopup} /></div>
         <div className='main'>
           <Routes>
             <Route path="/" element={<Results />} />
-            <Route path="/culculate" element={<NewСalculation openTelescope={openTelescopePopup} loadPopup={openLoadingPopup} />} />
-            <Route path="/results" element={<Results />} />
+            <Route path="/culculate" element={
+              <NewСalculation
+                openTelescope={openAddNSPopup}
+                openloadPopup={openLoadingPopup}
+                rowData={rowData}
+                setCulculationIcon={setCulculationIcon}
+              />}
+            />
+            <Route path="/results" element={
+              <Results
+                onAskConfiguration={onAskConfiguration}
+                onShowResults={onShowResults}
+              />} />
             <Route path="/resultsdone" element={<ResultsDone />} />
           </Routes>
         </div>
       </div>
 
       <TelescopePopup isOpen={isTelescopePopupOpen} onClose={closeTelescopePopup} addNs={openAddNSPopup} />
-      <LoadingPopup isOpen={isLoadingPopupOpen} onClose={closeLoadingPopup} />
-      <AddNSPopup isOpen={isAddNSPopupOpen} onClose={closeAddNSPopup} />
+      <LoadingPopup
+        isOpen={isLoadingPopupOpen}
+        onClose={closeLoadingPopup}
+        dataLog={dataLog}
+        dataLogMessage={dataLogMessage}
+        textPopup={textPopup}
+      />
+      <AddNSPopup isOpen={isAddNSPopupOpen} onClose={closeAddNSPopup} onAddTelescope={addTelescope} />
 
     </BrowserRouter>
   );

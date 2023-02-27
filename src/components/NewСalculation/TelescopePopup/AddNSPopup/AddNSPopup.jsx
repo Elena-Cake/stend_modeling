@@ -302,8 +302,11 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             onChange={handleChange}
                         />
                     </label>
+                    <div>
+                        <button className="button__bottom form__btn">Добавить в расчет</button>
+                        <button className="button__bottom form__btn">Добавить из базы</button>
+                    </div>
 
-                    <button className="button__bottom form__btn">Добавить в расчет</button>
                 </form>
             </div>
         </div>

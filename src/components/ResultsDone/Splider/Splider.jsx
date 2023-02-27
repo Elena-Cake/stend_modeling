@@ -44,25 +44,6 @@ const Splider = ({ dates, data }) => {
             setActiveSlide(keys.length - 1)
     }
 
-<<<<<<< HEAD
-    return (<Splide hasTrack={false} aria-label="..." >
-        <div className="custom-wrapper">
-            <SplideTrack>
-                <SplideSlide>
-                    <ChartsBar />
-                </SplideSlide>
-                <SplideSlide>
-                    <Charts />
-                </SplideSlide>
-                <SplideSlide>
-                    <Charts />
-                </SplideSlide>
-            </SplideTrack>
-
-            <div className="splide__arrows">
-                <button className="splide__arrow splide__arrow--prev">Prev</button>
-                <button className="splide__arrow splide__arrow--next">Next</button>
-=======
     return (
         <div className={`charts `}>
             <select className="charts__select" onChange={(event) => setActiveSlide(event.target.value)}>
@@ -73,7 +54,6 @@ const Splider = ({ dates, data }) => {
             </p>
             <div className="slider">
                 {slideElements}
->>>>>>> 28f4063e860a72505aae21c069acd0793667ba87
             </div>
             <div className="charts__btns">
                 <button className="charts__btn" onClick={onHandlePrev}>prev</button>

@@ -9,8 +9,6 @@ const TelescopePopup = ({ isOpen, onClose, addNs }) => {
     const classPopup = `popup popup-telescope  ${isOpen ? 'popup_opened' : ''}`
 
 
-<<<<<<< HEAD
-=======
     const containerStyle = useMemo(() => ({ width: '100%', height: '65vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
@@ -86,7 +84,6 @@ const TelescopePopup = ({ isOpen, onClose, addNs }) => {
         };
     }, []);
 
->>>>>>> 28f4063e860a72505aae21c069acd0793667ba87
     return (
         <div className={classPopup}>
             <div className="popup__container popup__telescope">

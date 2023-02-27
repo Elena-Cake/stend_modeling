@@ -1,7 +1,13 @@
 import React from "react";
 import './Options.css';
 
-const Options = ({ }) => {
+const Options = ({ setOptions }) => {
+
+    const handleChange = (e) => {
+
+
+    }
+
     return (
         <div className="option">
             <label className="option__select">
@@ -25,7 +31,7 @@ const Options = ({ }) => {
                     <input
                         name="detectable_snr"
                         className="option__input"
-                        placeholder="ведите номер средства"
+                        placeholder="ведите ОСШ"
                         required
                     />
                 </label>
@@ -34,7 +40,7 @@ const Options = ({ }) => {
                     <input
                         name="max_exp"
                         className="option__input"
-                        placeholder="ведите номер средства"
+                        placeholder="ведите экспозицию"
                         required
                     />
                 </label>
@@ -43,7 +49,7 @@ const Options = ({ }) => {
                     <input
                         name="max_track_length"
                         className="option__input"
-                        placeholder="ведите номер средства"
+                        placeholder="ведите длину"
                         required
                     />
                 </label>
@@ -52,7 +58,7 @@ const Options = ({ }) => {
                     <input
                         name="zenith_sky_brightness"
                         className="option__input"
-                        placeholder="ведите номер средства"
+                        placeholder="ведите фон неба"
                         required
                     />
                 </label>

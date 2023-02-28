@@ -1,26 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { useFormAndValidation } from "../../../hooks/useFormAndValidation";
 import './Options.css';
 
-const Options = ({ setOptions }) => {
+const Options = ({ onChangeOptions, catalogNames }) => {
 
-    const handleChange = (e) => {
-
-
-    }
+    const catalogItems = catalogNames.map((item) => <option>{item}</option>)
 
     return (
         <div className="option">
             <label className="option__select">
                 <p className="form__label">Каталог</p>
-                <select className="option__select option_options">
-                    <option>1</option>
-                    <option>2</option>
+                <select className="option__select option_options" name="catalog" onChange={onChangeOptions}>
+                    {catalogItems}
                 </select>
             </label>
             <div className="option__items">
                 <label className="option__select">
                     <p className="form__label">Угол погружения Солнца, град</p>
-                    <select className="option__select option_options" name="sun_elevation">
+                    <select className="option__select option_options" name="sun_elevation" onChange={onChangeOptions}>
                         <option>6</option>
                         <option>12</option>
                         <option>18</option>
@@ -33,6 +30,7 @@ const Options = ({ setOptions }) => {
                         className="option__input"
                         placeholder="ведите ОСШ"
                         required
+                        onChange={onChangeOptions}
                     />
                 </label>
                 <label className="option__item">
@@ -42,6 +40,7 @@ const Options = ({ setOptions }) => {
                         className="option__input"
                         placeholder="ведите экспозицию"
                         required
+                        onChange={onChangeOptions}
                     />
                 </label>
                 <label className="option__item">
@@ -51,6 +50,7 @@ const Options = ({ setOptions }) => {
                         className="option__input"
                         placeholder="ведите длину"
                         required
+                        onChange={onChangeOptions}
                     />
                 </label>
                 <label className="option__item">
@@ -60,6 +60,7 @@ const Options = ({ setOptions }) => {
                         className="option__input"
                         placeholder="ведите фон неба"
                         required
+                        onChange={onChangeOptions}
                     />
                 </label>
             </div>

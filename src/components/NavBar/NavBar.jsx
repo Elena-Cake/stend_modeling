@@ -25,7 +25,7 @@ const NavBar = (isCulculating, openLoadPopup) => {
                     `navbar__btn navbar__btn_active` : "navbar__btn"}>
                 Последний расчет
             </NavLink>
-            <button className={`navbar__calc ${isCulculating && "navbar__calc_visible"}`} onClick={openLoadPopup}></button>
+            <button className={`navbar__calc ${isCulculating && "navbar__calc_visible"}`} onClick={openLoadingPopup}></button>
         </div>
     )
 }

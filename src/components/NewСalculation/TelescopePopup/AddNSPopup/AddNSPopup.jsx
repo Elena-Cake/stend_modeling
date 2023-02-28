@@ -1,23 +1,9 @@
 import React from "react";
 import './AddNSPopup.css';
 
-import { useState, useCallback } from "react";
+import { useFormAndValidation } from "../../../../hooks/useFormAndValidation";
 
-export function useFormAndValidation() {
-    const [values, setValues] = useState({});
 
-    const handleChange = (event) => {
-        const { value, name } = event.target;
-        console.log(value, name)
-        setValues({ ...values, [name]: value });
-    };
-
-    const resetForm = useCallback((newValues = {}) => {
-        setValues(newValues);
-    }, [setValues]);
-
-    return { values, handleChange, resetForm, setValues };
-}
 
 const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
     const classPopup = `popup popup-addNS  ${isOpen ? 'popup_opened' : ''}`

@@ -10,6 +10,7 @@
 
 .option__items {
     margin: 0;
+    position: relative;
 }
 
 .option__item {

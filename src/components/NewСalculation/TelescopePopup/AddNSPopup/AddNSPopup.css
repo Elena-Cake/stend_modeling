@@ -1,5 +1,8 @@
 .popup__addNS {
-    width: 80%;
+    width: 1200px;
+    max-width: 95%;
+    min-height: 80vh;
+    max-height: 95vh;
 }
 
 .form__addNS {

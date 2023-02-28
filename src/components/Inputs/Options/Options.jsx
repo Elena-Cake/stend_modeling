@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useFormAndValidation } from "../../../hooks/useFormAndValidation";
 import './Options.css';
 
-const Options = ({ onChangeOptions, catalogNames }) => {
+const Options = ({ onChangeOptions, catalogNames, isErrorOptions }) => {
 
-    const catalogItems = catalogNames.map((item) => <option>{item}</option>)
+    const catalogItems = catalogNames.map((item, i) => {
+        if (i === 0) { return <option >{item}</option> }
+        return <option selected >{item}</option>
+    })
 
     return (
         <div className="option">
@@ -63,7 +66,9 @@ const Options = ({ onChangeOptions, catalogNames }) => {
                         onChange={onChangeOptions}
                     />
                 </label>
+                <span className={`inputs__error ${isErrorOptions && "inputs__error_visible"}`}>Все поля обязательны</span>
             </div>
+
         </div>
     )
 }

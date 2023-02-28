@@ -22,12 +22,15 @@ function App() {
   const [isAddNSPopupOpen, setIsAddNSPopupOpen] = useState(false);
   const [isLoadingPopupOpen, setIsLoadingPopupOpen] = useState(false);
 
+  // видимость иконки расчета
   const [isCulculating, setIsCulculating] = useState(false);
-
+  // заружены ли результаты
+  const [isVisibleResultsDone, setIsVisibleResultsDone] = useState(false)
 
   const [textPopup, setTextPopup] = useState({ text: '', isError: false });
   const [dataLogMessage, setDataLogMessage] = useState('')
   const [dataLog, setDataLog] = useState('')
+
 
   // показ и сокрытие иконки расчета
   function setCulculationIcon() {
@@ -58,7 +61,7 @@ function App() {
     setTextPopup({ text, isError })
     openLoadPopup()
   }
-  function openLoadPopup() { //!!!!!!!!!!!!!!!!err
+  function openLoadPopup() {
     setIsLoadingPopupOpen(true)
   }
   function closeLoadingPopup() {
@@ -127,11 +130,17 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-
         <div className='header'><NavBar isCulculating={isCulculating} openLoadPopup={openLoadPopup} /></div>
         <div className='main'>
           <Routes>
-            <Route path="/" element={<Results />} />
+            <Route path="/" element={
+              <NewСalculation
+                openTelescope={openAddNSPopup}
+                openloadPopup={openLoadingPopup}
+                rowData={rowData}
+                setCulculationIcon={setCulculationIcon}
+              />}
+            />
             <Route path="/culculate" element={
               <NewСalculation
                 openTelescope={openAddNSPopup}
@@ -145,7 +154,7 @@ function App() {
                 onAskConfiguration={onAskConfiguration}
                 onShowResults={onShowResults}
               />} />
-            <Route path="/resultsdone" element={<ResultsDone />} />
+            <Route path="/resultsdone" element={<ResultsDone isVisible={isVisibleResultsDone} />} />
           </Routes>
         </div>
       </div>

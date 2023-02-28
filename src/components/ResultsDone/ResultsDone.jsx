@@ -4,14 +4,19 @@ import Splider from "./Splider/Splider";
 import './ResultsDone.css';
 import TableResultsDone from "./TableResultsDone/TableResultsDone";
 
-const ResultsDone = () => {
+const ResultsDone = (props) => {
     return (
-        <div className="resultsdone">
-            <IntervalDate />
-            <TableResultsDone />
-            <Splider />
+        <div>
+            {props.isVisible &&
+                <div className="resultsdone">
+                    <IntervalDate />
+                    <TableResultsDone />
+                    <Splider />
+                </div>}
+            {!props.isVisible && <h2> Выберите расчет для загрузки на вкладке "Загрузить рузуьтаты"</h2>}
         </div>
     )
+
 }
 
 export default ResultsDone;

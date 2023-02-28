@@ -14,6 +14,8 @@ const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculation
     const [errorDateText, setErrorDateText] = useState('Укажите даты')
     const [isErrorDate, setIsErrorDate] = useState(false)
 
+    const [isErrorOptions, setIsErrorOptions] = useState(false)
+
     const [catalogNames, setCatalogNames] = useState([])
 
     function onChangeDate(e) {
@@ -23,7 +25,6 @@ const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculation
 
     function onChangeOptions(e) {
         const { name, value } = e.target
-        console.log(name, value)
         setOptions({ ...options, [name]: value })
     }
 
@@ -35,16 +36,16 @@ const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculation
             if (dateStart < dateEnd) {
                 if (dateStart.getFullYear() === dateEnd.getFullYear()) {
                     setIsErrorDate(false)
-                    // АПИ  гет каталог сет каталог
+                    // АПИ - гет каталог___________________________________________________________________
                     console.log(dateStart.getFullYear())
-
+                    // принятые каталоги
                     setCatalogNames(['GIAC', 'ANC'])
                 } else {
                     setErrorDateText('Выберите даты в рамках одного года')
                     setIsErrorDate(true)
                 }
             } else {
-                setErrorDateText('Интервал дат некоректен')
+                setErrorDateText('Интервал дат некорректен')
                 setIsErrorDate(true)
             }
         }
@@ -57,10 +58,13 @@ const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculation
 
     useEffect(() => {
         if (dates.date_start === '' || dates.date_end === '') {
-            setErrorDateText('Укжите даты')
+            setErrorDateText('Укажите даты')
             setIsErrorDate(true)
+        } else if (!options.detectable_snr || !options.max_exp || !options.max_track_length || !options.sun_elevation || !options.zenith_sky_brightness) {
+            setIsErrorOptions(true)
         } else {
             setIsErrorDate(false)
+            setIsErrorOptions(false)
             setCulculationIcon()
             openloadPopup('Расчет запущен', false)
             const reqData = {
@@ -82,9 +86,10 @@ const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculation
             <Inputs
                 onChangeDate={onChangeDate}
                 isErrorDate={isErrorDate}
-                onChangeOptions={onChangeOptions}
                 errorDateText={errorDateText}
-                catalogNames={catalogNames} />
+                onChangeOptions={onChangeOptions}
+                catalogNames={catalogNames}
+                isErrorOptions={isErrorOptions} />
             <Configuration
                 onTelescope={openTelescope}
                 rowData={rowData}

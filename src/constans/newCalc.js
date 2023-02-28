@@ -64,3 +64,4 @@ export const newCulc = {
 	max_track_length: 0.05,
 	zenith_sky_brightness: 22
 }
+

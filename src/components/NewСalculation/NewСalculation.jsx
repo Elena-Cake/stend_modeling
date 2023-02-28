@@ -5,7 +5,7 @@ import Inputs from "../Inputs/Inputs";
 import './NewСalculation.css';
 
 
-const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculationIcon }) => {
+const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculationIcon }) => {
 
     const [dates, setDates] = useState({ date_start: '', date_end: '' })
     const [options, setOptions] = useState({ sun_elevation: 6 })
@@ -70,7 +70,7 @@ const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculation
             const reqData = {
                 ...dates,
                 ...options,
-                selectedId
+                instruments: selectedId
             }
             // АПИ готового расчета
             console.log(reqData)
@@ -92,7 +92,7 @@ const NewСalculation = ({ openTelescope, openloadPopup, rowData, setCulculation
                 isErrorOptions={isErrorOptions} />
             <Configuration
                 onTelescope={openTelescope}
-                rowData={rowData}
+                rowData={resData.instruments}
                 onAskCulculate={onAskCulculate} />
         </div>
     )

@@ -1,16 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { render } from 'react-dom';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import './Configuration.css';
-import { NavLink } from "react-router-dom";
-
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-
 
 const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const gridRef = useRef();
@@ -18,7 +12,8 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'nsr', checkboxSelection: true, headerName: "Номер средства", headerTooltip: "Номер средства", pinned: true, width: 200 },
+        { checkboxSelection: true, maxWidth: 50, pinned: true },
+        { field: 'nsr', headerName: "Номер средства", headerTooltip: "Номер средства" },
         { field: 'cod', headerName: "Название", headerTooltip: "Название средства" },
         { field: 'latitude', headerName: "Геодезическая широта, град", headerTooltip: "Геодезическая широта в градусах" },
         { field: 'longitude', headerName: "Геодезическая долгота, град", headerTooltip: "Геодезическая долгота в градусах" },
@@ -48,7 +43,7 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const autoGroupColumnDef = useMemo(() => {
         return {
             headerValueGetter: (params) => `${params.colDef.headerName}`,
-            width: 300,
+            width: 200,
             cellRendererParams: {
                 suppressCount: true,
                 checkbox: true,
@@ -67,7 +62,7 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const defaultColDef = useMemo(() => {
         return {
             flex: 1,
-            minWidth: 100,
+            minWidth: 200,
             resizable: true,
             headerCheckboxSelection: isFirstColumn,
             checkboxSelection: isFirstColumn,
@@ -87,7 +82,6 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
             });
             onAskCulculate(selectedIds)
         }, []);
-
 
     return (
         <div className="configuration">

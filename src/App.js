@@ -31,6 +31,8 @@ function App() {
   const [dataLogMessage, setDataLogMessage] = useState('')
   const [dataLog, setDataLog] = useState('')
 
+  // для нового расчета
+  const [resData, setResData] = useState({ instruments: [] });
 
   // показ и сокрытие иконки расчета
   function setCulculationIcon() {
@@ -84,21 +86,6 @@ function App() {
     return rowDataGenerated
   }
 
-  // формирование данных для таблицы нового расчета
-  const changeNewCalcStructure = (res) => {
-    const rowDataGenerated = [];
-    for (let item of res.instruments) {
-      rowDataGenerated.push(item)
-    }
-    return rowDataGenerated
-  }
-
-  changeResStructure(newCulc)
-
-  const [rowData, setRowData] = useState(
-    changeNewCalcStructure(newCulc)
-  );
-
   // Добавить телескоп (в базу) в таблицу расчета
   function addTelescope(
     nsr, cod, latitude, longitude,
@@ -108,23 +95,30 @@ function App() {
     slew_vel_alpha, slew_vel_delta, min_elevation, transmittivity,
     quantum_efficiency, mode = 'обзор', noko_twilight = false,
     noko = false, gso_survey = false) {
-    setRowData([...rowData, {
-      nsr: Number(nsr), cod,
-      latitude: Number(latitude), longitude: Number(longitude),
-      altitude: Number(altitude), aperture: Number(aperture),
-      secondary_coefficient: Number(secondary_coefficient),
-      pixel_scale: Number(pixel_scale), readout_noise: Number(readout_noise),
-      fovx: Number(fovx), fovy: Number(fovy), frame_readout: Number(frame_readout),
-      frame_flush: Number(frame_flush), task_switch_time: Number(task_switch_time),
-      stabilization_time: Number(stabilization_time), mount_type,
-      slew_vel_alpha: Number(slew_vel_alpha), slew_vel_delta: Number(slew_vel_delta),
-      min_elevation: Number(min_elevation), transmittivity: Number(transmittivity),
-      quantum_efficiency: Number(quantum_efficiency), mode,
-      noko_twilight: noko_twilight === 'on' ? true : false,
-      noko: noko === 'on' ? true : false,
-      gso_survey: gso_survey === 'on' ? true : false
-    }])
+    setResData({
+      ...resData,
+      instruments: [...resData.instruments, {
+        nsr: Number(nsr), cod,
+        latitude: Number(latitude), longitude: Number(longitude),
+        altitude: Number(altitude), aperture: Number(aperture),
+        secondary_coefficient: Number(secondary_coefficient),
+        pixel_scale: Number(pixel_scale), readout_noise: Number(readout_noise),
+        fovx: Number(fovx), fovy: Number(fovy), frame_readout: Number(frame_readout),
+        frame_flush: Number(frame_flush), task_switch_time: Number(task_switch_time),
+        stabilization_time: Number(stabilization_time), mount_type,
+        slew_vel_alpha: Number(slew_vel_alpha), slew_vel_delta: Number(slew_vel_delta),
+        min_elevation: Number(min_elevation), transmittivity: Number(transmittivity),
+        quantum_efficiency: Number(quantum_efficiency), mode,
+        noko_twilight: noko_twilight === 'on' ? true : false,
+        noko: noko === 'on' ? true : false,
+        gso_survey: gso_survey === 'on' ? true : false
+      }]
+    })
     closeAddNSPopup()
+  }
+
+  const onSetDataToNewCalculation = (data) => {
+    setResData(data)
   }
 
   return (
@@ -137,7 +131,7 @@ function App() {
               <NewСalculation
                 openTelescope={openAddNSPopup}
                 openloadPopup={openLoadingPopup}
-                rowData={rowData}
+                resData={resData}
                 setCulculationIcon={setCulculationIcon}
               />}
             />
@@ -145,7 +139,7 @@ function App() {
               <NewСalculation
                 openTelescope={openAddNSPopup}
                 openloadPopup={openLoadingPopup}
-                rowData={rowData}
+                resData={resData}
                 setCulculationIcon={setCulculationIcon}
               />}
             />
@@ -153,6 +147,7 @@ function App() {
               <Results
                 onAskConfiguration={onAskConfiguration}
                 onShowResults={onShowResults}
+                onSetDataToNewCalculation={onSetDataToNewCalculation}
               />} />
             <Route path="/resultsdone" element={<ResultsDone isVisible={isVisibleResultsDone} />} />
           </Routes>

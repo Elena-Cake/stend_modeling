@@ -18,6 +18,19 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
 
     const [catalogNames, setCatalogNames] = useState([])
 
+    useEffect(() => {
+        console.log(resData)
+        setDates({ date_start: resData.start_date, date_end: resData.end_date })
+        setOptions({
+            sun_elevation: resData.sun_elevation,
+            detectable_snr: resData.detectable_snr,
+            max_exp: resData.max_exp,
+            max_track_length: resData.max_track_length,
+            zenith_sky_brightness: resData.zenith_sky_brightness
+        })
+        setCatalogNames([resData.catalog])
+    }, [resData])
+
     function onChangeDate(e) {
         const { name, value } = e.target
         setDates({ ...dates, [name]: value })
@@ -29,27 +42,35 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
     }
 
     // назначение дат
-    useEffect(() => {
+    const getCatalogs = () => {
         if (dates.date_start !== '' && dates.date_end !== '') {
             const dateStart = new Date(dates.date_start)
             const dateEnd = new Date(dates.date_end)
             if (dateStart < dateEnd) {
                 if (dateStart.getFullYear() === dateEnd.getFullYear()) {
                     setIsErrorDate(false)
-                    // АПИ - гет каталог___________________________________________________________________
+                    // АПИ - гет каталог
                     console.log(dateStart.getFullYear())
                     // принятые каталоги
                     setCatalogNames(['GIAC', 'ANC'])
+                    // пока нет
+                    setOptions({ ...options, catalog: catalogNames[0] })
                 } else {
+                    setCatalogNames([])
                     setErrorDateText('Выберите даты в рамках одного года')
                     setIsErrorDate(true)
                 }
             } else {
+                setCatalogNames([])
                 setErrorDateText('Интервал дат некорректен')
                 setIsErrorDate(true)
             }
+        } else {
+            setCatalogNames([])
+            setErrorDateText('Интервал дат некорректен')
+            setIsErrorDate(true)
         }
-    }, [dates]);
+    }
 
     // нажатие запуска расчета
     function onAskCulculate(arrId) {
@@ -89,7 +110,10 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
                 errorDateText={errorDateText}
                 onChangeOptions={onChangeOptions}
                 catalogNames={catalogNames}
-                isErrorOptions={isErrorOptions} />
+                isErrorOptions={isErrorOptions}
+                getCatalogs={getCatalogs}
+                dates={dates}
+                options={options} />
             <Configuration
                 onTelescope={openTelescope}
                 rowData={resData.instruments}

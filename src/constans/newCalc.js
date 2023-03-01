@@ -1,11 +1,12 @@
 export const newCulc = {
 	start_date: "2020-01-01",
 	end_date: "2020-12-31",
-	catalogue: "anc",
+	catalog: "anc",
 	instruments: [
 		{
 			nsr: 10093,//Номер средства
 			cod: "Кис2",//Название
+			locname: "Кисловодск",
 			latitude: 43.7402600307874,//Геодезическая широта, град -90 +90
 			longitude: 42.6536598478286,//Геодезическая долгота, град -180 180
 			altitude: 2107.7471803287,//Высота,м 0 
@@ -33,6 +34,7 @@ export const newCulc = {
 		{
 			nsr: 10316,
 			cod: "Блг7",
+			locname: "Благовещенск",
 			latitude: 50.1265854,
 			longitude: 127.7223353,
 			altitude: 161.172,

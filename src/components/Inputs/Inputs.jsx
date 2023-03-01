@@ -19,7 +19,6 @@ const Inputs = ({ onChangeDate, isErrorDate, onChangeOptions,
                 isErrorOptions={isErrorOptions}
                 getCatalogs={getCatalogs}
                 options={options} />
-
         </div>
     )
 }

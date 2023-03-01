@@ -26,7 +26,8 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
             detectable_snr: resData.detectable_snr,
             max_exp: resData.max_exp,
             max_track_length: resData.max_track_length,
-            zenith_sky_brightness: resData.zenith_sky_brightness
+            zenith_sky_brightness: resData.zenith_sky_brightness,
+            catalog: resData.catalog
         })
         setCatalogNames([resData.catalog])
     }, [resData])

@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormAndValidation } from "../../../hooks/useFormAndValidation";
 import './Options.css';
 
 const Options = ({ onChangeOptions, catalogNames, isErrorOptions, getCatalogs, options }) => {
 
+    const [catalogLastRes, setCatalogLastRes] = useState('')
     const catalogItems = catalogNames.map((item, i) => {
-        if (i === 0) { return <option key={i} defaultValue>{item}</option> }
-        return <option key={i}>{item}</option>
+        // if (i === 0) { return <option key={i} defaultValue></option> }
+        return <option key={i + 1}>{item}</option>
     })
 
     return (

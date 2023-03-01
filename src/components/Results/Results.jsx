@@ -12,11 +12,12 @@ import configuration from '../../constans/configurations'
 import { NavLink } from 'react-router-dom';
 
 import { newCulc } from '../../constans/newCalc';
+import { api } from '../../utils/api';
 
 
 const Results = ({ onAskConfiguration, onShowResults, onSetDataToNewCalculation }) => {
     const gridRef = useRef();
-    const containerStyle = useMemo(() => ({ width: '100%', height: '75vh' }), []);
+    const containerStyle = useMemo(() => ({ width: '100%', height: '75vh', marginBottom: '50px' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
     const changeResStructure = (res) => {
@@ -133,7 +134,7 @@ const Results = ({ onAskConfiguration, onShowResults, onSetDataToNewCalculation 
         });
         onAskConfiguration(selectedId)
         // АПИ - запросить данные для конструктора
-
+        // api.getNewCalc(selectedId)
         onSetDataToNewCalculation(newCulc)
     }, []);
 
@@ -144,6 +145,7 @@ const Results = ({ onAskConfiguration, onShowResults, onSetDataToNewCalculation 
             if (node.selected) { selectedId = node.key }
         });
         onShowResults(selectedId)
+        // api.getResultsDone(selectedId)
         // АПИ - запросить данные для готового расчета
     }, []);
 
@@ -166,12 +168,14 @@ const Results = ({ onAskConfiguration, onShowResults, onSetDataToNewCalculation 
                     animateRows={true}
                 ></AgGridReact>
             </div>
-            <button className="button__bottom" onClick={handleAskResults}>
-                <NavLink to="/culculate" className="navlink__decoration">Загрузить конфигурацию</NavLink>
-            </button>
-            <button className="button__bottom" onClick={handleShowResults}>
-                <NavLink to="/resultsdone" className="navlink__decoration">Показать результаты расчета</NavLink>
-            </button>
+            <div className='button_container'>
+                <button className="button__navlink" onClick={handleAskResults}>
+                    <NavLink to="/culculate" className="navlink__decoration">Загрузить конфигурацию</NavLink>
+                </button>
+                <button className="button__navlink" onClick={handleShowResults}>
+                    <NavLink to="/resultsdone" className="navlink__decoration">Показать результаты расчета</NavLink>
+                </button>
+            </div>
         </div>
     );
 }

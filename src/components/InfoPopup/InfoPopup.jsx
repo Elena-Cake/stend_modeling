@@ -1,12 +1,8 @@
 import React from "react";
-import './LoadingPopup.css';
+import '../LoadingPopup/LoadingPopup.css';
 
-const LoadingPopup = ({
-    isOpen, onClose, dataLog,
-    textPopup = { text: "ой", isError: true },
-    dataLogMessage = '', abortCulculate
-}) => {
-    const classPopup = `popup popup-loading ${isOpen ? 'popup_opened' : ''}`
+const InfoPopup = ({ isOpen, onClose, textPopup }) => {
+    const classPopup = `popup popup-addNS  ${isOpen ? 'popup_opened' : ''}`
 
     return (
         <div className={classPopup}>
@@ -18,16 +14,10 @@ const LoadingPopup = ({
                 </button>
                 <form className="popup__form" name="addPopup" >
                     <h3 className={`popup__title ${textPopup.isError && 'popup__title_type_error'}`}>{textPopup.text}</h3>
-                    <div className="popup__text">{dataLogMessage}</div>
-                    <div className="popup__log">
-                        {dataLog}
-                    </div>
-                    <button className=" popup__button" onClick={abortCulculate}>Прервать текущий расчет</button>
                 </form>
             </div>
         </div>
     )
 }
 
-export default LoadingPopup;
-
+export default InfoPopup;

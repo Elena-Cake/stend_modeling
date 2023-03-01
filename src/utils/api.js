@@ -35,7 +35,7 @@ export const api = {
             .then(res => res.json())
     },
     // пост запрос на расчет
-    postCalculate(data) {
+    startCalculate(data) {
         return instance.post('', JSON.stringify(data))
             .then(res => res.data)
     },

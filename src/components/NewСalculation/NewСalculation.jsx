@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import Configuration from "./Configuration/Configuration";
 import Inputs from "../Inputs/Inputs";
 import './NewСalculation.css';
+import { api } from "../../utils/api";
 
 
-const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculationIcon }) => {
+const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculationIcon, startCalculate }) => {
 
     const [dates, setDates] = useState({ date_start: '', date_end: '' })
     const [options, setOptions] = useState({ sun_elevation: 6 })
@@ -50,8 +51,11 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
             if (dateStart < dateEnd) {
                 if (dateStart.getFullYear() === dateEnd.getFullYear()) {
                     setIsErrorDate(false)
-                    // АПИ - гет каталог
+                    // АПИ - гет имен каталогов
                     console.log(dateStart.getFullYear())
+                    // api.getCatalogNames(dateStart.getFullYear())
+                    // .then ((data)=> setCatalogNames(data))
+
                     // принятые каталоги
                     setCatalogNames(['GIAC', 'ANC'])
                     // пока нет
@@ -94,7 +98,8 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
                 ...options,
                 instruments: selectedId
             }
-            // АПИ готового расчета
+            // АПИ на старт расчета
+            // startCalculate(reqData)
             console.log(reqData)
         }
     }, [selectedId]);

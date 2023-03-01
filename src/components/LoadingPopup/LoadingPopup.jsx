@@ -22,6 +22,7 @@ const LoadingPopup = ({
                     <div className="popup__log">
                         {dataLog}
                     </div>
+                    <button className=" popup__button" onClick={onClose}>Продолжить</button>
                     <button className=" popup__button" onClick={abortCulculate}>Прервать текущий расчет</button>
                 </form>
             </div>

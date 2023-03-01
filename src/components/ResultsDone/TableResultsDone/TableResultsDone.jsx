@@ -27,7 +27,7 @@ class ProductService {
     }
 }
 
-const TableResultsDone = ({ }) => {
+const TableResultsDone = ({ instruments }) => {
 
     const [products, setProducts] = useState(dataRows);
 

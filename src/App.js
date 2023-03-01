@@ -75,10 +75,12 @@ function App() {
   function openLoadPopup() {
     setIsLoadingPopupOpen(true)
   }
-  function closePopups() {
+  function closePopups(e) {
+    e.preventDefault()
     setIsLoadingPopupOpen(false)
     setIsInfoPopupOpen(false)
     setIsTelescopePopupOpen(false)
+    setIsAddNSPopupOpen(false)
   }
 
   // послать номер расчета для получения коонфигурации в NewСalculation
@@ -128,10 +130,17 @@ function App() {
     closePopups()
   }
 
+  // кнопки из резалтс
   const onSetDataToNewCalculation = (data) => {
-
     setResData(data)
   }
+
+  // убрать
+  const onSetDataToResultsDone = (data) => {
+    setDataResultsDone(data)
+    setIsVisibleResultsDone(true)
+  }
+
 
   // получение статуса работы
   function longAPI() {
@@ -180,6 +189,9 @@ function App() {
   // прервать вычисление
   const abortCulculate = (e) => {
     e.preventDefault()
+    setTextPopup({ text: 'Моделирование прервано', isError: true })
+    closePopups()
+    openInfoPopup()
     // api.abortCalculate()
     //   .then((data) => {
     //     setTextPopup({ text: 'Моделирование прервано', isError: true })
@@ -217,6 +229,7 @@ function App() {
                 onAskConfiguration={onAskConfiguration}
                 onShowResults={onShowResults}
                 onSetDataToNewCalculation={onSetDataToNewCalculation}
+                onSetDataToResultsDone={onSetDataToResultsDone}
               />} />
             <Route path="/resultsdone" element={<ResultsDone isVisible={isVisibleResultsDone} data={dataResultsDone} />} />
           </Routes>

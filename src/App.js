@@ -76,7 +76,6 @@ function App() {
     setIsLoadingPopupOpen(true)
   }
   function closePopups(e) {
-    e.preventDefault()
     setIsLoadingPopupOpen(false)
     setIsInfoPopupOpen(false)
     setIsTelescopePopupOpen(false)

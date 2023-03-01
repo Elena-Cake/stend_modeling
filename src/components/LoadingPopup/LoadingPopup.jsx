@@ -8,6 +8,11 @@ const LoadingPopup = ({
 }) => {
     const classPopup = `popup popup-loading ${isOpen ? 'popup_opened' : ''}`
 
+    const onClosePopup = (e) => {
+        e.preventDefault()
+        onClose()
+    }
+
     return (
         <div className={classPopup}>
             <div className="popup__container popup__warning">
@@ -22,7 +27,7 @@ const LoadingPopup = ({
                     <div className="popup__log">
                         {dataLog}
                     </div>
-                    <button className=" popup__button" onClick={onClose}>Продолжить</button>
+                    <button className=" popup__button" onClick={onClosePopup}>Продолжить</button>
                     <button className=" popup__button" onClick={abortCulculate}>Прервать текущий расчет</button>
                 </form>
             </div>

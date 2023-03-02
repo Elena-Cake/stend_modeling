@@ -196,6 +196,7 @@ function App() {
     closePopups()
     setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
     openInfoPopup()
+
     // api.abortCalculate()
     //   .then((data) => {
     //     closePopups()
@@ -239,6 +240,7 @@ function App() {
         dataLogMessage={dataLogMessage}
         textPopup={textPopup}
         abortCulculate={abortCulculate}
+        isCulculating={isCulculating}
       />
       <AddNSPopup isOpen={isAddNSPopupOpen} onClose={closePopups} onAddTelescope={addTelescope} />
       <InfoPopup

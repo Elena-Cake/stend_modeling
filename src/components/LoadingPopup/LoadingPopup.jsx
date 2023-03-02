@@ -4,7 +4,8 @@ import './LoadingPopup.css';
 const LoadingPopup = ({
     isOpen, onClose, dataLog,
     textPopup = { text: "ой", isError: true },
-    dataLogMessage = '', abortCulculate
+    dataLogMessage = '', abortCulculate,
+    isCulculating
 }) => {
     const classPopup = `popup popup-loading ${isOpen ? 'popup_opened' : ''}`
 
@@ -28,7 +29,8 @@ const LoadingPopup = ({
                         {dataLog}
                     </div>
                     <button className=" popup__button" onClick={onClosePopup}>Продолжить</button>
-                    <button className=" popup__button" onClick={abortCulculate}>Прервать текущий расчет</button>
+                    {isCulculating &&
+                        <button className=" popup__button" onClick={abortCulculate}>Прервать текущий расчет</button>}
                 </form>
             </div>
         </div>

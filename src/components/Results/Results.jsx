@@ -134,7 +134,7 @@ const Results = ({ onSetDataToNewCalculation, onSetDataToResultsDone }) => {
                 selectedId = node.key
             }
         });
-        onSetDataToNewCalculation(newCulc, selectedId)
+        onSetDataToNewCalculation(selectedId)
     }, []);
 
     // загрузить результаты
@@ -143,7 +143,7 @@ const Results = ({ onSetDataToNewCalculation, onSetDataToResultsDone }) => {
         gridRef.current.api.forEachNode(function (node) {
             if (node.selected) { selectedId = node.key }
         });
-        onSetDataToResultsDone(newCulc, selectedId)
+        onSetDataToResultsDone(selectedId)
     }, []);
 
     useEffect(() => {
@@ -167,11 +167,11 @@ const Results = ({ onSetDataToNewCalculation, onSetDataToResultsDone }) => {
                 ></AgGridReact>
             </div>
             <div className='button_container'>
-                <button className="button__navlink" onClick={handleAskResults}>
-                    <NavLink to="/" className="navlink__decoration">Загрузить конфигурацию</NavLink>
+                <button className="button__bottom" onClick={handleAskResults}>
+                    Загрузить конфигурацию
                 </button>
-                <button className="button__navlink" onClick={handleShowResults}>
-                    <NavLink to="/resultsdone" className="navlink__decoration">Показать результаты расчета</NavLink>
+                <button className="button__bottom" onClick={handleShowResults}>
+                    Показать результаты расчета
                 </button>
             </div>
         </div>

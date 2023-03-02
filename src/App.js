@@ -10,7 +10,7 @@ import TelescopePopup from './components/NewСalculation/TelescopePopup/Telescop
 import AddNSPopup from './components/NewСalculation/TelescopePopup/AddNSPopup/AddNSPopup';
 import LoadingPopup from './components/LoadingPopup/LoadingPopup';
 
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Navigate, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import ResultsDone from './components/ResultsDone/ResultsDone';
 
 import configuration from './constans/configurations'
@@ -19,6 +19,8 @@ import { api } from './utils/api';
 import InfoPopup from './components/InfoPopup/InfoPopup';
 
 function App() {
+
+  const navigate = useNavigate();
 
   const [isTelescopePopupOpen, setIsTelescopePopupOpen] = useState(false);
   const [isAddNSPopupOpen, setIsAddNSPopupOpen] = useState(false);
@@ -125,20 +127,24 @@ function App() {
   }
 
   // кнопки из резалтс
-  const askDataToNewCalculation = (data, selectedId) => {
+  const askDataToNewCalculation = (selectedId) => {
+
     // АПИ - запросить данные для конструктора
     // api.getNewCalc(selectedId)
+
     setIsResaltDownload(true)
-    setResData(data)
+    setResData(newCulc)
     setIsVisibleResultsDone(true)
     setSelectedId(selectedId)
+    navigate('/', { replace: true })
   }
 
-  // убрать
-  const askDataToResultsDone = (data, selectedId) => {
+
+  const askDataToResultsDone = (selectedId) => {
     // АПИ - запросить данные для готового расчета
     // api.getResultsDone(selectedId)
-    setDataResultsDone(data)
+    setDataResultsDone(newCulc)
+    navigate('/resultsdone', { replace: true })
   }
 
 
@@ -205,7 +211,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <div>
       <div className="App">
         <div className='header'><NavBar isCulculating={isCulculating} openLoadPopup={openLoadPopup} /></div>
         <div className='main'>
@@ -219,6 +225,7 @@ function App() {
                 startCalculate={startCalculate}
                 isResaltDownload={isResaltDownload}
                 selectedIdResDone={selectedId}
+                askDataToResultsDone={askDataToResultsDone}
               />}
             />
             <Route path="/results" element={
@@ -246,7 +253,7 @@ function App() {
         isOpen={isInfoPopupOpen}
         onClose={closePopups}
         textPopup={textInfoPopup} />
-    </BrowserRouter>
+    </div>
   );
 }
 

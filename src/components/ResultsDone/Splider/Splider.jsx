@@ -1,8 +1,6 @@
 
 import React, { useState } from "react";
-import ChartsBar from "./ChartsBar/ChartsBar";
 import './Splider.css';
-import { output } from "../../../constans/res";
 
 const Splider = ({ data }) => {
 
@@ -15,7 +13,7 @@ const Splider = ({ data }) => {
             keys.push(key)
     };
     // формирование опций для переключения
-    const options = keys.map((key, i) => <option className="charts__option" value={i}>{key}</option>);
+    const options = keys.map((key, i) => <option className="charts__option" value={i}>{key.split('_').join(' ')}</option>);
 
     const slideElements = keys.map((key, i) => {
         return (
@@ -57,7 +55,7 @@ const Splider = ({ data }) => {
                 {options}
             </select>
             <p className="charts__title">
-                {keys[activeSlide]}
+                {keys[activeSlide].split('_').join(' ')}
             </p>
             <div className="slider">
                 {slideElements}

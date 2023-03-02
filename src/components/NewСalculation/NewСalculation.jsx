@@ -20,7 +20,6 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
     const [catalogNames, setCatalogNames] = useState([])
 
     useEffect(() => {
-        console.log(resData)
         setDates({ date_start: resData.start_date, date_end: resData.end_date })
         setOptions({
             sun_elevation: resData.sun_elevation,

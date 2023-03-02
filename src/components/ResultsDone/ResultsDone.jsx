@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import IntervalDate from "../IntervalDate/IntervalDate";
 import Splider from "./Splider/Splider";
 import './ResultsDone.css';
 import TableResultsDone from "./TableResultsDone/TableResultsDone";
+import IntervalDateDone from "./IntervalDate/IntervalDate";
 
 const ResultsDone = (props) => {
 
@@ -22,7 +22,7 @@ const ResultsDone = (props) => {
         <div>
             {props.isVisible &&
                 <div className="resultsdone">
-                    <IntervalDate dates={intervalDates} />
+                    <IntervalDateDone dates={intervalDates} />
                     <TableResultsDone instruments={instruments} />
                     {/* <Splider data={props.data} /> */}
                 </div>}

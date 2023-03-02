@@ -188,15 +188,15 @@ function App() {
   // прервать вычисление
   const abortCulculate = (e) => {
     e.preventDefault()
-    setTextPopup({ text: 'Моделирование прервано', isError: true })
     closePopups()
+    setTextPopup({ text: 'Моделирование прервано', isError: true })
     openInfoPopup()
     // api.abortCalculate()
     //   .then((data) => {
-    //     setTextPopup({ text: 'Моделирование прервано', isError: true })
     //     closePopups()
+    //     setTextPopup({ text: 'Моделирование прервано', isError: true })
     //     openInfoPopup()
-    //   })
+    //   }) 
   }
 
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import './IntervalDate.css';
 
-const IntervalDate = ({ dates }) => {
+const IntervalDateDone = ({ dates }) => {
     return (
         <div className="intervaldate">
             <h1 className="title">
@@ -12,19 +12,19 @@ const IntervalDate = ({ dates }) => {
                 <input
                     className="inputs__date"
                     type="date"
-                    name="date_start"
-                    value={dates.date_start || ''}
+                    name="start_date"
+                    value={dates.start_date || ''}
                     readOnly />
                 <p className="inputs__text">до</p>
                 <input
                     className="inputs__date"
                     type="date"
-                    name="date_end"
-                    value={dates.date_end || ''}
+                    name="end_date"
+                    value={dates.end_date || ''}
                     readOnly />
             </div>
         </div>
     )
 }
 
-export default IntervalDate;
+export default IntervalDateDone;

@@ -4,23 +4,43 @@ import './Options.css';
 
 const Options = ({ onChangeOptions, catalogNames, isErrorOptions, getCatalogs, options }) => {
 
-    const [catalogLastRes, setCatalogLastRes] = useState('')
+    const [isChangeDefaultCatalog, setIsChangeDefaultCatalog] = useState(false)
+
+    const onFirstChangeCatalogs = () => {
+        setIsChangeDefaultCatalog(true)
+        getCatalogs()
+    }
+
     const catalogItems = catalogNames.map((item, i) => {
         // if (i === 0) { return <option key={i} defaultValue></option> }
         return <option key={i + 1}>{item}</option>
     })
 
+
+
     return (
         <div className="option">
             <label className="option__select">
                 <p className="form__label">Каталог</p>
-                <select
-                    className="option__select option_options"
-                    name="catalog"
-                    onChange={onChangeOptions}
-                    onClick={getCatalogs}>
-                    {catalogItems}
-                </select>
+                {!isChangeDefaultCatalog &&
+                    <select
+                        className="option__select option_options"
+                        name="catalog"
+                        onChange={onChangeOptions}
+                        onClick={onFirstChangeCatalogs}>
+                        {catalogItems}
+                    </select>
+                }
+                {isChangeDefaultCatalog &&
+                    <select
+                        className="option__select option_options"
+                        name="catalog"
+                        onChange={onChangeOptions}
+                        onClick={getCatalogs}>
+                        <option key={0} defaultValue></option>
+                        {catalogItems}
+                    </select>
+                }
             </label>
             <div className="option__items">
                 <label className="option__select">

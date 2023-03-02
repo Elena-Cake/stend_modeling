@@ -39,7 +39,7 @@ function App() {
   // для нового расчета
   const [resData, setResData] = useState({ instruments: [] });
   const [isResaltDownload, setIsResaltDownload] = useState(false);
-
+  const [selectedId, setSelectedId] = useState('');
 
   // для готового расчета
   const [dataResultsDone, setDataResultsDone] = useState({})
@@ -86,16 +86,6 @@ function App() {
     setIsAddNSPopupOpen(false)
   }
 
-  // послать номер расчета для получения коонфигурации в NewСalculation
-  function onAskConfiguration(id) {
-    console.log(id);
-    setIsResaltDownload(true)
-  }
-  // послать номер расчета для просмотра результатов
-  function onShowResults(id) {
-    console.log(id);
-  }
-
   // формирование данных для таблицы готовых расчетов
   const changeResStructure = (res) => {
     const rowDataGenerated = res.instruments;
@@ -135,14 +125,20 @@ function App() {
   }
 
   // кнопки из резалтс
-  const onSetDataToNewCalculation = (data) => {
+  const askDataToNewCalculation = (data, selectedId) => {
+    // АПИ - запросить данные для конструктора
+    // api.getNewCalc(selectedId)
+    setIsResaltDownload(true)
     setResData(data)
+    setIsVisibleResultsDone(true)
+    setSelectedId(selectedId)
   }
 
   // убрать
-  const onSetDataToResultsDone = (data) => {
+  const askDataToResultsDone = (data, selectedId) => {
+    // АПИ - запросить данные для готового расчета
+    // api.getResultsDone(selectedId)
     setDataResultsDone(data)
-    setIsVisibleResultsDone(true)
   }
 
 
@@ -222,14 +218,13 @@ function App() {
                 setCulculationIcon={setCulculationIcon}
                 startCalculate={startCalculate}
                 isResaltDownload={isResaltDownload}
+                selectedIdResDone={selectedId}
               />}
             />
             <Route path="/results" element={
               <Results
-                onAskConfiguration={onAskConfiguration}
-                onShowResults={onShowResults}
-                onSetDataToNewCalculation={onSetDataToNewCalculation}
-                onSetDataToResultsDone={onSetDataToResultsDone}
+                onSetDataToNewCalculation={askDataToNewCalculation}
+                onSetDataToResultsDone={askDataToResultsDone}
               />} />
             <Route path="/resultsdone" element={<ResultsDone isVisible={isVisibleResultsDone} data={dataResultsDone} />} />
           </Routes>

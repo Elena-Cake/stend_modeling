@@ -6,7 +6,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import './Configuration.css';
 
-const Configuration = ({ onTelescope, rowData, onAskCulculate, isResaltDownload }) => {
+const Configuration = ({ onTelescope, rowData, onAskCulculate, isResaltDownload, selectedId }) => {
     const gridRef = useRef();
     const containerStyle = useMemo(() => ({ width: '100%', height: '50vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
@@ -82,6 +82,10 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate, isResaltDownload 
             });
             onAskCulculate(selectedIds)
         }, []);
+    // при нажатии запроса на показ результата
+    const handleAskResult = () => {
+
+    }
 
     return (
         <div className="configuration">
@@ -104,8 +108,8 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate, isResaltDownload 
             {isResaltDownload &&
                 <button
                     className="button__bottom"
-                    onClick={handleAskCulculate}>
-                    Посмотреть результаты загруженного расчета
+                    onClick={handleAskResult}>
+                    Посмотреть результаты расчета №{selectedId}
                 </button>}
         </div>
     )

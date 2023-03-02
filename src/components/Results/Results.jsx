@@ -20,50 +20,47 @@ const Results = ({ onSetDataToNewCalculation, onSetDataToResultsDone }) => {
     const containerStyle = useMemo(() => ({ width: '100%', height: '75vh', marginBottom: '50px' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
-    const changeResStructure = (res) => {
+    const changeResStructure = (configurations) => {
         const rowDataGenerated = [];
-        for (let key in res.configurations) {
-            for (let keyInst in res.configurations[key].instruments) {
-                const pathToInstrumentData = res.configurations[key].instruments[keyInst]
-                const item = {
+        for (let key in configurations) {
+            configurations[key].instruments.map((item) => {
+                const rowsData = {
                     configuration: key,
-                    idInstruments: keyInst,
-                    cod: pathToInstrumentData.cod,
-                    locname: pathToInstrumentData.locname,
-                    latitude: pathToInstrumentData.latitude,
-                    longitude: pathToInstrumentData.longitude,
-                    altitude: pathToInstrumentData.altitude,
-                    aperture: pathToInstrumentData.aperture,
-                    secondary_coefficient: pathToInstrumentData.secondary_coefficient,
-                    pixel_scale: pathToInstrumentData.pixel_scale,
-                    readout_noise: pathToInstrumentData.readout_noise,
-                    fovx: pathToInstrumentData.fovx,
-                    fovy: pathToInstrumentData.fovy,
-                    frame_readout: pathToInstrumentData.frame_readout,
-                    frame_flush: pathToInstrumentData.frame_flush,
-                    task_switch_time: pathToInstrumentData.task_switch_time,
-                    stabilization_time: pathToInstrumentData.stabilization_time,
-                    mount_type: pathToInstrumentData.mount_type,
-                    slew_vel_alpha: pathToInstrumentData.slew_vel_alpha,
-                    slew_vel_delta: pathToInstrumentData.slew_vel_delta,
-                    min_elevation: pathToInstrumentData.min_elevation,
-                    transmittivity: pathToInstrumentData.transmittivity,
-                    quantum_efficiency: pathToInstrumentData.quantum_efficiency,
-                    mode: pathToInstrumentData.mode,
-                    noko_twilight: pathToInstrumentData.noko_twilight,
-                    noko: pathToInstrumentData.noko,
-                    gso_survey: pathToInstrumentData.gso_survey
+                    idInstruments: item.nsr,
+                    cod: item.cod,
+                    locname: item.locname,
+                    latitude: item.latitude,
+                    longitude: item.longitude,
+                    altitude: item.altitude,
+                    aperture: item.aperture,
+                    secondary_coefficient: item.secondary_coefficient,
+                    pixel_scale: item.pixel_scale,
+                    readout_noise: item.readout_noise,
+                    fovx: item.fovx,
+                    fovy: item.fovy,
+                    frame_readout: item.frame_readout,
+                    frame_flush: item.frame_flush,
+                    task_switch_time: item.task_switch_time,
+                    stabilization_time: item.stabilization_time,
+                    mount_type: item.mount_type,
+                    slew_vel_alpha: item.slew_vel_alpha,
+                    slew_vel_delta: item.slew_vel_delta,
+                    min_elevation: item.min_elevation,
+                    transmittivity: item.transmittivity,
+                    quantum_efficiency: item.quantum_efficiency,
+                    mode: item.mode,
+                    noko_twilight: item.noko_twilight,
+                    noko: item.noko,
+                    gso_survey: item.gso_survey
                 }
-                rowDataGenerated.push(item)
-            }
+                rowDataGenerated.push(rowsData)
+            })
         }
         return rowDataGenerated
     }
 
     // заполнение таблицы
-    const [rowData, setRowData] = useState(
-        changeResStructure(configuration)
-    );
+    const [rowData, setRowData] = useState([]);
 
     // Each Column Definition results in one Column.
     const [columnDefs, setColumnDefs] = useState([
@@ -121,7 +118,7 @@ const Results = ({ onSetDataToNewCalculation, onSetDataToResultsDone }) => {
         return {
             headerName: 'Номер расчета',
             field: 'idInstruments',
-            minWidth: 150,
+            minWidth: 280,
             cellRenderer: 'agGroupCellRenderer'
         };
     }, []);
@@ -149,8 +146,11 @@ const Results = ({ onSetDataToNewCalculation, onSetDataToResultsDone }) => {
     useEffect(() => {
         console.clear()
         // АПИ - запрос готовых расчетов
-        // api.getResult()
-        // .then((res) => setRowData(res))
+        api.getResults()
+            .then((res) => {
+                console.log(res)
+                setRowData(changeResStructure(res.configurations))
+            })
     }, []);
 
     return (

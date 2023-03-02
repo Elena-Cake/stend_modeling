@@ -14,8 +14,8 @@ export const api = {
     // запросы для таблицы результатов
     // гет заполненя таблицы предыдущих результатов
     getResults() {
-        return instance.get('')
-            .then(res => res.json())
+        return instance.get('modelling_result_list')
+            .then(res => res.data)
     },
     // гет запрос расчета для конструктора
     getNewCalc(id) {

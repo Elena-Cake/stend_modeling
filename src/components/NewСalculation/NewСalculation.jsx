@@ -19,8 +19,6 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
 
     const [catalogNames, setCatalogNames] = useState([])
 
-    console.log(selectedIdResDone)
-
     useEffect(() => {
         setDates({ date_start: resData.start_date, date_end: resData.end_date })
         setOptions({

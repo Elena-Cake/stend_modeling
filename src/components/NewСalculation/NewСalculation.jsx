@@ -52,13 +52,14 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
                     setIsErrorDate(false)
                     // АПИ - гет имен каталогов
                     console.log(dateStart.getFullYear())
-                    // api.getCatalogNames(dateStart.getFullYear())
-                    // .then ((data)=> setCatalogNames(data))
+                    api.getCatalogNames(dateStart.getFullYear())
+                        .then((data) => {
+                            console.log(data)
+                            setCatalogNames(data.message)
+                        })
 
                     // принятые каталоги
                     setCatalogNames(['GIAC', 'ANC'])
-                    // пока нет
-                    setOptions({ ...options, catalog: catalogNames[0] })
                 } else {
                     setCatalogNames([])
                     setErrorDateText('Выберите даты в рамках одного года')

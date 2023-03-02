@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'http://',
+    baseURL: 'http://modeller:9090/',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
@@ -31,8 +31,8 @@ export const api = {
     // запросы для конструктора
     // гет запрос списка каталогов
     getCatalogNames(year) {
-        return instance.get(`/${year}`)
-            .then(res => res.json())
+        return instance.get(`catalog_list?year=${year}`)
+            .then(res => res.data)
     },
     // пост запрос на расчет
     startCalculate(data) {
@@ -43,7 +43,7 @@ export const api = {
     // Запросы в процессе расчета
     // Запрос лога
     getLog() {
-        return instance.get('')
+        return instance.get('getlog')
             .then(res => res.data)
     },
     // Запрос результата
@@ -53,7 +53,7 @@ export const api = {
     },
     // принудительное завершение выполнения задачи
     abortCalculate() {
-        return instance.get('')
+        return instance.get('abort')
             .then(res => res.data)
     }
 }

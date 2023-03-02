@@ -1,7 +1,8 @@
 import React from "react";
 import './IntervalDate.css';
 
-const IntervalDate = ({ dates }) => {
+
+const IntervalDate = ({ onChangeDate, isErrorDate, errorDateText, dates }) => {
     return (
         <div className="intervaldate">
             <h1 className="title">
@@ -13,16 +14,17 @@ const IntervalDate = ({ dates }) => {
                     className="inputs__date"
                     type="date"
                     name="date_start"
-                    value={dates.date_start || ''}
-                    readOnly />
+                    onChange={onChangeDate}
+                    value={dates.date_start || ''} />
                 <p className="inputs__text">до</p>
                 <input
                     className="inputs__date"
                     type="date"
                     name="date_end"
-                    value={dates.date_end || ''}
-                    readOnly />
+                    onChange={onChangeDate}
+                    value={dates.date_end || ''} />
             </div>
+            <span className={`inputs__error ${isErrorDate && "inputs__error_visible"}`}>{errorDateText}</span>
         </div>
     )
 }

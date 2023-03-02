@@ -10,19 +10,17 @@ const Splider = ({ data }) => {
 
     // список ключей ответа
     const keys = []
-    for (let key in data.instruments) {
-        keys.push(key)
+    for (let key in data) {
+        key !== 'success' &&
+            keys.push(key)
     };
     // формирование опций для переключения
     const options = keys.map((key, i) => <option className="charts__option" value={i}>{key}</option>);
 
-    const srcImg = '"' + data.min_size_inc_height.data + '"'
-    console.log(srcImg)
-
     const slideElements = keys.map((key, i) => {
         return (
             <img className={`slide ${activeSlide == i && 'slide_active'}`}
-                src={output}
+                src={data[key].data}
             />
         )
         // формирование массива объектов для граффиков

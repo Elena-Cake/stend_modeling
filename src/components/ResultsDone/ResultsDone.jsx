@@ -10,6 +10,7 @@ const ResultsDone = (props) => {
     const [instruments, setInstruments] = useState([])
 
     useEffect(() => {
+        console.log(props.data)
         setIntervalDates({
             end_date: props.data.end_date,
             start_date: props.data.start_date

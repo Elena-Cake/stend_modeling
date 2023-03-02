@@ -19,13 +19,13 @@ export const api = {
     },
     // гет запрос расчета для конструктора
     getNewCalc(id) {
-        return instance.get(`/${id}`)
-            .then(res => res.json())
+        return instance.get(`modelling_result?id=${id}`)
+            .then(res => res.data)
     },
     // гет запрос расчета для показа результатов
     getResultsDone(id) {
-        return instance.get(`/${id}`)
-            .then(res => res.json())
+        return instance.get(`modelling_result?id=${id}`)
+            .then(res => res.data)
     },
 
     // запросы для конструктора

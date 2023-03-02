@@ -4,7 +4,7 @@ import ChartsBar from "./ChartsBar/ChartsBar";
 import './Splider.css';
 import { output } from "../../../constans/res";
 
-const Splider = ({ dates, data }) => {
+const Splider = ({ data }) => {
 
     const [activeSlide, setActiveSlide] = useState(0);
 
@@ -15,6 +15,9 @@ const Splider = ({ dates, data }) => {
     };
     // формирование опций для переключения
     const options = keys.map((key, i) => <option className="charts__option" value={i}>{key}</option>);
+
+    const srcImg = '"' + data.min_size_inc_height.data + '"'
+    console.log(srcImg)
 
     const slideElements = keys.map((key, i) => {
         return (

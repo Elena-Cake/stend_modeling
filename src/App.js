@@ -134,7 +134,6 @@ function App() {
 
     setIsResaltDownload(true)
     setResData(newCulc)
-    setIsVisibleResultsDone(true)
     setSelectedId(selectedId)
     navigate('/', { replace: true })
   }
@@ -142,9 +141,13 @@ function App() {
 
   const askDataToResultsDone = (selectedId) => {
     // АПИ - запросить данные для готового расчета
-    // api.getResultsDone(selectedId)
-    setDataResultsDone(newCulc)
-    navigate('/resultsdone', { replace: true })
+    api.getResultsDone(selectedId)
+      .then((res) => {
+        setDataResultsDone(res)
+        setIsVisibleResultsDone(true)
+        setDataResultsDone(res)
+        navigate('/resultsdone', { replace: true })
+      })
   }
 
 

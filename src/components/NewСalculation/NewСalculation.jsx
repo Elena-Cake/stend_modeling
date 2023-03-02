@@ -22,6 +22,7 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
     useEffect(() => {
         setDates({ date_start: resData.start_date, date_end: resData.end_date })
         setOptions({
+            name: resData.name,
             sun_elevation: resData.sun_elevation,
             detectable_snr: resData.detectable_snr,
             max_exp: resData.max_exp,

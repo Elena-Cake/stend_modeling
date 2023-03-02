@@ -26,7 +26,7 @@ const ResultsDone = (props) => {
                     <TableResultsDone instruments={instruments} />
                     {/* <Splider data={props.data} /> */}
                 </div>}
-            {!props.isVisible && <h2> Выберите расчет для загрузки на вкладке "Загрузить результаты" или запустите новый расчет</h2>}
+            {!props.isVisible && <h2> Выберите расчет для загрузки на вкладке "Завершенные расчеты" или запустите новый расчет</h2>}
         </div>
     )
 

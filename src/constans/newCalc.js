@@ -2,6 +2,7 @@ export const newCulc = {
 	start_date: "2020-01-01",
 	end_date: "2020-12-31",
 	catalog: "anc",
+	name: "АЦУК",
 	instruments: [
 		{
 			nsr: 10093,//Номер средства

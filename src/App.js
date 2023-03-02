@@ -34,6 +34,8 @@ function App() {
   const [dataLogMessage, setDataLogMessage] = useState('')
   const [dataLog, setDataLog] = useState('')
 
+  const [textInfoPopup, setTextInfoPopup] = useState({ text: '', isError: false });
+
   // для нового расчета
   const [resData, setResData] = useState({ instruments: [] });
 
@@ -150,15 +152,18 @@ function App() {
         setDataLog(status)
         console.log(status)
         if (status === 'finished') {
+          setDataLogMessage('Перейдите на вкладку "Завершенные расчеты" для запроса результатов')
+          openLoadingPopup('Расчет окончен!', false)
           // запросить и назначить данные во вкладку готового расчета
-          api.getResult()
-            .then(data => {
-              setDataResultsDone(data)
-              setIsVisibleResultsDone(true)
-              setIsCulculating(false)
-            })
+          // api.getResult()
+          //   .then(data => {
+          //     setDataResultsDone(data)
+          //     setIsVisibleResultsDone(true)
+          //     setIsCulculating(false)
+          //   })
         } else if (status === 'aborted') {
-          console.log('abort')
+          setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
+          openInfoPopup()
           setIsCulculating(false)
         } else {
           setTimeout(longAPI, 5000)
@@ -189,12 +194,12 @@ function App() {
   const abortCulculate = (e) => {
     e.preventDefault()
     closePopups()
-    setTextPopup({ text: 'Моделирование прервано', isError: true })
+    setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
     openInfoPopup()
     // api.abortCalculate()
     //   .then((data) => {
     //     closePopups()
-    //     setTextPopup({ text: 'Моделирование прервано', isError: true })
+    //     setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
     //     openInfoPopup()
     //   }) 
   }
@@ -206,15 +211,6 @@ function App() {
         <div className='main'>
           <Routes>
             <Route path="/" element={
-              <NewСalculation
-                openTelescope={openAddNSPopup}
-                openloadPopup={openLoadingPopup}
-                resData={resData}
-                setCulculationIcon={setCulculationIcon}
-                startCalculate={startCalculate}
-              />}
-            />
-            <Route path="/culculate" element={
               <NewСalculation
                 openTelescope={openAddNSPopup}
                 openloadPopup={openLoadingPopup}
@@ -248,7 +244,7 @@ function App() {
       <InfoPopup
         isOpen={isInfoPopupOpen}
         onClose={closePopups}
-        textPopup={textPopup} />
+        textPopup={textInfoPopup} />
     </BrowserRouter>
   );
 }

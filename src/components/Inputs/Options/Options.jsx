@@ -16,32 +16,43 @@ const Options = ({ onChangeOptions, catalogNames, isErrorOptions, getCatalogs, o
         return <option key={i + 1}>{item}</option>
     })
 
-
-
     return (
         <div className="option">
-            <label className="option__select">
-                <p className="form__label">Каталог</p>
-                {!isChangeDefaultCatalog &&
-                    <select
-                        className="option__select option_options"
-                        name="catalog"
+            <div>
+                <label className="option__item">
+                    <p className="form__label">Название НС</p>
+                    <input
+                        name="detectable_snr"
+                        className="option__input"
+                        placeholder="ведите название НС"
+                        required
                         onChange={onChangeOptions}
-                        onClick={onFirstChangeCatalogs}>
-                        {catalogItems}
-                    </select>
-                }
-                {isChangeDefaultCatalog &&
-                    <select
-                        className="option__select option_options"
-                        name="catalog"
-                        onChange={onChangeOptions}
-                        onClick={getCatalogs}>
-                        <option key={0} defaultValue></option>
-                        {catalogItems}
-                    </select>
-                }
-            </label>
+                        value={options.name || ''}
+                    />
+                </label>
+                <label className="option__select">
+                    <p className="form__label">Каталог</p>
+                    {!isChangeDefaultCatalog &&
+                        <select
+                            className="option__select option_options"
+                            name="catalog"
+                            onChange={onChangeOptions}
+                            onClick={onFirstChangeCatalogs}>
+                            {catalogItems}
+                        </select>
+                    }
+                    {isChangeDefaultCatalog &&
+                        <select
+                            className="option__select option_options"
+                            name="catalog"
+                            onChange={onChangeOptions}
+                            onClick={getCatalogs}>
+                            <option key={0} value="" disabled selected>выберите каталог</option>
+                            {catalogItems}
+                        </select>
+                    }
+                </label>
+            </div>
             <div className="option__items">
                 <label className="option__select">
                     <p className="form__label">Угол погружения Солнца, град</p>

@@ -7,7 +7,7 @@ const NavBar = (props) => {
 
     return (
         <div className="navbar">
-            <NavLink to="/culculate"
+            <NavLink to="/"
                 className={(state) => state.isActive ?
                     `navbar__btn navbar__btn_active` : "navbar__btn"}>
                 Новый расчет
@@ -15,12 +15,12 @@ const NavBar = (props) => {
             <NavLink to="/results"
                 className={(state) => state.isActive ?
                     `navbar__btn navbar__btn_active` : "navbar__btn"}>
-                Загрузить результаты
+                Завершенные расчеты
             </NavLink>
             <NavLink to="/resultsdone"
                 className={(state) => state.isActive ?
                     `navbar__btn navbar__btn_active` : "navbar__btn"}>
-                Последний расчет
+                Результаты моделирования
             </NavLink>
             <button className={`navbar__calc ${props.isCulculating && "navbar__calc_visible"}`} onClick={props.openLoadPopup}></button>
         </div>

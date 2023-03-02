@@ -171,9 +171,9 @@ const Results = ({ onAskConfiguration, onShowResults, onSetDataToNewCalculation,
                 ></AgGridReact>
             </div>
             <div className='button_container'>
-                {/* <button className="button__navlink" onClick={handleAskResults}>
-                    <NavLink to="/culculate" className="navlink__decoration">Загрузить конфигурацию</NavLink>
-                </button> */}
+                <button className="button__navlink" onClick={handleAskResults}>
+                    <NavLink to="/" className="navlink__decoration">Загрузить конфигурацию</NavLink>
+                </button>
                 <button className="button__navlink" onClick={handleShowResults}>
                     <NavLink to="/resultsdone" className="navlink__decoration">Показать результаты расчета</NavLink>
                 </button>

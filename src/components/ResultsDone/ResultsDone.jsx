@@ -6,7 +6,6 @@ import IntervalDateDone from "./IntervalDate/IntervalDate";
 
 const ResultsDone = (props) => {
 
-    console.log(props.data)
     const [intervalDates, setIntervalDates] = useState({})
     const [instruments, setInstruments] = useState([])
 
@@ -24,7 +23,7 @@ const ResultsDone = (props) => {
                 <div className="resultsdone">
                     <IntervalDateDone dates={intervalDates} />
                     <TableResultsDone instruments={instruments} />
-                    {/* <Splider data={props.data} /> */}
+                    <Splider data={props.data} />
                 </div>}
             {!props.isVisible && <h2> Выберите расчет для загрузки на вкладке "Завершенные расчеты" или запустите новый расчет</h2>}
         </div>

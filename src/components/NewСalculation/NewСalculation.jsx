@@ -6,7 +6,7 @@ import './NewСalculation.css';
 import { api } from "../../utils/api";
 
 
-const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculationIcon, startCalculate }) => {
+const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculationIcon, startCalculate, isResaltDownload }) => {
 
     const [dates, setDates] = useState({ date_start: '', date_end: '' })
     const [options, setOptions] = useState({ sun_elevation: 6 })
@@ -124,7 +124,8 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
             <Configuration
                 onTelescope={openTelescope}
                 rowData={resData.instruments}
-                onAskCulculate={onAskCulculate} />
+                onAskCulculate={onAskCulculate}
+                isResaltDownload={isResaltDownload} />
         </div>
     )
 }

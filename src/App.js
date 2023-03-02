@@ -38,6 +38,8 @@ function App() {
 
   // для нового расчета
   const [resData, setResData] = useState({ instruments: [] });
+  const [isResaltDownload, setIsResaltDownload] = useState(false);
+
 
   // для готового расчета
   const [dataResultsDone, setDataResultsDone] = useState({})
@@ -87,6 +89,7 @@ function App() {
   // послать номер расчета для получения коонфигурации в NewСalculation
   function onAskConfiguration(id) {
     console.log(id);
+    setIsResaltDownload(true)
   }
   // послать номер расчета для просмотра результатов
   function onShowResults(id) {
@@ -218,6 +221,7 @@ function App() {
                 resData={resData}
                 setCulculationIcon={setCulculationIcon}
                 startCalculate={startCalculate}
+                isResaltDownload={isResaltDownload}
               />}
             />
             <Route path="/results" element={

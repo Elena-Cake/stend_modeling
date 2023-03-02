@@ -40,12 +40,6 @@ const TableResultsDone = ({ instruments }) => {
             <DataTable value={products} stripedRows responsiveLayout="scroll">
                 <Column field="idInstruments" header="Code"></Column>
                 <Column field="name" header="Name"></Column>
-                <Column field="latitude" header="latitude"></Column>
-                <Column field="mode" header="mode"></Column>
-                <Column field="idInstruments" header="Code"></Column>
-                <Column field="name" header="Name"></Column>
-                <Column field="latitude" header="latitude"></Column>
-                <Column field="mode" header="mode"></Column>
             </DataTable>
         </div>
     );

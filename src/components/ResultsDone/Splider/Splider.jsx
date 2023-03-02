@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import ChartsBar from "./ChartsBar/ChartsBar";
 import './Splider.css';
+import { output } from "../../../constans/res";
 
 const Splider = ({ dates, data }) => {
 
@@ -9,25 +10,30 @@ const Splider = ({ dates, data }) => {
 
     // список ключей ответа
     const keys = []
-    for (let key in data) {
-        if (key !== 'success') { keys.push(key) }
+    for (let key in data.instruments) {
+        keys.push(key)
     };
     // формирование опций для переключения
     const options = keys.map((key, i) => <option className="charts__option" value={i}>{key}</option>);
 
     const slideElements = keys.map((key, i) => {
-        // формирование массива объектов для граффиков
-        const dataChart = []
-        data[key].map((item, i) => {
-            dataChart.push({
-                name: dates[i],
-                data: data[key][i].toFixed(2)
-            })
-        })
-
         return (
-            <ChartsBar activeSlide={activeSlide} dataChart={dataChart} i={i} />
+            <img className={`slide ${activeSlide == i && 'slide_active'}`}
+                src={output}
+            />
         )
+        // формирование массива объектов для граффиков
+        // const dataChart = []
+        // data[key].map((item, i) => {
+        //     dataChart.push({
+        //         name: dates[i],
+        //         data: data[key][i].toFixed(2)
+        //     })
+        // })
+
+        // return (
+        //     <ChartsBar activeSlide={activeSlide} dataChart={dataChart} i={i} />
+        // )
     })
 
     // кнопки переключения слайдов

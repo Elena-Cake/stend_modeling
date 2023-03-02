@@ -130,7 +130,9 @@ const Results = ({ onAskConfiguration, onShowResults, onSetDataToNewCalculation,
     const handleAskResults = useCallback(() => {
         let selectedId
         gridRef.current.api.forEachNode(function (node) {
-            if (node.selected) { selectedId = node.key }
+            if (node.selected) {
+                selectedId = node.key
+            }
         });
         onAskConfiguration(selectedId)
         // АПИ - запросить данные для конструктора

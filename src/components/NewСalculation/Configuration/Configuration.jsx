@@ -62,7 +62,7 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const defaultColDef = useMemo(() => {
         return {
             flex: 1,
-            minWidth: 200,
+            minWidth: 150,
             resizable: true,
             headerCheckboxSelection: isFirstColumn,
             checkboxSelection: isFirstColumn,

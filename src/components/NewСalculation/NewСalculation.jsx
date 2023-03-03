@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import Configuration from "./Configuration/Configuration";
 import Inputs from "../Inputs/Inputs";
 import './NewСalculation.css';
+import { api } from "../../utils/api";
 
 
-const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculationIcon }) => {
+const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculationIcon, startCalculate, isResaltDownload, selectedIdResDone, askDataToResultsDone }) => {
 
     const [dates, setDates] = useState({ date_start: '', date_end: '' })
     const [options, setOptions] = useState({ sun_elevation: 6 })
@@ -18,6 +19,20 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
 
     const [catalogNames, setCatalogNames] = useState([])
 
+    useEffect(() => {
+        setDates({ date_start: resData.start_date, date_end: resData.end_date })
+        setOptions({
+            name: resData.name,
+            sun_elevation: resData.sun_elevation,
+            detectable_snr: resData.detectable_snr,
+            max_exp: resData.max_exp,
+            max_track_length: resData.max_track_length,
+            zenith_sky_brightness: resData.zenith_sky_brightness,
+            catalog: resData.catalog
+        })
+        setCatalogNames([resData.catalog])
+    }, [resData])
+
     function onChangeDate(e) {
         const { name, value } = e.target
         setDates({ ...dates, [name]: value })
@@ -29,27 +44,39 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
     }
 
     // назначение дат
-    useEffect(() => {
+    const getCatalogs = () => {
         if (dates.date_start !== '' && dates.date_end !== '') {
             const dateStart = new Date(dates.date_start)
             const dateEnd = new Date(dates.date_end)
             if (dateStart < dateEnd) {
                 if (dateStart.getFullYear() === dateEnd.getFullYear()) {
                     setIsErrorDate(false)
-                    // АПИ - гет каталог___________________________________________________________________
+                    // АПИ - гет имен каталогов
                     console.log(dateStart.getFullYear())
+                    api.getCatalogNames(dateStart.getFullYear())
+                        .then((data) => {
+                            console.log(data)
+                            setCatalogNames(data.message)
+                        })
+
                     // принятые каталоги
                     setCatalogNames(['GIAC', 'ANC'])
                 } else {
+                    setCatalogNames([])
                     setErrorDateText('Выберите даты в рамках одного года')
                     setIsErrorDate(true)
                 }
             } else {
+                setCatalogNames([])
                 setErrorDateText('Интервал дат некорректен')
                 setIsErrorDate(true)
             }
+        } else {
+            setCatalogNames([])
+            setErrorDateText('Интервал дат некорректен')
+            setIsErrorDate(true)
         }
-    }, [dates]);
+    }
 
     // нажатие запуска расчета
     function onAskCulculate(arrId) {
@@ -72,7 +99,8 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
                 ...options,
                 instruments: selectedId
             }
-            // АПИ готового расчета
+            // АПИ на старт расчета
+            // startCalculate(reqData)
             console.log(reqData)
         }
     }, [selectedId]);
@@ -89,11 +117,17 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
                 errorDateText={errorDateText}
                 onChangeOptions={onChangeOptions}
                 catalogNames={catalogNames}
-                isErrorOptions={isErrorOptions} />
+                isErrorOptions={isErrorOptions}
+                getCatalogs={getCatalogs}
+                dates={dates}
+                options={options} />
             <Configuration
                 onTelescope={openTelescope}
                 rowData={resData.instruments}
-                onAskCulculate={onAskCulculate} />
+                onAskCulculate={onAskCulculate}
+                isResaltDownload={isResaltDownload}
+                selectedId={selectedIdResDone}
+                askDataToResultsDone={askDataToResultsDone} />
         </div>
     )
 }

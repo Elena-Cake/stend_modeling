@@ -11,7 +11,7 @@
   width: 92%;
   margin: auto auto;
   padding: 15px 0;
-  /* border: 1px solid black; */
+  position: relative;
 }
 
 .button__bottom {
@@ -30,11 +30,41 @@
   color: white;
 }
 
+.button__disable {
+  border: 0.1px solid rgba(0, 24, 77, 0.5);
+  min-width: 200px;
+  max-width: 400px;
+  height: 30px;
+  background-color: rgba(0, 37, 117, 0.237);
+  border-radius: 10px;
+  margin: 15px 5px;
+  font-size: 17px;
+  opacity: .8;
+}
+
+.button__navlink {
+  border: 0;
+  background-color: inherit;
+}
+
+.button_container {
+  position: absolute;
+  bottom: 0;
+}
+
 .navlink__decoration {
   text-decoration: none;
   color: #0a0141;
   padding: 10px;
   border-radius: 10px;
+  border: 0.1px solid rgba(0, 24, 77, 0.5);
+  min-width: 200px;
+  max-width: 400px;
+  height: 30px;
+  background-color: rgba(0, 37, 117, 0.237);
+  border-radius: 10px;
+  margin: 10px 5px;
+  font-size: 17px;
 }
 
 .navlink__decoration:hover {

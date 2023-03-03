@@ -1,33 +1,38 @@
 
 import React, { useState } from "react";
-import ChartsBar from "./ChartsBar/ChartsBar";
 import './Splider.css';
 
-const Splider = ({ dates, data }) => {
+const Splider = ({ data }) => {
 
     const [activeSlide, setActiveSlide] = useState(0);
 
     // список ключей ответа
     const keys = []
     for (let key in data) {
-        if (key !== 'success') { keys.push(key) }
+        key !== 'success' &&
+            keys.push(key)
     };
     // формирование опций для переключения
-    const options = keys.map((key, i) => <option className="charts__option" value={i}>{key}</option>);
+    const options = keys.map((key, i) => <option className="charts__option" value={i}>{key.split('_').join(' ')}</option>);
 
     const slideElements = keys.map((key, i) => {
-        // формирование массива объектов для граффиков
-        const dataChart = []
-        data[key].map((item, i) => {
-            dataChart.push({
-                name: dates[i],
-                data: data[key][i].toFixed(2)
-            })
-        })
-
         return (
-            <ChartsBar activeSlide={activeSlide} dataChart={dataChart} i={i} />
+            <img className={`slide ${activeSlide == i && 'slide_active'}`}
+                src={data[key].data}
+            />
         )
+        // формирование массива объектов для граффиков
+        // const dataChart = []
+        // data[key].map((item, i) => {
+        //     dataChart.push({
+        //         name: dates[i],
+        //         data: data[key][i].toFixed(2)
+        //     })
+        // })
+
+        // return (
+        //     <ChartsBar activeSlide={activeSlide} dataChart={dataChart} i={i} />
+        // )
     })
 
     // кнопки переключения слайдов
@@ -50,7 +55,7 @@ const Splider = ({ dates, data }) => {
                 {options}
             </select>
             <p className="charts__title">
-                {keys[activeSlide]}
+                {keys[activeSlide].split('_').join(' ')}
             </p>
             <div className="slider">
                 {slideElements}

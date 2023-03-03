@@ -27,7 +27,7 @@ class ProductService {
     }
 }
 
-const TableResultsDone = ({ }) => {
+const TableResultsDone = ({ instruments }) => {
 
     const [products, setProducts] = useState(dataRows);
 
@@ -40,12 +40,6 @@ const TableResultsDone = ({ }) => {
             <DataTable value={products} stripedRows responsiveLayout="scroll">
                 <Column field="idInstruments" header="Code"></Column>
                 <Column field="name" header="Name"></Column>
-                <Column field="latitude" header="latitude"></Column>
-                <Column field="mode" header="mode"></Column>
-                <Column field="idInstruments" header="Code"></Column>
-                <Column field="name" header="Name"></Column>
-                <Column field="latitude" header="latitude"></Column>
-                <Column field="mode" header="mode"></Column>
             </DataTable>
         </div>
     );

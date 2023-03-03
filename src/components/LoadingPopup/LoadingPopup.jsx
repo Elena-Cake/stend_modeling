@@ -1,12 +1,17 @@
 import React from "react";
 import './LoadingPopup.css';
 
-const LoadingPopup = ({ isOpen, onClose, dataLog, textPopup = { text: "ой", isError: true }, dataLogMessage = '', onAbortClick }) => {
+const LoadingPopup = ({
+    isOpen, onClose, dataLog,
+    textPopup = { text: "ой", isError: true },
+    dataLogMessage = '', abortCulculate,
+    isCulculating
+}) => {
     const classPopup = `popup popup-loading ${isOpen ? 'popup_opened' : ''}`
 
-    const handleAbortClick = (e) => {
+    const onClosePopup = (e) => {
         e.preventDefault()
-        onAbortClick()
+        onClose()
     }
 
     return (
@@ -23,7 +28,9 @@ const LoadingPopup = ({ isOpen, onClose, dataLog, textPopup = { text: "ой", is
                     <div className="popup__log">
                         {dataLog}
                     </div>
-                    <button className=" popup__button" onClick={(e) => handleAbortClick(e)}>Прервать текущий расчет</button>
+                    <button className=" popup__button" onClick={onClosePopup}>Продолжить</button>
+                    {isCulculating &&
+                        <button className=" popup__button" onClick={abortCulculate}>Прервать текущий расчет</button>}
                 </form>
             </div>
         </div>

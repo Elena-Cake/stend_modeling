@@ -6,7 +6,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import './Configuration.css';
 
-const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
+const Configuration = ({ onTelescope, rowData, onAskCulculate, isResaltDownload, selectedId, askDataToResultsDone }) => {
     const gridRef = useRef();
     const containerStyle = useMemo(() => ({ width: '100%', height: '50vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
@@ -15,8 +15,9 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
         { checkboxSelection: true, maxWidth: 50, pinned: true },
         { field: 'nsr', headerName: "Номер средства", headerTooltip: "Номер средства" },
         { field: 'cod', headerName: "Название", headerTooltip: "Название средства" },
-        { field: 'latitude', headerName: "Геодезическая широта, град", headerTooltip: "Геодезическая широта в градусах" },
-        { field: 'longitude', headerName: "Геодезическая долгота, град", headerTooltip: "Геодезическая долгота в градусах" },
+        { field: 'locname', headerName: "Местоположение", headerTooltip: "Местоположение" },
+        { field: 'latitude', headerName: "Геодезическая широта, град", headerTooltip: "Геодезическая широта в градусах", hide: true },
+        { field: 'longitude', headerName: "Геодезическая долгота, град", headerTooltip: "Геодезическая долгота в градусах", hide: true },
         { field: 'altitude', headerName: "Высота, м", headerTooltip: "Высота в метрах" },
         { field: 'aperture', headerName: "Апертура, см", headerTooltip: "Апертура в см" },
         { field: 'secondary_coefficient', headerName: "Коэффициент экранирования", headerTooltip: "Коэффициент экранирования" },
@@ -48,7 +49,6 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
                 suppressCount: true,
                 checkbox: true,
             },
-
         };
     }, []);
 
@@ -62,7 +62,7 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
     const defaultColDef = useMemo(() => {
         return {
             flex: 1,
-            minWidth: 150,
+            wigth: 200,
             resizable: true,
             headerCheckboxSelection: isFirstColumn,
             checkboxSelection: isFirstColumn,
@@ -82,6 +82,10 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
             });
             onAskCulculate(selectedIds)
         }, []);
+    // при нажатии запроса на показ результата
+    const handleAskResult = () => {
+        askDataToResultsDone(selectedId)
+    }
 
     return (
         <div className="configuration">
@@ -96,15 +100,17 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate }) => {
                         defaultColDef={defaultColDef}
                         autoGroupColumnDef={autoGroupColumnDef}
                         groupDisplayType={'multipleColumns'}
-                        animateRows={true}
                         rowSelection='multiple'
-
-
                     ></AgGridReact>
                 </div>
             </div>
             <button className="button__bottom" onClick={handleAskCulculate}>Запустить расчет</button>
-
+            {isResaltDownload &&
+                <button
+                    className="button__bottom"
+                    onClick={handleAskResult}>
+                    Посмотреть результаты расчета №{selectedId}
+                </button>}
         </div>
     )
 }

@@ -10,17 +10,22 @@ import TelescopePopup from './components/NewСalculation/TelescopePopup/Telescop
 import AddNSPopup from './components/NewСalculation/TelescopePopup/AddNSPopup/AddNSPopup';
 import LoadingPopup from './components/LoadingPopup/LoadingPopup';
 
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Navigate, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import ResultsDone from './components/ResultsDone/ResultsDone';
 
 import configuration from './constans/configurations'
 import { newCulc } from './constans/newCalc';
+import { api } from './utils/api';
+import InfoPopup from './components/InfoPopup/InfoPopup';
 
 function App() {
+
+  const navigate = useNavigate();
 
   const [isTelescopePopupOpen, setIsTelescopePopupOpen] = useState(false);
   const [isAddNSPopupOpen, setIsAddNSPopupOpen] = useState(false);
   const [isLoadingPopupOpen, setIsLoadingPopupOpen] = useState(false);
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
   // видимость иконки расчета
   const [isCulculating, setIsCulculating] = useState(false);
@@ -31,8 +36,15 @@ function App() {
   const [dataLogMessage, setDataLogMessage] = useState('')
   const [dataLog, setDataLog] = useState('')
 
+  const [textInfoPopup, setTextInfoPopup] = useState({ text: '', isError: false });
+
   // для нового расчета
   const [resData, setResData] = useState({ instruments: [] });
+  const [isResaltDownload, setIsResaltDownload] = useState(false);
+  const [selectedId, setSelectedId] = useState('');
+
+  // для готового расчета
+  const [dataResultsDone, setDataResultsDone] = useState({})
 
   // показ и сокрытие иконки расчета
   function setCulculationIcon() {
@@ -46,9 +58,7 @@ function App() {
   function openAddNSPopup() {
     setIsAddNSPopupOpen(true)
   }
-  function closeAddNSPopup() {
-    setIsAddNSPopupOpen(false)
-  }
+
 
   // попап добавления в базу
   function openTelescopePopup() {
@@ -56,6 +66,11 @@ function App() {
   }
   function closeTelescopePopup() {
     setIsTelescopePopupOpen(false)
+  }
+
+  // попап оповещения расчетов
+  function openInfoPopup() {
+    setIsInfoPopupOpen(true)
   }
 
   // попап ожидания расчетов
@@ -66,17 +81,11 @@ function App() {
   function openLoadPopup() {
     setIsLoadingPopupOpen(true)
   }
-  function closeLoadingPopup() {
+  function closePopups(e) {
     setIsLoadingPopupOpen(false)
-  }
-
-  // послать номер расчета для получения коонфигурации в NewСalculation
-  function onAskConfiguration(id) {
-    console.log(id);
-  }
-  // послать номер расчета для просмотра результатов
-  function onShowResults(id) {
-    console.log(id);
+    setIsInfoPopupOpen(false)
+    setIsTelescopePopupOpen(false)
+    setIsAddNSPopupOpen(false)
   }
 
   // формирование данных для таблицы готовых расчетов
@@ -114,15 +123,98 @@ function App() {
         gso_survey: gso_survey === 'on' ? true : false
       }]
     })
-    closeAddNSPopup()
+    closePopups()
   }
 
-  const onSetDataToNewCalculation = (data) => {
-    setResData(data)
+  // кнопки из резалтс
+  const askDataToNewCalculation = (selectedId) => {
+
+    // АПИ - запросить данные для конструктора
+    // api.getNewCalc(selectedId)
+
+    setIsResaltDownload(true)
+    setResData(newCulc)
+    setSelectedId(selectedId)
+    navigate('/', { replace: true })
+  }
+
+
+  const askDataToResultsDone = (selectedId) => {
+    // АПИ - запросить данные для готового расчета
+    api.getResultsDone(selectedId)
+      .then((res) => {
+        setDataResultsDone(res)
+        setIsVisibleResultsDone(true)
+        setDataResultsDone(res)
+        navigate('/resultsdone', { replace: true })
+      })
+  }
+
+
+  // получение статуса работы
+  function longAPI() {
+    let status
+    api.getLog()
+      .then((res) => {
+        status = res.message == [] ? '' : res.message;
+        setDataLog(status)
+        console.log(status)
+        if (status === 'finished') {
+          setDataLogMessage('Перейдите на вкладку "Завершенные расчеты" для запроса результатов')
+          openLoadingPopup('Расчет окончен!', false)
+          // запросить и назначить данные во вкладку готового расчета
+          // api.getResult()
+          //   .then(data => {
+          //     setDataResultsDone(data)
+          //     setIsVisibleResultsDone(true)
+          //     setIsCulculating(false)
+          //   })
+        } else if (status === 'aborted') {
+          setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
+          openInfoPopup()
+          setIsCulculating(false)
+        } else {
+          setTimeout(longAPI, 5000)
+        }
+      })
+  }
+
+  // апи запрос на расчет
+  const startCalculate = (dataRequest) => {
+    api.startCalculate(dataRequest)
+      .then((data) => {
+        if (data.success === 1) {
+          setTextPopup({ text: 'Моделирование запущено', isError: false })
+          setDataLogMessage(data.message)
+          openLoadingPopup()
+          longAPI()
+        } else if (data.success === 0) {
+          setTextPopup({ text: 'Не удалось запустить оценку', isError: true })
+          setDataLogMessage(data.message)
+          openLoadingPopup()
+          longAPI()
+        }
+      })
+  }
+
+
+  // прервать вычисление
+  const abortCulculate = (e) => {
+    e.preventDefault()
+    closePopups()
+    setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
+    openInfoPopup()
+
+    // api.abortCalculate()
+    //   .then((data) => {
+    //     closePopups()
+    //     setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
+    //     openInfoPopup()
+    //   }) 
   }
 
   return (
-    <BrowserRouter>
+    <div>
       <div className="App">
         <div className='header'><NavBar isCulculating={isCulculating} openLoadPopup={openLoadPopup} /></div>
         <div className='main'>
@@ -133,23 +225,18 @@ function App() {
                 openloadPopup={openLoadingPopup}
                 resData={resData}
                 setCulculationIcon={setCulculationIcon}
-              />}
-            />
-            <Route path="/culculate" element={
-              <NewСalculation
-                openTelescope={openAddNSPopup}
-                openloadPopup={openLoadingPopup}
-                resData={resData}
-                setCulculationIcon={setCulculationIcon}
+                startCalculate={startCalculate}
+                isResaltDownload={isResaltDownload}
+                selectedIdResDone={selectedId}
+                askDataToResultsDone={askDataToResultsDone}
               />}
             />
             <Route path="/results" element={
               <Results
-                onAskConfiguration={onAskConfiguration}
-                onShowResults={onShowResults}
-                onSetDataToNewCalculation={onSetDataToNewCalculation}
+                onSetDataToNewCalculation={askDataToNewCalculation}
+                onSetDataToResultsDone={askDataToResultsDone}
               />} />
-            <Route path="/resultsdone" element={<ResultsDone isVisible={isVisibleResultsDone} />} />
+            <Route path="/resultsdone" element={<ResultsDone isVisible={isVisibleResultsDone} data={dataResultsDone} />} />
           </Routes>
         </div>
       </div>
@@ -157,14 +244,19 @@ function App() {
       <TelescopePopup isOpen={isTelescopePopupOpen} onClose={closeTelescopePopup} addNs={openAddNSPopup} />
       <LoadingPopup
         isOpen={isLoadingPopupOpen}
-        onClose={closeLoadingPopup}
+        onClose={closePopups}
         dataLog={dataLog}
         dataLogMessage={dataLogMessage}
         textPopup={textPopup}
+        abortCulculate={abortCulculate}
+        isCulculating={isCulculating}
       />
-      <AddNSPopup isOpen={isAddNSPopupOpen} onClose={closeAddNSPopup} onAddTelescope={addTelescope} />
-
-    </BrowserRouter>
+      <AddNSPopup isOpen={isAddNSPopupOpen} onClose={closePopups} onAddTelescope={addTelescope} />
+      <InfoPopup
+        isOpen={isInfoPopupOpen}
+        onClose={closePopups}
+        textPopup={textInfoPopup} />
+    </div>
   );
 }
 

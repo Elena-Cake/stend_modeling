@@ -104,13 +104,18 @@ const Configuration = ({ onTelescope, rowData, onAskCulculate, isResaltDownload,
                     ></AgGridReact>
                 </div>
             </div>
-            <button className="button__bottom" onClick={handleAskCulculate}>Запустить расчет</button>
-            {isResaltDownload &&
-                <button
-                    className="button__bottom"
-                    onClick={handleAskResult}>
-                    Посмотреть результаты расчета №{selectedId}
-                </button>}
+            <div className='container__button'>
+                <button className="button__bottom" onClick={handleAskCulculate}>Запустить расчет</button>
+                {isResaltDownload &&
+                    <div>
+
+                        <button
+                            className="button__bottom"
+                            onClick={handleAskResult}>
+                            Посмотреть результаты расчета №{selectedId}
+                        </button>
+                    </div>}
+            </div>
         </div>
     )
 }

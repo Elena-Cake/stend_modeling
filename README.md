@@ -10,9 +10,12 @@ cd C:\Program Files (x86)\Google\Chrome\Application
 chrome.exe --disable-web-security --user-data-dir="C:\temp"
 chrome.exe --user-data-dir="C:\temp" --disable-web-security --disable-site-isolation-trials
 
--прописать мин макм значения
+// for start
+// node src/utils/proxyServer.js
 
--последний расчет сделать
+-прописать мин макм значения + нет валидации.. бесполезно
+
+-последний расчет сделать .. запрос с ошибкой, почему
 
 -вывод графиков
 -таблица готового на 4 колонки в newCalc в конце /

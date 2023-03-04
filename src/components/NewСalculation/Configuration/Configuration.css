@@ -13,3 +13,7 @@
 .button__bottom:hover .result__link-btn {
     color: rgb(255, 255, 255);
 }
+
+.container__button {
+    display: flex;
+}

@@ -6,6 +6,7 @@ const Splider = ({ data }) => {
 
     const [activeSlide, setActiveSlide] = useState(0);
 
+    console.log(data)
     // список ключей ответа
     const keys = []
     for (let key in data) {

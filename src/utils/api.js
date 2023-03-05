@@ -6,7 +6,6 @@ import axios from "axios";
 const BASE_URL = 'http://localhost:3030'
 
 export const api = {
-
     // запросы для таблицы результатов
     getResults() {
         return axios.get(BASE_URL + '/modelling_result_list', {

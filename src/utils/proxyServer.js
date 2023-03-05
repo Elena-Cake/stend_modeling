@@ -9,9 +9,10 @@ app.use(cors({
     origin: '*'
 }))
 
-app.get(':endpoint([\\/\\w\\.-]*)', (req, res) => {
-    let endpoint = 'http://modeller:9090' + req.params.endpoint
+app.get(':endpoint', (req, res) => {
 
+    let endpoint = 'http://modeller:9090' + req.params.endpoint
+    console.log(endpoint)
     axios.get(endpoint).then(response => {
         res.json(response.data)
     }).catch(err => {
@@ -25,3 +26,4 @@ app.listen(PORT, () => {
 
 // for start
 //  node src/utils/proxyServer.js
+

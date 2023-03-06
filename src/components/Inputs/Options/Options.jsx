@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useFormAndValidation } from "../../../hooks/useFormAndValidation";
 import './Options.css';
 
-const Options = ({ onChangeOptions, catalogNames, isErrorOptions, getCatalogs, options }) => {
+const Options = ({ onChangeOptions, catalogNames, isErrorOptions, getCatalogs, options, isResaltDownload }) => {
 
     const [isChangeDefaultCatalog, setIsChangeDefaultCatalog] = useState(false)
 
@@ -19,17 +19,18 @@ const Options = ({ onChangeOptions, catalogNames, isErrorOptions, getCatalogs, o
     return (
         <div className="option">
             <div>
-                <label className="option__item">
-                    <p className="form__label">Название НС</p>
-                    <input
-                        name="detectable_snr"
-                        className="option__input"
-                        placeholder="ведите название НС"
-                        required
-                        onChange={onChangeOptions}
-                        value={options.name || ''}
-                    />
-                </label>
+                {isResaltDownload &&
+                    <label className="option__item">
+                        <p className="form__label">Название НС</p>
+                        <input
+                            className="option__input"
+                            readOnly
+                            required
+                            onChange={onChangeOptions}
+                            value={options.name || ''}
+                        />
+                    </label>
+                }
                 <label className="option__select">
                     <p className="form__label">Каталог</p>
                     {!isChangeDefaultCatalog &&

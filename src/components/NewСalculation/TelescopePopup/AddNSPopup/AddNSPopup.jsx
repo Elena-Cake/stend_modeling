@@ -42,7 +42,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                         <p className="form__label">Номер средства</p>
                         <input
                             name="nsr"
-                            type="number"
+                            //type="number"
                             className="form__input"
                             placeholder="Введите номер средства"
                             required
@@ -75,7 +75,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="latitude"
                             className="form__input"
                             placeholder="Введите широту в градусах"
-                            type="number"
+                            //type="number"
                             min="-90"
                             max="90"
                             required
@@ -88,7 +88,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="longitude"
                             className="form__input"
                             placeholder="Введите долготу в градусах"
-                            type="number"
+                            //type="number"
                             min="-180"
                             max="180"
                             required
@@ -101,7 +101,6 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="altitude"
                             className="form__input"
                             placeholder="Введите высоту в метрах"
-                            type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -113,7 +112,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="aperture"
                             className="form__input"
                             placeholder="Введите апертуру в см"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -125,9 +124,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="secondary_coefficient"
                             className="form__input"
                             placeholder="Введите коэффициент экранирования"
-                            type="number"
-                            min="0"
-                            max="1"
+                            //type="number"
                             required
                             onChange={handleChange}
                         />
@@ -138,7 +135,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="pixel_scale"
                             className="form__input"
                             placeholder="Введите масштаб пикселя"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -150,7 +147,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="readout_noise"
                             className="form__input"
                             placeholder="Введите шум считывания"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -162,7 +159,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="fovx"
                             className="form__input"
                             placeholder="Введите поле зрения по X"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -174,7 +171,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="fovy"
                             className="form__input"
                             placeholder="Введите поле зрения по Y"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -186,7 +183,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="frame_readout"
                             className="form__input"
                             placeholder="Введите время считывания кадра в буфер"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -198,7 +195,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="frame_flush"
                             className="form__input"
                             placeholder="Введите время сохранения кадра на ФС"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -210,7 +207,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="task_switch_time"
                             className="form__input"
                             placeholder="Введите время на смену задания"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -222,7 +219,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="stabilization_time"
                             className="form__input"
                             placeholder="Введите время на стабилизацию"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -244,7 +241,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="slew_vel_alpha"
                             className="form__input"
                             placeholder="Введите cкорость перенаведения по оси альфа"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -256,7 +253,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="slew_vel_delta"
                             className="form__input"
                             placeholder="Введите скорость перенаведения по оси дельта"
-                            type="number"
+                            //type="number"
                             min="0"
                             required
                             onChange={handleChange}
@@ -268,7 +265,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="min_elevation"
                             className="form__input"
                             placeholder="Введите минимальный угол места"
-                            type="number"
+                            //type="number"
                             min="0"
                             max="90"
                             required
@@ -281,7 +278,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="transmittivity"
                             className="form__input"
                             placeholder="Введите коэффициент пропускания"
-                            type="number"
+                            //type="number"
                             min="0"
                             max="1"
                             required
@@ -294,7 +291,7 @@ const AddNSPopup = ({ isOpen, onClose, onAddTelescope }) => {
                             name="quantum_efficiency"
                             className="form__input"
                             placeholder="Введите квантовую эффективность"
-                            type="number"
+                            //type="number"
                             min="0"
                             max="1"
                             required

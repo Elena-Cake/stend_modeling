@@ -4,7 +4,8 @@ import './Inputs.css';
 import Options from "./Options/Options";
 
 const Inputs = ({ onChangeDate, isErrorDate, onChangeOptions,
-    errorDateText, catalogNames, isErrorOptions, getCatalogs, dates, options }) => {
+    errorDateText, catalogNames, isErrorOptions, getCatalogs,
+    dates, options, isResaltDownload }) => {
 
     return (
         <div className="inputs">
@@ -18,7 +19,8 @@ const Inputs = ({ onChangeDate, isErrorDate, onChangeOptions,
                 catalogNames={catalogNames}
                 isErrorOptions={isErrorOptions}
                 getCatalogs={getCatalogs}
-                options={options} />
+                options={options}
+                isResaltDownload={isResaltDownload} />
         </div>
     )
 }

@@ -269,7 +269,6 @@ function App() {
 
   // сформировать таблицу для Results Done из Results
   useEffect(() => {
-    // alert(rowDataResults)
     const rowData = []
     rowDataResults.forEach((result) => {
       if (result.key === selectedIdToResDone) {
@@ -280,6 +279,9 @@ function App() {
     })
   }, [selectedIdToResDone])
 
+  // useEffect(() => {
+  //   alert(rowDataResults)
+  // }, [rowDataResults])
 
   return (
     <div>

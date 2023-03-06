@@ -120,7 +120,8 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
                 isErrorOptions={isErrorOptions}
                 getCatalogs={getCatalogs}
                 dates={dates}
-                options={options} />
+                options={options}
+                isResaltDownload={isResaltDownload} />
             <Configuration
                 onTelescope={openTelescope}
                 rowData={resData.instruments}

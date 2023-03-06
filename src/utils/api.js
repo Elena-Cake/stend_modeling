@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// const BASE_URL = 'http://modeller:9090'
+const BASE_URL = 'http://modeller:9090'
 
 // для работы нужно поднять сервер из utils/proxyServer.js
-const BASE_URL = 'http://localhost:3030'
+// const BASE_URL = 'http://localhost:3030'
 
 export const api = {
     // запросы для таблицы результатов

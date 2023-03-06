@@ -23,7 +23,7 @@ const ResultsDone = (props) => {
             {props.isVisible &&
                 <div className="resultsdone">
                     <IntervalDateDone dates={intervalDates} />
-                    <TableResultsDone instruments={instruments} />
+                    <TableResultsDone instruments={instruments} rowDataTable={props.rowDataTable} />
                     <Splider data={props.data} />
                 </div>}
             {!props.isVisible && <h2> Выберите расчет для загрузки на вкладке "Завершенные расчеты" или запустите новый расчет</h2>}

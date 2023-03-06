@@ -9,10 +9,12 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 import { dataRows } from '../../../constans/changeResStructure'
 
-const TableResultsDone = ({ rowData }) => {
+const TableResultsDone = ({ rowDataTable }) => {
     const gridRef = useRef();
     const containerStyle = useMemo(() => ({ width: '100%', height: '50vh' }), []);
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
+
+    console.log(rowDataTable)
 
     const [columnDefs, setColumnDefs] = useState([
         { field: 'nsr', headerName: "Номер средства", headerTooltip: "Номер средства" },
@@ -43,6 +45,7 @@ const TableResultsDone = ({ rowData }) => {
         { field: 'gso_survey', headerName: "Работа по геостационарной области", headerTooltip: "Работа по геостационарной области", hide: true }
     ]);
 
+
     const autoGroupColumnDef = useMemo(() => {
         return {
             headerValueGetter: (params) => `${params.colDef.headerName}`,
@@ -72,7 +75,7 @@ const TableResultsDone = ({ rowData }) => {
                 <div style={gridStyle} className="ag-theme-alpine ">
                     <AgGridReact
                         ref={gridRef}
-                        rowData={rowData}
+                        rowData={rowDataTable}
                         columnDefs={columnDefs}
                         defaultColDef={defaultColDef}
                         autoGroupColumnDef={autoGroupColumnDef}

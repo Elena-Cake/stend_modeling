@@ -9,9 +9,19 @@ app.use(cors({
     origin: '*'
 }))
 
-app.get(':endpoint', (req, res) => {
+app.get('/modelling_result_list', (req, res) => {
 
-    let endpoint = 'http://modeller:9090' + req.params.endpoint
+    let endpoint = 'http://modeller:9090' + '/modelling_result_list'
+    console.log(endpoint)
+    axios.get(endpoint).then(response => {
+        res.json(response.data)
+    }).catch(err => {
+        res.send(err)
+    })
+})
+
+app.get('/modelling_result', (req, res) => {
+    let endpoint = 'http://modeller:9090' + '/modelling_result/?id=' + req.query.id
     console.log(endpoint)
     axios.get(endpoint).then(response => {
         res.json(response.data)

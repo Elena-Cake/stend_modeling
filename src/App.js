@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState, useEffect } from 'react';
 import './App.css';
 
@@ -38,13 +38,18 @@ function App() {
 
   const [textInfoPopup, setTextInfoPopup] = useState({ text: '', isError: false });
 
+  // для таблицы результатов
+  const [rowDataResults, setRowDataResults] = useState([]);
+
   // для нового расчета
   const [resData, setResData] = useState({ instruments: [] });
   const [isResaltDownload, setIsResaltDownload] = useState(false);
   const [selectedId, setSelectedId] = useState('');
 
   // для готового расчета
+  const [selectedIdToResDone, setSelectedIdToResDone] = useState('')
   const [dataResultsDone, setDataResultsDone] = useState({})
+  const [rowDataResultsDone, setRowDataResultsDone] = useState([]);
 
   // показ и сокрытие иконки расчета
   function setCulculationIcon() {
@@ -88,12 +93,60 @@ function App() {
     setIsAddNSPopupOpen(false)
   }
 
-  // формирование данных для таблицы готовых расчетов
-  const changeResStructure = (res) => {
-    const rowDataGenerated = res.instruments;
+  // запрос данных для таблицы результатов
+  const askDataToResults = () => {
+    api.getResults()
+      .then((res) => {
+        console.log(res)
+        setRowDataResults(changeResStructure(res.configurations))
+      })
+  }
 
+  const changeResStructure = (configurations) => {
+    const rowDataGenerated = [];
+    for (let key in configurations) {
+      configurations[key].instruments.map((item) => {
+        const rowsData = {
+          configuration: key,
+          idInstruments: item.nsr,
+          cod: item.cod,
+          locname: item.locname,
+          latitude: item.latitude,
+          longitude: item.longitude,
+          altitude: item.altitude,
+          aperture: item.aperture,
+          secondary_coefficient: item.secondary_coefficient,
+          pixel_scale: item.pixel_scale,
+          readout_noise: item.readout_noise,
+          fovx: item.fovx,
+          fovy: item.fovy,
+          frame_readout: item.frame_readout,
+          frame_flush: item.frame_flush,
+          task_switch_time: item.task_switch_time,
+          stabilization_time: item.stabilization_time,
+          mount_type: item.mount_type,
+          slew_vel_alpha: item.slew_vel_alpha,
+          slew_vel_delta: item.slew_vel_delta,
+          min_elevation: item.min_elevation,
+          transmittivity: item.transmittivity,
+          quantum_efficiency: item.quantum_efficiency,
+          mode: item.mode,
+          noko_twilight: item.noko_twilight,
+          noko: item.noko,
+          gso_survey: item.gso_survey
+        }
+        rowDataGenerated.push(rowsData)
+      })
+    }
     return rowDataGenerated
   }
+
+  // формирование данных для таблицы готовых расчетов
+  // const changeResStructure = (res) => {
+  //   const rowDataGenerated = res.instruments;
+
+  //   return rowDataGenerated
+  // }
 
   // Добавить телескоп (в базу) в таблицу расчета
   function addTelescope(
@@ -138,18 +191,19 @@ function App() {
     navigate('/', { replace: true })
   }
 
+  // запросить данные для готового расчета
+  const askDataToResultsDone = (selectedIdInResults) => {
 
-  const askDataToResultsDone = (selectedId) => {
     // АПИ - запросить данные для готового расчета
-    api.getResultsDone(selectedId)
+    api.getResultsDone(selectedIdInResults)
       .then((res) => {
         setDataResultsDone(res)
         setIsVisibleResultsDone(true)
         setDataResultsDone(res)
         navigate('/resultsdone', { replace: true })
       })
+    setSelectedIdToResDone(selectedIdInResults)
   }
-
 
   // получение статуса работы
   function longAPI() {
@@ -213,6 +267,20 @@ function App() {
     //   }) 
   }
 
+  // сформировать таблицу для Results Done из Results
+  useEffect(() => {
+    // alert(rowDataResults)
+    const rowData = []
+    rowDataResults.forEach((result) => {
+      if (result.key === selectedIdToResDone) {
+        debugger
+        rowData.push(result)
+      }
+      setRowDataResultsDone(rowData)
+    })
+  }, [selectedIdToResDone])
+
+
   return (
     <div>
       <div className="App">
@@ -233,10 +301,12 @@ function App() {
             />
             <Route path="/results" element={
               <Results
+                rowData={rowDataResults}
+                getDataToResults={askDataToResults}
                 onSetDataToNewCalculation={askDataToNewCalculation}
                 onSetDataToResultsDone={askDataToResultsDone}
               />} />
-            <Route path="/resultsdone" element={<ResultsDone isVisible={isVisibleResultsDone} data={dataResultsDone} />} />
+            <Route path="/resultsdone" element={<ResultsDone isVisible={isVisibleResultsDone} data={dataResultsDone} rowDataTable={rowDataResultsDone} />} />
           </Routes>
         </div>
       </div>

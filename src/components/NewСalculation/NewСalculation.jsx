@@ -100,7 +100,7 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
                 instruments: selectedId
             }
             // АПИ на старт расчета
-            // startCalculate(reqData)
+            startCalculate(reqData)
             console.log(reqData)
         }
     }, [selectedId]);

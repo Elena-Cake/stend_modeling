@@ -42,7 +42,76 @@ function App() {
   const [rowDataResults, setRowDataResults] = useState([]);
 
   // для нового расчета
-  const [resData, setResData] = useState({ instruments: [] });
+  const [resData, setResData] = useState(
+    {
+      "start_date": "2020-01-01",
+      "end_date": "2020-12-31",
+      "catalogue": "2020",
+      "instruments": [
+        {
+          "nsr": 10093,
+          "cod": "Кис2",
+          "locname": "Кисловодск",
+          "latitude": 43.7402600307874,
+          "longitude": 42.6536598478286,
+          "altitude": 2107.7471803287,
+          "aperture": 19.2,
+          "secondary_coefficient": 0.52,
+          "pixel_scale": 6.3,
+          "readout_noise": 5,
+          "fovx": 14.0,
+          "fovy": 9.0,
+          "frame_readout": 0.5,
+          "frame_flush": 5.0,
+          "task_switch_time": 6,
+          "stabilization_time": 10,
+          "mount_type": "экваториальная",
+          "slew_vel_alpha": 1.8,
+          "slew_vel_delta": 1.8,
+          "min_elevation": 10,
+          "transmittivity": 0.5,
+          "quantum_efficiency": 0.8,
+          "mode": "обзор",
+          "noko_twilight": false,
+          "noko": false,
+          "gso_survey": true
+        },
+        {
+          "nsr": 10316,
+          "cod": "Блг7",
+          "locname": "Благовещенск",
+          "latitude": 50.1265854,
+          "longitude": 127.7223353,
+          "altitude": 161.172,
+          "aperture": 65.0,
+          "secondary_coefficient": 0.33,
+          "pixel_scale": 1.59,
+          "readout_noise": 5,
+          "fovx": 2.7,
+          "fovy": 2.7,
+          "frame_readout": 7,
+          "frame_flush": 0,
+          "task_switch_time": 6,
+          "stabilization_time": 10,
+          "mount_type": "альтазимутальная",
+          "slew_vel_alpha": 4,
+          "slew_vel_delta": 4,
+          "min_elevation": 10,
+          "transmittivity": 0.5,
+          "quantum_efficiency": 0.8,
+          "mode": "ЦУ",
+          "noko_twilight": false,
+          "noko": false,
+          "gso_survey": false
+        }
+      ],
+      "sun_elevation": 18,
+      "detectable_snr": 3.0,
+      "max_exp": 7.0,
+      "max_track_length": 0.05,
+      "zenith_sky_brightness": 22
+    }
+  );
   const [isResaltDownload, setIsResaltDownload] = useState(false);
   const [selectedId, setSelectedId] = useState('');
 
@@ -235,6 +304,7 @@ function App() {
 
   // апи запрос на расчет
   const startCalculate = (dataRequest) => {
+    console.log(1)
     api.startCalculate(dataRequest)
       .then((data) => {
         if (data.success === 1) {
@@ -246,7 +316,6 @@ function App() {
           setTextPopup({ text: 'Не удалось запустить оценку', isError: true })
           setDataLogMessage(data.message)
           openLoadingPopup()
-          longAPI()
         }
       })
   }

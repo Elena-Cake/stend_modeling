@@ -34,7 +34,7 @@ export const api = {
     },
     // пост запрос на расчет
     startCalculate(data) {
-        return axios.post(BASE_URL + '/', JSON.stringify(data))
+        return axios.post(BASE_URL + '/run_modelling', JSON.stringify(data))
             .then(res => res.data)
     },
 
@@ -42,11 +42,6 @@ export const api = {
     // Запрос лога
     getLog() {
         return axios.get(BASE_URL + '/getlog')
-            .then(res => res.data)
-    },
-    // Запрос результата
-    getResult() {
-        return axios.get(BASE_URL + '')
             .then(res => res.data)
     },
     // принудительное завершение выполнения задачи

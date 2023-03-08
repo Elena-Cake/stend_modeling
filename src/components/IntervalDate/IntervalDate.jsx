@@ -13,16 +13,16 @@ const IntervalDate = ({ onChangeDate, isErrorDate, errorDateText, dates }) => {
                 <input
                     className="inputs__date"
                     type="date"
-                    name="date_start"
+                    name="start_date"
                     onChange={onChangeDate}
-                    value={dates.date_start || ''} />
+                    value={dates.start_date || ''} />
                 <p className="inputs__text">до</p>
                 <input
                     className="inputs__date"
                     type="date"
-                    name="date_end"
+                    name="end_date"
                     onChange={onChangeDate}
-                    value={dates.date_end || ''} />
+                    value={dates.end_date || ''} />
             </div>
             <span className={`inputs__error ${isErrorDate && "inputs__error_visible"}`}>{errorDateText}</span>
         </div>

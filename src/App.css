@@ -17,8 +17,8 @@
 .button__bottom {
   border: 0.1px solid rgba(0, 24, 77, 0.5);
   min-width: 200px;
-  max-width: 400px;
-  height: 30px;
+  max-width: 360px;
+  /* height: 30px; */
   background-color: rgba(0, 37, 117, 0.237);
   border-radius: 10px;
   margin: 15px 5px;

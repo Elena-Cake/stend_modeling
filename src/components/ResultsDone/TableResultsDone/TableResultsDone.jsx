@@ -17,14 +17,14 @@ const TableResultsDone = ({ rowDataTable }) => {
     console.log(rowDataTable)
 
     const [columnDefs, setColumnDefs] = useState([
-        { field: 'nsr', headerName: "Номер средства", headerTooltip: "Номер средства" },
+        { field: 'idInstruments', headerName: "Номер средства", headerTooltip: "Номер средства" },
         { field: 'cod', headerName: "Название", headerTooltip: "Название средства", hide: true },
         { field: 'locname', headerName: "Местоположение", headerTooltip: "Местоположение" },
         { field: 'latitude', headerName: "Геодезическая широта, град", headerTooltip: "Геодезическая широта в градусах" },
         { field: 'longitude', headerName: "Геодезическая долгота, град", headerTooltip: "Геодезическая долгота в градусах" },
         { field: 'altitude', headerName: "Высота, м", headerTooltip: "Высота в метрах", hide: true },
         { field: 'aperture', headerName: "Апертура, см", headerTooltip: "Апертура в см", hide: true },
-        { field: 'secondary_coefficient', headerName: "Коэффициент экранирования", headerTooltip: "Коэффициент экранирования" },
+        { field: 'secondary_coefficient', headerName: "Коэффициент экранирования", headerTooltip: "Коэффициент экранирования", hide: true },
         { field: 'pixel_scale', headerName: "Масштаб пикселя, угл.с/px", headerTooltip: "Масштаб пикселя в угл.с/px", hide: true },
         { field: 'readout_noise', headerName: "Шум считывания, е", headerTooltip: "Шум считывания в е", hide: true },
         { field: 'fovx', headerName: "Поле зрения по X, град", headerTooltip: "Поле зрения по X в градусах", hide: true },

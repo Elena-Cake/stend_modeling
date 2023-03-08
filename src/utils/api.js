@@ -8,9 +8,7 @@ const BASE_URL = 'http://modeller:9090'
 export const api = {
     // запросы для таблицы результатов
     getResults() {
-        return axios.get(BASE_URL + '/modelling_result_list', {
-
-        })
+        return axios.get(BASE_URL + '/modelling_result_list')
             .then(res => res.data)
             .catch(err => console.log(err))
     },
@@ -34,7 +32,13 @@ export const api = {
     },
     // пост запрос на расчет
     startCalculate(data) {
-        return axios.post(BASE_URL + '/run_modelling', JSON.stringify(data))
+        return axios.post(BASE_URL + '/run_modelling', JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+
+        })
             .then(res => res.data)
     },
 

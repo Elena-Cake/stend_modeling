@@ -36,7 +36,7 @@ const Options = ({ onChangeOptions, catalogNames, isErrorOptions, getCatalogs, o
                     {!isChangeDefaultCatalog &&
                         <select
                             className="option__select option_options"
-                            name="catalog"
+                            name="catalogue"
                             onChange={onChangeOptions}
                             onClick={onFirstChangeCatalogs}>
                             {catalogItems}
@@ -45,7 +45,7 @@ const Options = ({ onChangeOptions, catalogNames, isErrorOptions, getCatalogs, o
                     {isChangeDefaultCatalog &&
                         <select
                             className="option__select option_options"
-                            name="catalog"
+                            name="catalogue"
                             onChange={onChangeOptions}
                             onClick={getCatalogs}>
                             <option key={0} value="" disabled selected>выберите каталог</option>

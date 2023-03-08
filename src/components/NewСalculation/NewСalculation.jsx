@@ -20,7 +20,7 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
     const [catalogNames, setCatalogNames] = useState([])
 
     useEffect(() => {
-        setDates({ date_start: resData.start_date, date_end: resData.end_date })
+        setDates({ start_date: resData.start_date, end_date: resData.end_date })
         setOptions({
             name: resData.name,
             sun_elevation: resData.sun_elevation,
@@ -45,22 +45,21 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
 
     // назначение дат
     const getCatalogs = () => {
-        if (dates.date_start !== '' && dates.date_end !== '') {
-            const dateStart = new Date(dates.date_start)
-            const dateEnd = new Date(dates.date_end)
+        if (dates.start_date !== '' && dates.end_date !== '') {
+            const dateStart = new Date(dates.start_date)
+            const dateEnd = new Date(dates.end_date)
             if (dateStart < dateEnd) {
                 if (dateStart.getFullYear() === dateEnd.getFullYear()) {
                     setIsErrorDate(false)
+                    const fullYear = dateStart.getFullYear()
                     // АПИ - гет имен каталогов
-                    console.log(dateStart.getFullYear())
-                    api.getCatalogNames(dateStart.getFullYear())
+                    api.getCatalogNames(fullYear)
                         .then((data) => {
-                            console.log(data)
-                            setCatalogNames(data.message)
+                            setCatalogNames(data.message.map(item => fullYear + '/' + item))
                         })
 
                     // принятые каталоги
-                    setCatalogNames(['GIAC', 'ANC'])
+                    // setCatalogNames(['GIAC', 'ANC'])
                 } else {
                     setCatalogNames([])
                     setErrorDateText('Выберите даты в рамках одного года')
@@ -92,8 +91,6 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
         } else {
             setIsErrorDate(false)
             setIsErrorOptions(false)
-            setCulculationIcon()
-            openloadPopup('Расчет запущен', false)
             const reqData = {
                 ...dates,
                 ...options,
@@ -101,7 +98,7 @@ const NewСalculation = ({ openTelescope, openloadPopup, resData, setCulculation
             }
             // АПИ на старт расчета
             startCalculate(reqData)
-            console.log(reqData)
+            // console.log(reqData)
         }
     }, [selectedId]);
 

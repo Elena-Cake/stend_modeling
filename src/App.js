@@ -31,22 +31,18 @@ function App() {
   const [isCulculating, setIsCulculating] = useState(false);
   // заружены ли результаты
   const [isVisibleResultsDone, setIsVisibleResultsDone] = useState(false)
-
+  // для модальных окон
   const [textPopup, setTextPopup] = useState({ text: '', isError: false });
   const [dataLogMessage, setDataLogMessage] = useState('')
   const [dataLog, setDataLog] = useState('')
-
   const [textInfoPopup, setTextInfoPopup] = useState({ text: '', isError: false });
-
   // для таблицы результатов
   const [rowDataResults, setRowDataResults] = useState([]);
-
   // для нового расчета
   const [resData, setResData] = useState(
     {
       "start_date": "2020-01-01",
-      "end_date": "2020-12-31",
-      "catalogue": "2020",
+      "end_date": "2020-01-02",
       "instruments": [
         {
           "nsr": 10093,
@@ -133,7 +129,6 @@ function App() {
     setIsAddNSPopupOpen(true)
   }
 
-
   // попап добавления в базу
   function openTelescopePopup() {
     setIsTelescopePopupOpen(true)
@@ -210,13 +205,6 @@ function App() {
     return rowDataGenerated
   }
 
-  // формирование данных для таблицы готовых расчетов
-  // const changeResStructure = (res) => {
-  //   const rowDataGenerated = res.instruments;
-
-  //   return rowDataGenerated
-  // }
-
   // Добавить телескоп (в базу) в таблицу расчета
   function addTelescope(
     nsr, cod, latitude, longitude,
@@ -249,11 +237,11 @@ function App() {
   }
 
   // кнопки из резалтс
-  const askDataToNewCalculation = (selectedId) => {
 
+  // запросить данные для загрузки рассчета в конструктор
+  const askDataToNewCalculation = (selectedId) => {
     // АПИ - запросить данные для конструктора
     // api.getNewCalc(selectedId)
-
     setIsResaltDownload(true)
     setResData(newCulc)
     setSelectedId(selectedId)
@@ -263,15 +251,45 @@ function App() {
   // запросить данные для готового расчета
   const askDataToResultsDone = (selectedIdInResults) => {
 
-    // АПИ - запросить данные для готового расчета
     api.getResultsDone(selectedIdInResults)
       .then((res) => {
         setDataResultsDone(res)
         setIsVisibleResultsDone(true)
-        setDataResultsDone(res)
         navigate('/resultsdone', { replace: true })
+        // let rowData = []
+        // rowData =rowDataResults.filter((row) => row.configuration === selectedIdInResults)
+        setSelectedIdToResDone(selectedIdInResults)
+        // setRowDataResultsDone(rowData)
       })
-    setSelectedIdToResDone(selectedIdInResults)
+  }
+
+  // сформировать таблицу для Results Done из Results
+  useEffect(() => {
+    let rowData = []
+    rowData = rowDataResults.filter((row) => row.configuration === selectedIdToResDone)
+    setRowDataResultsDone(rowData)
+  }, [selectedIdToResDone])
+
+  // апи запрос на расчет
+  const startCalculate = (dataRequest) => {
+    api.startCalculate(dataRequest)
+      .then((data) => {
+        console.log(data)
+        if (data.success === 1) {
+          setIsCulculating(true)
+          setDataLogMessage(data.message)
+          openLoadingPopup('Моделирование запущено', false)
+          longAPI()
+        } else if (data.success === 0) {
+          setTextInfoPopup({ text: 'Не удалось запустить оценку', isError: true })
+          openInfoPopup()
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        setTextInfoPopup({ text: err.message, isError: true })
+        openInfoPopup()
+      })
   }
 
   // получение статуса работы
@@ -281,10 +299,10 @@ function App() {
       .then((res) => {
         status = res.message == [] ? '' : res.message;
         setDataLog(status)
-        console.log(status)
         if (status === 'finished') {
           setDataLogMessage('Перейдите на вкладку "Завершенные расчеты" для запроса результатов')
           openLoadingPopup('Расчет окончен!', false)
+          setIsCulculating(false)
           // запросить и назначить данные во вкладку готового расчета
           // api.getResult()
           //   .then(data => {
@@ -293,60 +311,31 @@ function App() {
           //     setIsCulculating(false)
           //   })
         } else if (status === 'aborted') {
-          setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
-          openInfoPopup()
-          setIsCulculating(false)
+          api.abortCalculate()
+            .then((data) => {
+              console.log(data)
+              setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
+              openInfoPopup()
+              setIsCulculating(false)
+            })
         } else {
           setTimeout(longAPI, 5000)
         }
       })
   }
 
-  // апи запрос на расчет
-  const startCalculate = (dataRequest) => {
-    console.log(1)
-    api.startCalculate(dataRequest)
-      .then((data) => {
-        if (data.success === 1) {
-          setTextPopup({ text: 'Моделирование запущено', isError: false })
-          setDataLogMessage(data.message)
-          openLoadingPopup()
-          longAPI()
-        } else if (data.success === 0) {
-          setTextPopup({ text: 'Не удалось запустить оценку', isError: true })
-          setDataLogMessage(data.message)
-          openLoadingPopup()
-        }
-      })
-  }
-
-
   // прервать вычисление
   const abortCulculate = (e) => {
     e.preventDefault()
     closePopups()
-    setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
-    openInfoPopup()
-
-    // api.abortCalculate()
-    //   .then((data) => {
-    //     closePopups()
-    //     setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
-    //     openInfoPopup()
-    //   }) 
+    api.abortCalculate()
+      .then((data) => {
+        console.log(data)
+        setTextInfoPopup({ text: 'Моделирование прервано', isError: true })
+        openInfoPopup()
+        setIsCulculating(false)
+      })
   }
-
-  // сформировать таблицу для Results Done из Results
-  useEffect(() => {
-    const rowData = []
-    rowDataResults.forEach((result) => {
-      if (result.key === selectedIdToResDone) {
-        debugger
-        rowData.push(result)
-      }
-      setRowDataResultsDone(rowData)
-    })
-  }, [selectedIdToResDone])
 
   // useEffect(() => {
   //   alert(rowDataResults)
